@@ -1,5 +1,3 @@
-
-#QT += declarative qml quick
 QT += widgets gui-private
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
@@ -13,7 +11,6 @@ mac {
     OBJECTIVE_SOURCES += $$PWD/qtmacunifiedtoolbar.mm \
                          $$PWD/qtmactoolbardelegate.mm \
                          $$PWD/qtmactoolbutton.mm
-
 
     LIBS *= -framework AppKit
 }

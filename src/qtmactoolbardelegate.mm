@@ -159,16 +159,19 @@ QString qt_strippedText(QString s)
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
+    Q_UNUSED(toolbar);
     return itemIdentifiers(self->items, false);
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
 {
+    Q_UNUSED(toolbar);
     return itemIdentifiers(self->allowedItems, false);
 }
 
 - (NSArray *)toolbarSelectableItemIdentifiers: (NSToolbar *)toolbar
 {
+    Q_UNUSED(toolbar);
     NSMutableArray *array = itemIdentifiers(self->items, true);
     [array addObjectsFromArray :  itemIdentifiers(self->allowedItems, true)];
     return array;
@@ -192,16 +195,10 @@ QString qt_strippedText(QString s)
     const QString identifier = toQString(itemIdentifier);
 
     QtMacToolButton *toolButton = reinterpret_cast<QtMacToolButton *>(identifier.toULongLong()); // string -> unisgned long long -> pointer
-    NSToolbarItem *toolbarItem;
-//    if (toolButton->standardItem()) {
-//        toolbarItem = [NSToolbarItem alloc ]initWithItemIdentifier
-//
-//    } else {
-        toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
-        [toolbarItem setLabel: toNSString(qt_strippedText(toolButton->m_action->iconText()))];
-        [toolbarItem setPaletteLabel:[toolbarItem label]];
-        [toolbarItem setToolTip: toNSString(toolButton->m_action->toolTip())];
-//    }
+    NSToolbarItem *toolbarItem= [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
+    [toolbarItem setLabel: toNSString(qt_strippedText(toolButton->m_action->iconText()))];
+    [toolbarItem setPaletteLabel:[toolbarItem label]];
+    [toolbarItem setToolTip: toNSString(toolButton->m_action->toolTip())];
 
     QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
