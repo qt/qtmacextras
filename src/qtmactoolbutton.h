@@ -58,7 +58,6 @@ public:
         ShowColors,
         ShowFonts,
         PrintItem,
-        Separator,
         Space,
         FlexibleSpace
     };

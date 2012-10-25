@@ -54,8 +54,6 @@ NSString *toNSStandardItem(QtMacToolButton::StandardItem standardItem)
         return NSToolbarShowFontsItemIdentifier;
     else if (standardItem == QtMacToolButton::PrintItem)
         return NSToolbarPrintItemIdentifier;
-    else if (standardItem == QtMacToolButton::Separator)
-        return NSToolbarSeparatorItemIdentifier;
     else if (standardItem == QtMacToolButton::Space)
         return NSToolbarSpaceItemIdentifier;
     else if (standardItem == QtMacToolButton::FlexibleSpace)
@@ -75,6 +73,8 @@ public:
 QtMacUnifiedToolBar::QtMacUnifiedToolBar(QObject *parent)
     : QObject(parent)
 {
+    targetWidget = 0;
+    targetWindow = 0;
     d = new QtMacUnifiedToolBarPrivate();
     d->toolbar = [[NSToolbar alloc] initWithIdentifier:@"QtMacUnifiedToolBar"];
     d->delegate = [[QtMacToolbarDelegate alloc] init];
@@ -106,6 +106,13 @@ void QtMacUnifiedToolBar::showInWindow(QWindow *window)
     QTimer::singleShot(100, this, SLOT(showInWindow_impl())); // ### hackety hack
 }
 
+void QtMacUnifiedToolBar::showInWindowForWidget(QWidget *widget)
+{
+    targetWidget = widget;
+    widget->winId(); // create window
+    showInWindow_impl();
+}
+
 void QtMacUnifiedToolBar::showInMainWindow()
 {
     QWidgetList widgets = QApplication::topLevelWidgets();
@@ -117,11 +124,19 @@ void QtMacUnifiedToolBar::showInMainWindow()
 
 void QtMacUnifiedToolBar::showInWindow_impl()
 {
+    if (!targetWindow)
+        targetWindow = targetWidget->windowHandle();
+
+    if (!targetWindow) {
+        QTimer::singleShot(100, this, SLOT(showInWindow_impl()));
+        return;
+    }
+
     NSWindow *macWindow = static_cast<NSWindow*>(
         QGuiApplication::platformNativeInterface()->nativeResourceForWindow("nswindow", targetWindow));
 
     if (!macWindow) {
-        QTimer::singleShot(100, this, SLOT(showInWindow_impl())); // ### hackety hack
+        QTimer::singleShot(100, this, SLOT(showInWindow_impl()));
         return;
     }
 
@@ -139,6 +154,16 @@ QAction *QtMacUnifiedToolBar::addAction(const QIcon &icon, const QString &text)
     return [d->delegate addActionWithText:&text icon:&icon];
 }
 
+QAction *QtMacUnifiedToolBar::addAction(QAction *action)
+{
+    return [d->delegate addAction:action];
+}
+
+void QtMacUnifiedToolBar::addSeparator()
+{
+    addStandardItem(QtMacToolButton::Space); // No Seprator on OS X.
+}
+
 QAction *QtMacUnifiedToolBar::addStandardItem(QtMacToolButton::StandardItem standardItem)
 {
     return [d->delegate addStandardItem:standardItem];
@@ -152,6 +177,11 @@ QAction *QtMacUnifiedToolBar::addAllowedAction(const QString &text)
 QAction *QtMacUnifiedToolBar::addAllowedAction(const QIcon &icon, const QString &text)
 {
     return [d->delegate addAllowedActionWithText:&text icon:&icon];
+}
+
+QAction *QtMacUnifiedToolBar::addAllowedAction(QAction *action)
+{
+    return [d->delegate addAllowedAction:action];
 }
 
 QAction *QtMacUnifiedToolBar::addAllowedStandardItem(QtMacToolButton::StandardItem standardItem)

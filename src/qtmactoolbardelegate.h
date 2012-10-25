@@ -67,10 +67,12 @@
 
 - (QAction *)addActionWithText:(const QString *)text;
 - (QAction *)addActionWithText:(const QString *)text icon:(const QIcon *)icon;
+- (QAction *)addAction:(QAction *)action;
 - (QAction *)addStandardItem:(QtMacToolButton::StandardItem)standardItem;
 
 - (QAction *)addAllowedActionWithText:(const QString *)text;
 - (QAction *)addAllowedActionWithText:(const QString *)text icon:(const QIcon *)icon;
+- (QAction *)addAllowedAction:(QAction *)action;
 - (QAction *)addAllowedStandardItem:(QtMacToolButton::StandardItem)standardItem;
 
 - (IBAction)itemClicked:(id)sender;

@@ -63,21 +63,26 @@ public:
     QList<QtMacToolButton *> allowedButtons();
 
     void showInWindow(QWindow *window);
+    void showInWindowForWidget(QWidget *widget);
     Q_INVOKABLE void showInMainWindow();
 
     // Add actions to the toolbar
     Q_INVOKABLE QAction *addAction(const QString &text);
     Q_INVOKABLE QAction *addAction(const QIcon &icon, const QString &text);
+    Q_INVOKABLE QAction *addAction(QAction *action);
+    Q_INVOKABLE void addSeparator();
     Q_INVOKABLE QAction *addStandardItem(QtMacToolButton::StandardItem standardItem);
 
     // Add actions to the "Customize Toolbar" menu
     Q_INVOKABLE QAction *addAllowedAction(const QString &text);
     Q_INVOKABLE QAction *addAllowedAction(const QIcon &icon, const QString &text);
+    Q_INVOKABLE QAction *addAllowedAction(QAction *action);
     Q_INVOKABLE QAction *addAllowedStandardItem(QtMacToolButton::StandardItem standardItem);
 private Q_SLOTS:
     void showInWindow_impl();
 private:
     QWindow *targetWindow;
+    QWidget *targetWidget;
     bool m_showText;
     QList<QtMacToolButton *> m_buttons;
     QList<QtMacToolButton *> m_allowedButtons;

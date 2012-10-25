@@ -139,6 +139,21 @@ NSMutableArray *itemIdentifiers(const QList<QtMacToolButton *> &items, bool cull
     return array;
 }
 
+// from qaction.cpp
+QString qt_strippedText(QString s)
+{
+    s.remove( QString::fromLatin1("...") );
+    int i = 0;
+    while (i < s.size()) {
+        ++i;
+        if (s.at(i-1) != QLatin1Char('&'))
+            continue;
+        if (i < s.size() && s.at(i) == QLatin1Char('&'))
+            ++i;
+        s.remove(i-1,1);
+    }
+    return s.trimmed();
+}
 
 @implementation QtMacToolbarDelegate
 
@@ -177,10 +192,16 @@ NSMutableArray *itemIdentifiers(const QList<QtMacToolButton *> &items, bool cull
     const QString identifier = toQString(itemIdentifier);
 
     QtMacToolButton *toolButton = reinterpret_cast<QtMacToolButton *>(identifier.toULongLong()); // string -> unisgned long long -> pointer
-    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
-    [toolbarItem setLabel: toNSString(toolButton->m_action->text())];
-    [toolbarItem setPaletteLabel:[toolbarItem label]];
-//    [toolbarItem setToolTip: toNSString(action->toolTip())];
+    NSToolbarItem *toolbarItem;
+//    if (toolButton->standardItem()) {
+//        toolbarItem = [NSToolbarItem alloc ]initWithItemIdentifier
+//
+//    } else {
+        toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
+        [toolbarItem setLabel: toNSString(qt_strippedText(toolButton->m_action->iconText()))];
+        [toolbarItem setPaletteLabel:[toolbarItem label]];
+        [toolbarItem setToolTip: toNSString(toolButton->m_action->toolTip())];
+//    }
 
     QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
@@ -205,6 +226,16 @@ NSMutableArray *itemIdentifiers(const QList<QtMacToolButton *> &items, bool cull
     QtMacToolButton *button = new QtMacToolButton(action);
     button->m_action = action;
     items.append(button);
+    allowedItems.append(button);
+    return action;
+}
+
+- (QAction *)addAction:(QAction *)action
+{
+    QtMacToolButton *button = new QtMacToolButton(action);
+    button->m_action = action;
+    items.append(button);
+    allowedItems.append(button);
     return action;
 }
 
@@ -215,6 +246,7 @@ NSMutableArray *itemIdentifiers(const QList<QtMacToolButton *> &items, bool cull
     button->m_action = action;
     button->setStandardItem(standardItem);
     items.append(button);
+    allowedItems.append(button);
     return action;
 }
 
@@ -227,6 +259,14 @@ NSMutableArray *itemIdentifiers(const QList<QtMacToolButton *> &items, bool cull
 - (QAction *)addAllowedActionWithText:(const QString *)text icon:(const QIcon *)icon
 {
     QAction *action = new QAction(*icon, *text, 0);
+    QtMacToolButton *button = new QtMacToolButton(action);
+    button->m_action = action;
+    allowedItems.append(button);
+    return action;
+}
+
+- (QAction *)addAllowedAction:(QAction *)action
+{
     QtMacToolButton *button = new QtMacToolButton(action);
     button->m_action = action;
     allowedItems.append(button);
