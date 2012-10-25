@@ -51,8 +51,6 @@
 @interface QtMacToolbarDelegate : NSObject <NSToolbarDelegate>
 {
 @public
-    NSToolbar *toolbar;
-
     QList<QtMacToolButton *> items;
     QList<QtMacToolButton *> allowedItems;
 

@@ -41,7 +41,7 @@
 #include "QtMactoolbardelegate.h"
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QApplication>
-#include <QtGui/qplatformnativeinterface_qpa.h>
+#include <qpa/qplatformnativeinterface.h>
 #include <QtCore/QtCore>
 
 #import <AppKit/AppKit.h>
