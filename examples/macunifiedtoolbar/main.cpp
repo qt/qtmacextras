@@ -60,7 +60,7 @@ int main(int argc, char **argv)
     toolBar.addAllowedAction(QIcon(":/qtlogo.png"), "Extra Button 1");
     toolBar.addAllowedAction(QIcon(":/qtlogo.png"), "Extra Button 2");
 
-    toolBar.showInWindow(widget.windowHandle());
+    toolBar.showInWindowForWidget(&widget);
     widget.show();
 
     return app.exec();
