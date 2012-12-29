@@ -39,16 +39,16 @@
  **
  ****************************************************************************/
 
-#import <AppKit/AppKit.h>
-#include <QtCore/QString>
-#include <QtCore/QHash>
-#include <QtWidgets/QAction>
-
-#include "qtmacunifiedtoolbar.h"
-
-
 #ifndef QTMACTOOLBARDELEGATE_H
 #define QTMACTOOLBARDELEGATE_H
+
+#import <AppKit/AppKit.h>
+#include "qtmactoolbutton.h"
+//#include <QString>
+//#include <QHash>
+
+class QAction;
+class QIcon;
 
 @interface QtMacToolbarDelegate : NSObject <NSToolbarDelegate>
 {

@@ -39,12 +39,16 @@
  **
  ****************************************************************************/
 
-#include "QtMacunifiedtoolbar.h"
-#include "QtMactoolbardelegate.h"
-#include <QtGui/QGuiApplication>
-#include <QtWidgets/QApplication>
+#include "qtmacunifiedtoolbar.h"
+#include "qtmactoolbardelegate.h"
+#include <QApplication>
+#include <QTimer>
+#include <QWidget>
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QGuiApplication>
 #include <qpa/qplatformnativeinterface.h>
-#include <QtCore/QtCore>
+#endif
 
 #import <AppKit/AppKit.h>
 
@@ -120,12 +124,18 @@ void QtMacUnifiedToolBar::showInMainWindow()
     QWidgetList widgets = QApplication::topLevelWidgets();
     if (widgets.isEmpty())
         return;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     showInWindow(widgets.at(0)->windowHandle());
+#else
+    showInWindowForWidget(widgets.at(0)->window());
+#endif
 }
 
 
 void QtMacUnifiedToolBar::showInWindow_impl()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     if (!targetWindow)
         targetWindow = targetWidget->windowHandle();
 
@@ -136,6 +146,9 @@ void QtMacUnifiedToolBar::showInWindow_impl()
 
     NSWindow *macWindow = static_cast<NSWindow*>(
         QGuiApplication::platformNativeInterface()->nativeResourceForWindow("nswindow", targetWindow));
+#else
+    NSWindow *macWindow = reinterpret_cast<NSWindow*>([reinterpret_cast<NSView*>(targetWidget->winId()) window]);
+#endif
 
     if (!macWindow) {
         QTimer::singleShot(100, this, SLOT(showInWindow_impl()));

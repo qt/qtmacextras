@@ -42,10 +42,9 @@
 #ifndef QTMACTOOLBUTTON_H
 #define QTMACTOOLBUTTON_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtGui/QWindow>
-#include <QtWidgets/QAction>
+#include <QObject>
+
+class QAction;
 
 class QtMacToolButton : public QObject
 {
