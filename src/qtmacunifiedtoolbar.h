@@ -42,12 +42,13 @@
 #ifndef QTMACTOOLBAR_H
 #define QTMACTOOLBAR_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtGui/QWindow>
-#include <QtWidgets/QAction>
-
 #include "qtmactoolbutton.h"
+#include <QObject>
+#include <QIcon>
+#include <QString>
+
+class QAction;
+class QWindow;
 
 class QtMacUnifiedToolBarPrivate;
 class QtMacUnifiedToolBar : public QObject

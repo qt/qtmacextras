@@ -40,7 +40,9 @@
  ****************************************************************************/
 
 #include "qtmactoolbardelegate.h"
-#include <qdebug.h>
+#include <QAction>
+#include <QImage>
+#include <QPixmap>
 
 NSString *toNSString(const QString &string)
 {
