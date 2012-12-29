@@ -7,3 +7,4 @@ SOURCES += main.cpp
 RESOURCES += \
     macunifiedtoolbar.qrc
 
+ICON = qtlogo.icns
