@@ -39,14 +39,19 @@
  **
  ****************************************************************************/
 
-#include <QApplication>
-#include "window.h"
+#ifndef QTNSTOOLBAR_H
+#define QTNSTOOLBAR_H
 
-int main(int argc, char **argv)
-{
-    QApplication app(argc, argv);
-    Window window;
-    window.show();
-    return app.exec();
-}
+#include <AppKit/NSToolbar.h>
 
+extern NSString *QtNSToolbarDisplayModeChangedNotification;
+extern NSString *QtNSToolbarShowsBaselineSeparatorChangedNotification;
+extern NSString *QtNSToolbarAllowsUserCustomizationChangedNotification;
+extern NSString *QtNSToolbarSizeModeChangedNotification;
+extern NSString *QtNSToolbarVisibilityChangedNotification;
+
+@interface QtNSToolbar : NSToolbar
+
+@end
+
+#endif // QTNSTOOLBAR_H
