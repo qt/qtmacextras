@@ -53,13 +53,21 @@ class QWindow;
 class QtMacUnifiedToolBarPrivate;
 class QtMacUnifiedToolBar : public QObject
 {
+    friend class QtMacUnifiedToolBarPrivate;
+
     Q_OBJECT
     Q_PROPERTY(QList<QtMacToolButton *> buttons READ buttons)
     Q_PROPERTY(QList<QtMacToolButton *> allowedButtons READ allowedButtons)
 public:
-
     QtMacUnifiedToolBar(QObject *parent = 0);
     ~QtMacUnifiedToolBar();
+
+    bool isVisible() const;
+    bool showsBaselineSeparator() const;
+    bool allowsUserCustomization() const;
+    Qt::ToolButtonStyle toolButtonStyle() const;
+    QSize iconSize() const;
+    QtMacToolButton::IconSize iconSizeType() const;
 
     QList<QtMacToolButton *> buttons();
     QList<QtMacToolButton *> allowedButtons();
@@ -80,6 +88,24 @@ public:
     Q_INVOKABLE QAction *addAllowedAction(const QIcon &icon, const QString &text);
     Q_INVOKABLE QAction *addAllowedAction(QAction *action);
     Q_INVOKABLE QAction *addAllowedStandardItem(QtMacToolButton::StandardItem standardItem);
+
+signals:
+    void visibilityChanged(bool visible);
+    void showsBaselineSeparatorChanged(bool show);
+    void allowsUserCustomizationChanged(bool allow);
+    void toolButtonStyleChanged(Qt::ToolButtonStyle toolButtonStyle);
+    void iconSizeChanged(const QSize &iconSize);
+    void iconSizeChanged(QtMacToolButton::IconSize iconSize);
+
+public Q_SLOTS:
+    void setVisible(bool visible);
+    void setShowsBaselineSeparator(bool show);
+    void setAllowsUserCustomization(bool allow);
+    void setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle);
+    void setIconSize(const QSize &iconSize);
+    void setIconSize(QtMacToolButton::IconSize iconSize);
+    void showCustomizationSheet();
+
 private Q_SLOTS:
     void showInWindow_impl();
 private:
