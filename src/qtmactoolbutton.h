@@ -63,6 +63,13 @@ public:
         FlexibleSpace
     };
 
+    enum IconSize
+    {
+        IconSizeDefault,
+        IconSizeRegular,
+        IconSizeSmall
+    };
+
     QtMacToolButton();
     QtMacToolButton(QObject *parent);
     virtual ~QtMacToolButton();
