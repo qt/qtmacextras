@@ -2,7 +2,7 @@ QT += widgets gui-private
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-# qtmacunifiedtoolbar
+# QtMacUnifiedToolBar
 HEADERS += $$PWD/qtmacunifiedtoolbar.h  \
            $$PWD/qtmactoolbardelegate.h \
            $$PWD/qtmactoolbutton.h \
@@ -18,3 +18,7 @@ mac {
 } else {
     SOURCES += $$PWD/qtmacunifiedtoolbar.cpp
 }
+
+# QtMacPasteboardMime
+HEADERS += $$PWD/qmacpasteboardmime.h
+OBJECTIVE_SOURCES += $$PWD/qmacpasteboardmime.mm
