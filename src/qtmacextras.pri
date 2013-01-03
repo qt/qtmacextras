@@ -22,3 +22,7 @@ mac {
 # QtMacPasteboardMime
 HEADERS += $$PWD/qmacpasteboardmime.h
 OBJECTIVE_SOURCES += $$PWD/qmacpasteboardmime.mm
+
+# qt_mac_set_dock_menu
+HEADERS += $$PWD/qtmacfunctions.h
+OBJECTIVE_SOURCES += $$PWD/qtmacfunctions.mm
