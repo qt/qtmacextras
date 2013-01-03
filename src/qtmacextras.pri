@@ -49,3 +49,13 @@ minQtVersion(5, 0, 1) {
 } else {
     message("QtMacPasteboardMime requires Qt 5.0.1 and will be exculded from this build. You have Qt" $$QT_VERSION)
 }
+
+# qt_mac_set_dock_menu
+minQtVersion(5, 0, 1) {
+    HEADERS += $$PWD/qtmacfunctions.h
+    OBJECTIVE_SOURCES += $$PWD/qtmacfunctions.mm
+} else {
+    message("qt_mac_set_dock_menu requires Qt 5.0.1 and will be exculded from this build. You have Qt" $$QT_VERSION)
+}
+
+
