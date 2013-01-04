@@ -43,6 +43,7 @@
 #include "qtmactoolbardelegate.h"
 #include "qtnstoolbar.h"
 #include <QApplication>
+#include <QDebug>
 #include <QTimer>
 #include <QToolBar>
 #include <QWidget>
@@ -50,6 +51,8 @@
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QGuiApplication>
 #include <qpa/qplatformnativeinterface.h>
+#else
+#include <QMainWindow>
 #endif
 
 #import <AppKit/AppKit.h>
@@ -175,6 +178,47 @@ public:
 }
 
 @end
+
+QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on)
+{
+    if (!toolbar)
+    {
+        qWarning() << "setNativeToolBarOnMac: toolbar was NULL";
+        return NULL;
+    }
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    // Turn off unified title and toolbar if it's on, because we're adding our own NSToolbar
+    QMainWindow *mainWindow = qobject_cast<QMainWindow*>(toolbar->window());
+    if (mainWindow && mainWindow->unifiedTitleAndToolBarOnMac())
+        mainWindow->setUnifiedTitleAndToolBarOnMac(false);
+#endif
+
+    static const char *macToolBarProperty = "_q_mac_native_toolbar";
+
+    // Check if we've already created a Mac equivalent for this toolbar
+    QVariant toolBarProperty = toolbar->property(macToolBarProperty);
+    QtMacUnifiedToolBar *macToolBar = NULL;
+    if (toolBarProperty.canConvert<QtMacUnifiedToolBar*>())
+        macToolBar = toolBarProperty.value<QtMacUnifiedToolBar*>();
+
+    // Create one if not, but only if we're turning it on - no point in creating
+    // a toolbar for the sole purpose of turning it off immediately
+    if (!macToolBar && on)
+    {
+        macToolBar = QtMacUnifiedToolBar::fromQToolBar(toolbar);
+        macToolBar->setParent(toolbar);
+        toolbar->setProperty(macToolBarProperty, QVariant::fromValue(macToolBar));
+    }
+
+    toolbar->setVisible(!on);
+    if (on)
+        macToolBar->showInWindowForWidget(toolbar->window());
+    else if (macToolBar)
+        macToolBar->removeFromWindowForWidget(toolbar->window());
+
+    return macToolBar;
+}
 
 QtMacUnifiedToolBar::QtMacUnifiedToolBar(QObject *parent)
     : QObject(parent)
@@ -380,6 +424,27 @@ void QtMacUnifiedToolBar::showInWindow_impl()
 
     [macWindow setToolbar: d->toolbar];
     [macWindow setShowsToolbarButton:YES];
+}
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+void QtMacUnifiedToolBar::removeFromWindow(QWindow *window)
+{
+    if (!window)
+        return;
+
+    NSWindow *macWindow = static_cast<NSWindow*>(
+        QGuiApplication::platformNativeInterface()->nativeResourceForWindow("nswindow", window));
+    [macWindow setToolbar:nil];
+}
+#endif
+
+void QtMacUnifiedToolBar::removeFromWindowForWidget(QWidget *widget)
+{
+    if (!widget)
+        return;
+
+    NSWindow *macWindow = reinterpret_cast<NSWindow*>([reinterpret_cast<NSView*>(widget->winId()) window]);
+    [macWindow setToolbar:nil];
 }
 
 QAction *QtMacUnifiedToolBar::addAction(const QString &text)
