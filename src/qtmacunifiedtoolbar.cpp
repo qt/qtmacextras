@@ -39,10 +39,17 @@
  **
  ****************************************************************************/
 
+#include <QString>
+
 class QToolBar;
 class QtMacUnifiedToolBar;
 
 QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar*, bool)
 {
     return 0;
+}
+
+QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar*, const QString&, bool)
+{
+    return NULL;
 }
