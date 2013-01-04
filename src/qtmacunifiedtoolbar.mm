@@ -42,6 +42,7 @@
 #include "qtmacunifiedtoolbar.h"
 #include "qtmactoolbardelegate.h"
 #include "qtnstoolbar.h"
+#include <QAction>
 #include <QApplication>
 #include <QDebug>
 #include <QTimer>
@@ -447,6 +448,23 @@ void QtMacUnifiedToolBar::removeFromWindowForWidget(QWidget *widget)
     [macWindow setToolbar:nil];
 }
 
+void QtMacUnifiedToolBar::setSelectedItem()
+{
+    // Tell the toolbar to select the NSToolbarItem corresponding to the triggered QAction
+    QAction *action = qobject_cast<QAction*>(sender());
+    if (action && action->isCheckable())
+    {
+        foreach (QtMacToolButton *toolButton, d->delegate->items)
+        {
+            if (toolButton->m_action == action)
+            {
+                [d->toolbar setSelectedItemIdentifier:toNSString(QString::number(qulonglong(toolButton)))];
+                break;
+            }
+        }
+    }
+}
+
 QAction *QtMacUnifiedToolBar::addAction(const QString &text)
 {
     return [d->delegate addActionWithText:&text];
@@ -459,6 +477,7 @@ QAction *QtMacUnifiedToolBar::addAction(const QIcon &icon, const QString &text)
 
 QAction *QtMacUnifiedToolBar::addAction(QAction *action)
 {
+    connect(action, SIGNAL(triggered()), this, SLOT(setSelectedItem()));
     return [d->delegate addAction:action];
 }
 
@@ -484,6 +503,7 @@ QAction *QtMacUnifiedToolBar::addAllowedAction(const QIcon &icon, const QString 
 
 QAction *QtMacUnifiedToolBar::addAllowedAction(QAction *action)
 {
+    connect(action, SIGNAL(triggered()), this, SLOT(setSelectedItem()));
     return [d->delegate addAllowedAction:action];
 }
 

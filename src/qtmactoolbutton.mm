@@ -40,6 +40,7 @@
  ****************************************************************************/
 
 #include "qtmactoolbutton.h"
+#include <QAction>
 
 QtMacToolButton::QtMacToolButton()
 {
@@ -63,12 +64,18 @@ QtMacToolButton::~QtMacToolButton()
 
 bool QtMacToolButton::selectable() const
 {
+    if (m_action)
+        return m_action->isCheckable();
+
     return m_selectable;
 }
 
 void QtMacToolButton::setSelectable(bool selectable)
 {
-    m_selectable = selectable;
+    if (m_action)
+        m_action->setCheckable(selectable);
+    else
+        m_selectable = selectable;
 }
 
 QtMacToolButton::StandardItem QtMacToolButton::standardItem() const
