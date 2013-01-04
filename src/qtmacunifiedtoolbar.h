@@ -42,18 +42,20 @@
 #ifndef QTMACTOOLBAR_H
 #define QTMACTOOLBAR_H
 
+#include <QString>
+
 class QToolBar;
 class QWidget;
 class QtMacUnifiedToolBar;
 
 QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
+QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on = true);
 
 #include <QtGlobal>
 #ifdef Q_OS_MAC
 #include "qtmactoolbutton.h"
 #include <QObject>
 #include <QIcon>
-#include <QString>
 #include <QVariant>
 
 class QAction;
@@ -69,10 +71,12 @@ class QtMacUnifiedToolBar : public QObject
     Q_PROPERTY(QList<QtMacToolButton *> allowedButtons READ allowedButtons)
 public:
     QtMacUnifiedToolBar(QObject *parent = 0);
+    QtMacUnifiedToolBar(const QString &identifier, QObject *parent = 0);
     ~QtMacUnifiedToolBar();
 
-    static QtMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar);
+    static QtMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar, const QString &identifier = QString());
 
+    QString identifier() const;
     bool isVisible() const;
     bool showsBaselineSeparator() const;
     bool allowsUserCustomization() const;
@@ -128,7 +132,6 @@ private Q_SLOTS:
 private:
     QWindow *targetWindow;
     QWidget *targetWidget;
-    bool m_showText;
     QList<QtMacToolButton *> m_buttons;
     QList<QtMacToolButton *> m_allowedButtons;
     QtMacUnifiedToolBarPrivate *d;
