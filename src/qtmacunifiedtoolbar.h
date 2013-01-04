@@ -108,6 +108,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void showInWindow_impl();
+    void setSelectedItem();
 private:
     QWindow *targetWindow;
     QWidget *targetWidget;
