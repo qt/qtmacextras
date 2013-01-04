@@ -42,6 +42,7 @@
 #ifndef QTMACTOOLBAR_H
 #define QTMACTOOLBAR_H
 
+class QToolBar;
 #include "qtmactoolbutton.h"
 #include <QObject>
 #include <QIcon>
@@ -61,6 +62,8 @@ class QtMacUnifiedToolBar : public QObject
 public:
     QtMacUnifiedToolBar(QObject *parent = 0);
     ~QtMacUnifiedToolBar();
+
+    static QtMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar);
 
     bool isVisible() const;
     bool showsBaselineSeparator() const;

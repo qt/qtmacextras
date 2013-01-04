@@ -44,6 +44,7 @@
 #include "qtnstoolbar.h"
 #include <QApplication>
 #include <QTimer>
+#include <QToolBar>
 #include <QWidget>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -200,6 +201,18 @@ QtMacUnifiedToolBar::~QtMacUnifiedToolBar()
 {
     [d->toolbar release];
     delete d;
+}
+
+QtMacUnifiedToolBar *QtMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar)
+{
+    // TODO: add the QToolBar's QWidgets to the Mac toolbar once it supports this
+    QtMacUnifiedToolBar *macToolBar = new QtMacUnifiedToolBar();
+    foreach (QAction *action, toolBar->actions())
+    {
+        macToolBar->addAction(action);
+    }
+
+    return macToolBar;
 }
 
 bool QtMacUnifiedToolBar::isVisible() const
