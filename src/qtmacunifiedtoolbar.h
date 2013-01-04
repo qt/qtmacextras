@@ -68,7 +68,7 @@ class QtMacUnifiedToolBar : public QObject
     Q_PROPERTY(QList<QtMacToolButton *> buttons READ buttons)
     Q_PROPERTY(QList<QtMacToolButton *> allowedButtons READ allowedButtons)
 public:
-    QtMacUnifiedToolBar(QObject *parent = 0);
+    QtMacUnifiedToolBar(const QString &identifier = QString(), QObject *parent = 0);
     ~QtMacUnifiedToolBar();
 
     static QtMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar);

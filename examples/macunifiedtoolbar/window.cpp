@@ -68,7 +68,7 @@ Window::Window(QWidget *parent) :
     QMenu *toolsMenu = d->mainMenuBar->addMenu("Tools");
     toolsMenu->addAction("Options", d->preferencesWindow, SLOT(show()));
 
-    d->toolBar = new QtMacUnifiedToolBar(this);
+    d->toolBar = new QtMacUnifiedToolBar(QString(), this);
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "Hello");
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "World");
     d->toolBar->addStandardItem(QtMacToolButton::FlexibleSpace);

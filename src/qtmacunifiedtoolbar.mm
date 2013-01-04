@@ -46,6 +46,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QToolBar>
+#include <QUuid>
 #include <QWidget>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -61,6 +62,8 @@
 #define kNSToolbarIconSizeSmall 24
 #define kNSToolbarIconSizeRegular 32
 #define kNSToolbarIconSizeDefault kNSToolbarIconSizeRegular
+
+NSString* toNSString(const QString &str);
 
 NSString *toNSStandardItem(QtMacToolButton::StandardItem standardItem)
 {
@@ -220,14 +223,14 @@ QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on)
     return macToolBar;
 }
 
-QtMacUnifiedToolBar::QtMacUnifiedToolBar(QObject *parent)
+QtMacUnifiedToolBar::QtMacUnifiedToolBar(const QString &identifier, QObject *parent)
     : QObject(parent)
 {
     targetWidget = 0;
     targetWindow = 0;
     d = new QtMacUnifiedToolBarPrivate();
     d->qtToolbar = this;
-    d->toolbar = [[QtNSToolbar alloc] initWithIdentifier:@"QtMacUnifiedToolBar"];
+    d->toolbar = [[QtNSToolbar alloc] initWithIdentifier:toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
     [d->toolbar setAutosavesConfiguration:NO];
 
     setAllowsUserCustomization(true);
