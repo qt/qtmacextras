@@ -41,13 +41,17 @@
 
 #include "window.h"
 #include "ui_window.h"
+#include "preferenceswindow.h"
 #include "qtmacunifiedtoolbar.h"
 #include <QDesktopWidget>
+#include <QMenuBar>
 #include <QTimer>
 
 class WindowPrivate
 {
 public:
+    PreferencesWindow *preferencesWindow;
+    QMenuBar *mainMenuBar;
     QtMacUnifiedToolBar *toolBar;
 };
 
@@ -57,6 +61,12 @@ Window::Window(QWidget *parent) :
     ui(new Ui::Window)
 {
     ui->setupUi(this);
+
+    d->preferencesWindow = new PreferencesWindow();
+
+    d->mainMenuBar = new QMenuBar();
+    QMenu *toolsMenu = d->mainMenuBar->addMenu("Tools");
+    toolsMenu->addAction("Options", d->preferencesWindow, SLOT(show()));
 
     d->toolBar = new QtMacUnifiedToolBar(this);
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "Hello");
@@ -99,6 +109,8 @@ Window::Window(QWidget *parent) :
 Window::~Window()
 {
     delete ui;
+    delete d->mainMenuBar;
+    delete d->preferencesWindow;
     delete d;
 }
 
