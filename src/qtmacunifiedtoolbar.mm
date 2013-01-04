@@ -42,6 +42,7 @@
 #include "qtmacunifiedtoolbar.h"
 #include "qtmactoolbardelegate.h"
 #include "qtnstoolbar.h"
+#include <QAction>
 #include <QApplication>
 #include <QDebug>
 #include <QTimer>
@@ -61,6 +62,8 @@
 #define kNSToolbarIconSizeSmall 24
 #define kNSToolbarIconSizeRegular 32
 #define kNSToolbarIconSizeDefault kNSToolbarIconSizeRegular
+
+NSString* toNSString(const QString &str);
 
 NSString *toNSStandardItem(QtMacToolButton::StandardItem standardItem)
 {
@@ -447,6 +450,69 @@ void QtMacUnifiedToolBar::removeFromWindowForWidget(QWidget *widget)
     [macWindow setToolbar:nil];
 }
 
+void QtMacUnifiedToolBar::setSelectedItem()
+{
+    setSelectedItem(qobject_cast<QAction*>(sender()));
+}
+
+QAction *QtMacUnifiedToolBar::setSelectedItem(QAction *action)
+{
+    // If this action is checkable, find the corresponding NSToolBarItem on the
+    // real NSToolbar and set it to the selected item if it is checked
+    if (action && action->isCheckable())
+    {
+        checkSelectableItemSanity();
+
+        foreach (QtMacToolButton *toolButton, allowedButtons())
+        {
+            if (toolButton->m_action == action && action->isChecked())
+            {
+                [d->toolbar setSelectedItemIdentifier:toNSString(QString::number(qulonglong(toolButton)))];
+                break;
+            }
+            else
+            {
+                [d->toolbar setSelectedItemIdentifier:nil];
+            }
+        }
+    }
+
+    return action;
+}
+
+void QtMacUnifiedToolBar::checkSelectableItemSanity()
+{
+    // Find a list of all selectable actions
+    QList<QAction*> selectableActions;
+    foreach (QtMacToolButton *button, allowedButtons())
+        if (button->m_action && button->m_action->isCheckable())
+            selectableActions.append(button->m_action);
+
+    // If there's more than one, we need to do some sanity checks
+    if (selectableActions.size() > 1)
+    {
+        // The action group that all selectable actions must belong to
+        QActionGroup *group = NULL;
+
+        foreach (QAction *action, selectableActions)
+        {
+            // The first action group we find is "the" action group that
+            // all selectable actions on the toolbar must belong to
+            if (!group)
+                group = action->actionGroup();
+
+            // An action not having a group is a failure
+            // All actions not belonging to the same group is a failure
+            // The group not being exclusive is a failure
+            if (!group || (group != action->actionGroup()) || (group && !group->isExclusive()))
+            {
+                qWarning() << "All selectable actions in a QtMacUnifiedToolBar should belong to the same exclusive QActionGroup if there is more than one selectable action.";
+                break;
+            }
+        }
+    }
+}
+
 QAction *QtMacUnifiedToolBar::addAction(const QString &text)
 {
     return [d->delegate addActionWithText:&text];
@@ -459,7 +525,8 @@ QAction *QtMacUnifiedToolBar::addAction(const QIcon &icon, const QString &text)
 
 QAction *QtMacUnifiedToolBar::addAction(QAction *action)
 {
-    return [d->delegate addAction:action];
+    connect(action, SIGNAL(triggered()), this, SLOT(setSelectedItem()));
+    return setSelectedItem([d->delegate addAction:action]);
 }
 
 void QtMacUnifiedToolBar::addSeparator()
@@ -484,7 +551,8 @@ QAction *QtMacUnifiedToolBar::addAllowedAction(const QIcon &icon, const QString 
 
 QAction *QtMacUnifiedToolBar::addAllowedAction(QAction *action)
 {
-    return [d->delegate addAllowedAction:action];
+    connect(action, SIGNAL(triggered()), this, SLOT(setSelectedItem()));
+    return setSelectedItem([d->delegate addAllowedAction:action]);
 }
 
 QAction *QtMacUnifiedToolBar::addAllowedStandardItem(QtMacToolButton::StandardItem standardItem)
