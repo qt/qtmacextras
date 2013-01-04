@@ -58,7 +58,7 @@ Window::Window(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    d->toolBar = new QtMacUnifiedToolBar(this);
+    d->toolBar = new QtMacUnifiedToolBar(QString(), this);
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "Hello");
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "World");
     d->toolBar->addStandardItem(QtMacToolButton::FlexibleSpace);
