@@ -43,10 +43,18 @@
 #define QTMACTOOLBAR_H
 
 class QToolBar;
+class QWidget;
+class QtMacUnifiedToolBar;
+
+QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
+
+#include <QtGlobal>
+#ifdef Q_OS_MAC
 #include "qtmactoolbutton.h"
 #include <QObject>
 #include <QIcon>
 #include <QString>
+#include <QVariant>
 
 class QAction;
 class QWindow;
@@ -78,6 +86,9 @@ public:
     void showInWindow(QWindow *window);
     void showInWindowForWidget(QWidget *widget);
     Q_INVOKABLE void showInMainWindow();
+
+    void removeFromWindow(QWindow *window);
+    void removeFromWindowForWidget(QWidget *widget);
 
     // Add actions to the toolbar
     Q_INVOKABLE QAction *addAction(const QString &text);
@@ -120,5 +131,8 @@ private:
     QtMacUnifiedToolBarPrivate *d;
 };
 
+Q_DECLARE_METATYPE(QtMacUnifiedToolBar*)
+
+#endif
 #endif
 

@@ -15,4 +15,6 @@ mac {
                          $$PWD/qtnstoolbar.mm
 
     LIBS *= -framework AppKit
+} else {
+    SOURCES += $$PWD/qtmacunifiedtoolbar.cpp
 }
