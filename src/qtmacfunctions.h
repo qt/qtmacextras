@@ -42,16 +42,30 @@
 #ifndef QTMACFUNCTIONS_H
 #define QTMACFUNCTIONS_H
 
-#include <ApplicationServices/ApplicationServices.h>
-#include <QtGui/QPixmap>
+typedef struct CGImage *CGImageRef;
+
+@class NSImage;
+@class NSString;
+
+QT_BEGIN_NAMESPACE
 
 class QMenu;
+class QPixmap;
+class QString;
 
 void qt_mac_set_dock_menu(QMenu *menu);
 
-CGImageRef toMacCGImageRef(const QPixmap &pixmap);
-QPixmap fromMacCGImageRef(CGImageRef image);
+namespace Qt
+{
+NSString* toNSString(const QString &string);
+QString toQString(const NSString *string);
 
+CGImageRef toMacCGImageRef(const QPixmap &pixmap);
+NSImage* toMacNSImage(const QPixmap &pixmap);
+QPixmap fromMacCGImageRef(CGImageRef image);
+}
+
+QT_END_NAMESPACE
 
 #endif //QTMACFUNCTIONS
 
