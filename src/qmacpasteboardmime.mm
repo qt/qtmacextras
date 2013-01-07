@@ -48,14 +48,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName)
-{
-    QPlatformNativeInterface *nativeInterface = QGuiApplication::platformNativeInterface();
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction fn = nativeInterface->nativeResourceFunctionForIntegration(functionName);
-    if (!fn)
-        qWarning() << "Qt could not resolve function" << functionName << "from QGuiApplication::platformNativeInterface()->nativeResourceFunctionForIntegration()";
-    return fn;
-}
+extern QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName);
 
 /*!
     \fn void qRegisterDraggedTypes(const QStringList &types)
