@@ -47,10 +47,16 @@ int main(int argc, char **argv)
     QWidget widget;
     widget.show();
 
+    // Dock menu
     QMenu menu;
     menu.addAction("Item 1");
     menu.addAction("Item 2");
     qt_mac_set_dock_menu(&menu);
+
+    // Pixmap <-> CGImage conversion
+    QPixmap pixmap(":qtlogo.png");
+    CGImageRef cgImage = toMacCGImageRef(pixmap);
+    QPixmap pixmap2 = fromMacCGImageRef(cgImage);
 
     return app.exec();
 }
