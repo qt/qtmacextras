@@ -8,3 +8,6 @@ include (../../src/qtmacextras.pri)
 
 # Input
 SOURCES += main.cpp
+
+RESOURCES += \
+    macfunctions.qrc
