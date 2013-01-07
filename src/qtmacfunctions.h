@@ -42,10 +42,42 @@
 #ifndef QTMACFUNCTIONS_H
 #define QTMACFUNCTIONS_H
 
-class QMenu;
+#ifdef __cplusplus // C++, Objective-C++
+#define CPP_CLASS(classname) class classname
+#else // C, Objective-C
+#define CPP_CLASS(classname) struct classname; typedef struct classname classname
+#endif
+
+#ifdef __OBJC__ // Objective-C, Objective-C++
+#define OBJC_CLASS(classname) @class classname
+#else // C, C++
+#define OBJC_CLASS(classname) typedef struct objc_object classname
+#endif
+
+typedef struct CGImage *CGImageRef;
+
+CPP_CLASS(QImage);
+CPP_CLASS(QMenu);
+CPP_CLASS(QPixmap);
+CPP_CLASS(QString);
+OBJC_CLASS(NSArray);
+OBJC_CLASS(NSImage);
+OBJC_CLASS(NSString);
+
+#ifdef __cplusplus
 
 void qt_mac_set_dock_menu(QMenu *menu);
 
+NSString* qt_mac_QStringToNSString(const QString &string);
+QString qt_mac_NSStringToQString(const NSString *string);
+
+CGImageRef qt_mac_image_to_cgimage(const QImage &img);
+
+NSImage *toNSImage(const QPixmap &pixmap);
+
+template <typename T> class QList;
+NSArray *toNSArray(const QList<QString> &stringList);
+
 #endif
 
-
+#endif // QTMACFUNCTIONS_H
