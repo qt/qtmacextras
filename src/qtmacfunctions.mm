@@ -47,15 +47,49 @@
 #include <qpa/qplatformmenu.h>
 #include <qpa/qplatformnativeinterface.h>
 
-void qt_mac_set_dock_menu(QMenu *menu)
+QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName)
 {
-    // Get platform menu, which will be a QCocoaMenu
-    QPlatformMenu *platformMenu = menu->platformMenu();
-
-    // Get setDockMenu function and call it.
     QPlatformNativeInterface *nativeInterface = QGuiApplication::platformNativeInterface();
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function =
-            nativeInterface->nativeResourceFunctionForIntegration("setdockmenu");
-    typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
-    reinterpret_cast<SetDockMenuFunction>(function)(platformMenu);
+        nativeInterface->nativeResourceFunctionForIntegration(functionName);
+    if (!function)
+        qWarning() << "qtmacfunctions: nativeResourceFunctionForIntegration returned 0 for" << functionName;
+    return function;
 }
+
+void qt_mac_set_dock_menu(QMenu *menu)
+{
+    // Get the platform menu, which will be a QCocoaMenu
+    QPlatformMenu *platformMenu = menu->platformMenu();
+
+    // Get the setDockMenu function and call it.
+    typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
+    reinterpret_cast<SetDockMenuFunction>(resolvePlatformFunction("setdockmenu"))(platformMenu);
+}
+
+
+/*!
+    Creates a \c CGImageRef equivalent to the QPixmap. Returns the \c CGImageRef handle.
+
+    It is the caller's responsibility to release the \c CGImageRef data
+    after use.
+
+    \sa fromMacCGImageRef()
+*/
+CGImageRef toMacCGImageRef(const QPixmap &pixmap)
+{
+    typedef CGImageRef (*QImageToCGIamgeFunction)(const QImage &image);
+    return reinterpret_cast<QImageToCGIamgeFunction>(resolvePlatformFunction("qimagetocgimage"))(pixmap.toImage());
+}
+
+/*!
+    Returns a QPixmap that is equivalent to the given \a image.
+
+    \sa toMacCGImageRef(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
+*/
+QPixmap fromMacCGImageRef(CGImageRef image)
+{
+    typedef QImage (*CGImageToQImageFunction)(CGImageRef image);
+    return QPixmap::fromImage(reinterpret_cast<CGImageToQImageFunction>(resolvePlatformFunction("cgimagetoqimage"))(image));
+}
+

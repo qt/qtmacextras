@@ -40,10 +40,19 @@
  ****************************************************************************/
 
 #ifndef QTMACFUNCTIONS_H
+#define QTMACFUNCTIONS_H
+
+#include <ApplicationServices/ApplicationServices.h>
+#include <QtGui/QPixmap>
+
 class QMenu;
 
 void qt_mac_set_dock_menu(QMenu *menu);
 
-#endif
+CGImageRef toMacCGImageRef(const QPixmap &pixmap);
+QPixmap fromMacCGImageRef(CGImageRef image);
+
+
+#endif //QTMACFUNCTIONS
 
 
