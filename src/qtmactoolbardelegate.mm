@@ -45,25 +45,6 @@
 #include <QImage>
 #include <QPixmap>
 
-NSString *toNSString(const QString &string)
-{
-    return [NSString
-                stringWithCharacters : reinterpret_cast<const UniChar *>(string.unicode())
-                length : string.length()];
-}
-
-QString toQString(NSString *string)
-{
-    if (!string)
-        return QString();
-
-    QString qstring;
-    qstring.resize([string length]);
-    [string getCharacters: reinterpret_cast<unichar*>(qstring.data()) range : NSMakeRange(0, [string length])];
-
-    return qstring;
-}
-
 NSArray *toNSArray(const QList<QString> &stringList)
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -131,7 +112,7 @@ QString qt_strippedText(QString s)
 - (IBAction)itemClicked:(id)sender
 {
     NSToolbarItem *item = reinterpret_cast<NSToolbarItem *>(sender);
-    QString identifier = toQString([item itemIdentifier]);
+    QString identifier = fromNSString([item itemIdentifier]);
     QtMacToolButton *toolButton = reinterpret_cast<QtMacToolButton *>(identifier.toULongLong());
     if (toolButton->m_action) {
         toolButton->m_action->trigger();
@@ -143,7 +124,7 @@ QString qt_strippedText(QString s)
 {
     Q_UNUSED(toolbar);
     Q_UNUSED(willBeInserted);
-    const QString identifier = toQString(itemIdentifier);
+    const QString identifier = fromNSString(itemIdentifier);
 
     QtMacToolButton *toolButton = reinterpret_cast<QtMacToolButton *>(identifier.toULongLong()); // string -> unisgned long long -> pointer
     NSToolbarItem *toolbarItem= [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
@@ -153,7 +134,7 @@ QString qt_strippedText(QString s)
 
     QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
-        [toolbarItem setImage : [[NSImage alloc] initWithCGImage:toMacCGImageRef(icon) size:NSZeroSize]];
+        [toolbarItem setImage : toMacNSImage(icon)];
     }
 
     [toolbarItem setTarget : self];
