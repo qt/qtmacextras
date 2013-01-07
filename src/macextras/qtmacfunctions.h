@@ -48,8 +48,10 @@
 
 #include "qmacextrasglobal.h"
 
-#include <ApplicationServices/ApplicationServices.h>
-#include <QtGui/QPixmap>
+typedef struct CGImage *CGImageRef;
+
+@class NSImage;
+@class NSString;
 
 #ifdef __OBJC__
 @class NSMenu;
@@ -57,15 +59,25 @@
 typedef struct objc_object NSMenu;
 #endif
 
+QT_BEGIN_NAMESPACE
+
 class QMenu;
+class QPixmap;
+class QString;
 
 Q_MACEXTRAS_EXPORT void qt_mac_set_dock_menu(QMenu *menu);
 
-Q_MACEXTRAS_EXPORT NSMenu *toNSMenu(QMenu *menu);
-Q_MACEXTRAS_EXPORT CGImageRef toMacCGImageRef(const QPixmap &pixmap);
-Q_MACEXTRAS_EXPORT QPixmap fromMacCGImageRef(CGImageRef image);
+namespace Qt
+{
+Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
+Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
+Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
 
+Q_MACEXTRAS_EXPORT CGImageRef toMacCGImageRef(const QPixmap &pixmap);
+Q_MACEXTRAS_EXPORT NSImage* toMacNSImage(const QPixmap &pixmap);
+Q_MACEXTRAS_EXPORT QPixmap fromMacCGImageRef(CGImageRef image);
+}
+
+QT_END_NAMESPACE
 
 #endif //QTMACFUNCTIONS
-
-
