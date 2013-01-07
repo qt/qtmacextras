@@ -58,4 +58,11 @@ minQtVersion(5, 0, 1) {
     message("qt_mac_set_dock_menu requires Qt 5.0.1 and will be exculded from this build. You have Qt" $$QT_VERSION)
 }
 
+# QtMacNativeWidget
+minQtVersion(5, 0, 1) {
+    HEADERS += $$PWD/qtmacnativewidget.h
+    OBJECTIVE_SOURCES += $$PWD/qtmacnativewidget.mm
+} else {
+    message("QtMacNativeWidget requires Qt 5.0.1 and will be exculded from this build. You have Qt" $$QT_VERSION)
+}
 
