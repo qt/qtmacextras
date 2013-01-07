@@ -45,11 +45,18 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <QtGui/QPixmap>
 
+@class NSImage;
+@class NSString;
 class QMenu;
+class QString;
 
 void qt_mac_set_dock_menu(QMenu *menu);
 
+NSString* toNSString(const QString &string);
+QString toQString(const NSString *string);
+
 CGImageRef toMacCGImageRef(const QPixmap &pixmap);
+NSImage* toMacNSImage(const QPixmap &pixmap);
 QPixmap fromMacCGImageRef(CGImageRef image);
 
 
