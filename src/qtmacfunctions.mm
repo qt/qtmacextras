@@ -38,9 +38,11 @@
  ** $QT_END_LICENSE$
  **
  ****************************************************************************/
-#import <Cocoa/Cocoa.h>
 
 #include "qtmacfunctions.h"
+#import <Cocoa/Cocoa.h>
+
+QT_BEGIN_NAMESPACE
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QtCore/qDebug.h>
@@ -75,6 +77,26 @@ void qt_mac_set_dock_menu(QMenu *menu)
 
 #endif
 
+namespace Qt
+{
+
+NSString *toNSString(const QString &string)
+{
+    return [NSString stringWithCharacters:reinterpret_cast<const UniChar*>(string.unicode()) length:string.length()];
+}
+
+QString toQString(const NSString *string)
+{
+    if (!string)
+        return QString();
+
+    QString qstring;
+    qstring.resize([string length]);
+    [string getCharacters:reinterpret_cast<unichar*>(qstring.data()) range:NSMakeRange(0, [string length])];
+
+    return qstring;
+}
+
 /*!
     Creates a \c CGImageRef equivalent to the QPixmap. Returns the \c CGImageRef handle.
 
@@ -100,6 +122,16 @@ CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 #endif
 }
 
+NSImage* toMacNSImage(const QPixmap &pixmap)
+{
+    QImage qimage = pixmap.toImage();
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:toMacCGImageRef(qimage)];
+    NSImage *image = [[NSImage alloc] init];
+    [image addRepresentation:bitmapRep];
+    [bitmapRep release];
+    return image;
+}
+
 /*!
     Returns a QPixmap that is equivalent to the given \a image.
 
@@ -122,3 +154,6 @@ QPixmap fromMacCGImageRef(CGImageRef image)
 #endif
 }
 
+} // namespace Qt
+
+QT_END_NAMESPACE

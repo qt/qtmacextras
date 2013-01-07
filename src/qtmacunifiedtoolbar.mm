@@ -39,6 +39,7 @@
  **
  ****************************************************************************/
 
+#include "qtmacfunctions.h"
 #include "qtmacunifiedtoolbar.h"
 #include "qtmactoolbardelegate.h"
 #include "qtnstoolbar.h"
@@ -63,9 +64,6 @@
 #define kNSToolbarIconSizeSmall 24
 #define kNSToolbarIconSizeRegular 32
 #define kNSToolbarIconSizeDefault kNSToolbarIconSizeRegular
-
-NSString* toNSString(const QString &str);
-QString toQString(NSString *string);
 
 NSString *toNSStandardItem(QtMacToolButton::StandardItem standardItem)
 {
