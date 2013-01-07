@@ -68,6 +68,22 @@ void qt_mac_set_dock_menu(QMenu *menu)
     reinterpret_cast<SetDockMenuFunction>(resolvePlatformFunction("setdockmenu"))(platformMenu);
 }
 
+NSString *qt_mac_QStringToNSString(const QString &string)
+{
+    return [NSString stringWithCharacters:reinterpret_cast<const UniChar*>(string.unicode()) length:string.length()];
+}
+
+QString qt_mac_NSStringToQString(const NSString *string)
+{
+    if (!string)
+        return QString();
+
+    QString qstring;
+    qstring.resize([string length]);
+    [string getCharacters:reinterpret_cast<unichar*>(qstring.data()) range:NSMakeRange(0, [string length])];
+
+    return qstring;
+}
 
 /*!
     Creates a \c CGImageRef equivalent to the QPixmap. Returns the \c CGImageRef handle.
@@ -81,6 +97,16 @@ CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 {
     typedef CGImageRef (*QImageToCGIamgeFunction)(const QImage &image);
     return reinterpret_cast<QImageToCGIamgeFunction>(resolvePlatformFunction("qimagetocgimage"))(pixmap.toImage());
+}
+
+NSImage* toMacNSImage(const QPixmap &pixmap)
+{
+    QImage qimage = pixmap.toImage();
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:toMacCGImageRef(qimage)];
+    NSImage *image = [[NSImage alloc] init];
+    [image addRepresentation:bitmapRep];
+    [bitmapRep release];
+    return image;
 }
 
 /*!

@@ -45,25 +45,6 @@
 #include <QImage>
 #include <QPixmap>
 
-NSString *toNSString(const QString &string)
-{
-    return [NSString
-                stringWithCharacters : reinterpret_cast<const UniChar *>(string.unicode())
-                length : string.length()];
-}
-
-QString toQString(NSString *string)
-{
-    if (!string)
-        return QString();
-
-    QString qstring;
-    qstring.resize([string length]);
-    [string getCharacters: reinterpret_cast<unichar*>(qstring.data()) range : NSMakeRange(0, [string length])];
-
-    return qstring;
-}
-
 NSArray *toNSArray(const QList<QString> &stringList)
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -82,7 +63,7 @@ NSMutableArray *itemIdentifiers(const QList<QtMacToolButton *> &items, bool cull
         if (cullUnselectable && item->selectable() == false)
             continue;
         if (item->standardItem() == QtMacToolButton::NoItem) {
-            [array addObject : toNSString(QString::number(qulonglong(item)))];
+            [array addObject : qt_mac_QStringToNSString(QString::number(qulonglong(item)))];
         } else {
             [array addObject : toNSStandardItem(item->standardItem())];
         }
@@ -131,7 +112,7 @@ QString qt_strippedText(QString s)
 - (IBAction)itemClicked:(id)sender
 {
     NSToolbarItem *item = reinterpret_cast<NSToolbarItem *>(sender);
-    QString identifier = toQString([item itemIdentifier]);
+    QString identifier = qt_mac_NSStringToQString([item itemIdentifier]);
     QtMacToolButton *toolButton = reinterpret_cast<QtMacToolButton *>(identifier.toULongLong());
     if (toolButton->m_action) {
         toolButton->m_action->trigger();
@@ -143,17 +124,17 @@ QString qt_strippedText(QString s)
 {
     Q_UNUSED(toolbar);
     Q_UNUSED(willBeInserted);
-    const QString identifier = toQString(itemIdentifier);
+    const QString identifier = qt_mac_NSStringToQString(itemIdentifier);
 
     QtMacToolButton *toolButton = reinterpret_cast<QtMacToolButton *>(identifier.toULongLong()); // string -> unisgned long long -> pointer
     NSToolbarItem *toolbarItem= [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
-    [toolbarItem setLabel: toNSString(qt_strippedText(toolButton->m_action->iconText()))];
+    [toolbarItem setLabel: qt_mac_QStringToNSString(qt_strippedText(toolButton->m_action->iconText()))];
     [toolbarItem setPaletteLabel:[toolbarItem label]];
-    [toolbarItem setToolTip: toNSString(toolButton->m_action->toolTip())];
+    [toolbarItem setToolTip: qt_mac_QStringToNSString(toolButton->m_action->toolTip())];
 
     QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
-        [toolbarItem setImage : [[NSImage alloc] initWithCGImage:toMacCGImageRef(icon) size:NSZeroSize]];
+        [toolbarItem setImage : toMacNSImage(icon)];
     }
 
     [toolbarItem setTarget : self];

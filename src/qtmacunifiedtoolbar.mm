@@ -39,6 +39,7 @@
  **
  ****************************************************************************/
 
+#include "qtmacfunctions.h"
 #include "qtmacunifiedtoolbar.h"
 #include "qtmactoolbardelegate.h"
 #include "qtnstoolbar.h"
@@ -63,9 +64,6 @@
 #define kNSToolbarIconSizeSmall 24
 #define kNSToolbarIconSizeRegular 32
 #define kNSToolbarIconSizeDefault kNSToolbarIconSizeRegular
-
-NSString* toNSString(const QString &str);
-QString toQString(NSString *string);
 
 NSString *toNSStandardItem(QtMacToolButton::StandardItem standardItem)
 {
@@ -134,7 +132,7 @@ public:
     QtMacUnifiedToolBarPrivate(QtMacUnifiedToolBar *parent, const QString &identifier = QString())
     {
         qtToolbar = parent;
-        toolbar = [[QtNSToolbar alloc] initWithIdentifier:toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
+        toolbar = [[QtNSToolbar alloc] initWithIdentifier:qt_mac_QStringToNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
         [toolbar setAutosavesConfiguration:NO];
 
         delegate = [[QtMacToolbarDelegate alloc] init];
@@ -281,7 +279,7 @@ QtMacUnifiedToolBar *QtMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar, 
 
 QString QtMacUnifiedToolBar::identifier() const
 {
-    return toQString([d->toolbar identifier]);
+    return qt_mac_NSStringToQString([d->toolbar identifier]);
 }
 
 bool QtMacUnifiedToolBar::isVisible() const
@@ -489,7 +487,7 @@ QAction *QtMacUnifiedToolBar::setSelectedItem(QAction *action)
         {
             if (toolButton->m_action && toolButton->m_action->isChecked())
             {
-                [d->toolbar setSelectedItemIdentifier:toNSString(QString::number(qulonglong(toolButton)))];
+                [d->toolbar setSelectedItemIdentifier:qt_mac_QStringToNSString(QString::number(qulonglong(toolButton)))];
                 break;
             }
             else
