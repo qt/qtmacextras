@@ -59,3 +59,7 @@ OBJECTIVE_SOURCES += $$PWD/qtmacfunctions.mm
 # QtMacNativeWidget
 HEADERS += $$PWD/qtmacnativewidget.h
 OBJECTIVE_SOURCES += $$PWD/qtmacnativewidget.mm
+
+# QMacCocoaViewContainer
+HEADERS += $$PWD/qtmaccocoaviewcontainer.h
+OBJECTIVE_SOURCES += $$PWD/qtmaccocoaviewcontainer.mm
