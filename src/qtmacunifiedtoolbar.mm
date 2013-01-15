@@ -465,7 +465,7 @@ QAction *QtMacUnifiedToolBar::setSelectedItem(QAction *action)
 
         foreach (QtMacToolButton *toolButton, allowedButtons())
         {
-            if (toolButton->m_action == action && action->isChecked())
+            if (toolButton->m_action && toolButton->m_action->isChecked())
             {
                 [d->toolbar setSelectedItemIdentifier:toNSString(QString::number(qulonglong(toolButton)))];
                 break;
