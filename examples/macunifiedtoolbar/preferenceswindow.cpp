@@ -60,9 +60,6 @@ PreferencesWindow::PreferencesWindow(QWidget *parent) :
     // on platforms other than OS X.
     ::setUnifiedTitleAndToolBarOnMac(ui->toolBar, ui->useNativeToolbarCheckBox->isChecked());
 
-    // Initial setup
-    ui->actionGeneral->trigger();
-
     QTimer::singleShot(0, this, SLOT(pack()));
 }
 
