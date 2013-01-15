@@ -44,5 +44,5 @@ class QtMacUnifiedToolBar;
 
 QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar*, bool)
 {
-    return NULL;
+    return 0;
 }

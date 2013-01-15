@@ -48,8 +48,6 @@ class QtMacUnifiedToolBar;
 
 QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
 
-#include <QtGlobal>
-#ifdef Q_OS_MAC
 #include "qtmactoolbutton.h"
 #include <QObject>
 #include <QIcon>
@@ -136,6 +134,5 @@ private:
 
 Q_DECLARE_METATYPE(QtMacUnifiedToolBar*)
 
-#endif
 #endif
 
