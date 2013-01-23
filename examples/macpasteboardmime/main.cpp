@@ -40,7 +40,10 @@
  ****************************************************************************/
 
 #include <QApplication>
-#include <QtWidgets/QtWidgets>
+#include <QDebug>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QWidget>
 
 #include <qmacpasteboardmime.h>
 
@@ -143,7 +146,7 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    qRegisterDraggedTypes(QStringList() << QStringLiteral("public.vcard"));
+    qRegisterDraggedTypes(QStringList() << QLatin1String("public.vcard"));
 
     TestWidget wid1;
     wid1.show();
