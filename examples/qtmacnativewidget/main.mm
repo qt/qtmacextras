@@ -58,6 +58,7 @@ public:
     void paintEvent(QPaintEvent *event)
     {
         QPainter p(this);
+        Q_UNUSED(event);
         QRect rect(QPoint(0, 0), size());
         qDebug() << "Painting geometry" << rect;
         p.fillRect(rect, QColor(133, 50, 50));

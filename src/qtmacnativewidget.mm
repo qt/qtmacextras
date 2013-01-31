@@ -49,8 +49,8 @@
 
 /*!
     \class QtMacNativeWidget
-    \brief The QtMacNativeWidget class provides a widget for Mac OS X that provides a way to put Qt widgets into Carbon
-    or Cocoa hierarchies depending on how Qt was configured.
+    \brief The QtMacNativeWidget class provides a widget for Mac OS X that provides a way to put Qt widgets
+    into Cocoa hierarchies.
 
     QtMacNativeWidget bridges the gap between NSViews and QWidgets and makes it possible to put a
     hierarchy of Qt widgets into a non-Qt window or view.
@@ -91,6 +91,8 @@ NSView *getEmbeddableView(QWindow *qtWindow)
 QtMacNativeWidget::QtMacNativeWidget(NSView *parentView)
     : QWidget(0, Qt::Window | Qt::SubWindow)
 {
+    Q_UNUSED(parentView);
+
     //d_func()->topData()->embedded = true;
     setPalette(QPalette(Qt::transparent));
     setAttribute(Qt::WA_SetPalette, false);
