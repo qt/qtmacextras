@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#ifndef QMACMIME_H
+#if !defined(QMACMIME_H) && !defined(QMIME_H)
 #define QMACMIME_H
 
 #include <QtCore>
