@@ -39,6 +39,7 @@
  **
  ****************************************************************************/
 
+#include "qtmacfunctions.h"
 #include "qtmactoolbardelegate.h"
 #include <QAction>
 #include <QImage>
@@ -70,60 +71,6 @@ NSArray *toNSArray(const QList<QString> &stringList)
         [array addObject : toNSString(string)];
     }
     return array;
-}
-
-static void drawImageReleaseData (void *info, const void *, size_t)
-{
-    delete static_cast<QImage *>(info);
-}
-
-CGImageRef qt_mac_image_to_cgimage(const QImage &img)
-{
-    QImage *image;
-    if (img.depth() != 32)
-        image = new QImage(img.convertToFormat(QImage::Format_ARGB32_Premultiplied));
-    else
-        image = new QImage(img);
-
-    uint cgflags = kCGImageAlphaNone;
-    switch (image->format()) {
-    case QImage::Format_ARGB32_Premultiplied:
-        cgflags = kCGImageAlphaPremultipliedFirst;
-        break;
-    case QImage::Format_ARGB32:
-        cgflags = kCGImageAlphaFirst;
-        break;
-    case QImage::Format_RGB32:
-        cgflags = kCGImageAlphaNoneSkipFirst;
-    default:
-        break;
-    }
-    cgflags |= kCGBitmapByteOrder32Host;
-    CGDataProviderRef dataProvider = CGDataProviderCreateWithData(image,
-                                                          static_cast<const QImage *>(image)->bits(),
-                                                          image->byteCount(),
-                                                          drawImageReleaseData);
-    CGColorSpaceRef colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-
-
-    CGImageRef cgImage = CGImageCreate(image->width(), image->height(), 8, 32,
-                                        image->bytesPerLine(),
-                                        colorspace,
-                                        cgflags, dataProvider, 0, false, kCGRenderingIntentDefault);
-
-    CFRelease(dataProvider);
-    CFRelease(colorspace);
-    return cgImage;
-}
-
-NSImage *toNSImage(const QPixmap &pixmap)
-{
-    QImage qimage = pixmap.toImage();
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage: qt_mac_image_to_cgimage(qimage)];
-    NSImage *image = [[NSImage alloc] init];
-    [image addRepresentation:bitmapRep];
-    [bitmapRep release];
-    return image;
 }
 
 NSString *toNSStandardItem(QtMacToolButton::StandardItem standardItem);
@@ -206,7 +153,7 @@ QString qt_strippedText(QString s)
 
     QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
-        [toolbarItem setImage : toNSImage(icon)];
+        [toolbarItem setImage : [[NSImage alloc] initWithCGImage:toMacCGImageRef(icon) size:NSZeroSize]];
     }
 
     [toolbarItem setTarget : self];
