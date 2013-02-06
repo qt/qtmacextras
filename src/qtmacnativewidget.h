@@ -41,7 +41,7 @@
 #ifndef QTMACNATIVEWIDGET_H
 #define QTMACNATIVEWIDGET_H
 
-#include <QtWidgets/QWidget>
+#include <QWidget>
 #import <Availability.h>
 
 QT_BEGIN_HEADER
@@ -52,24 +52,18 @@ QT_MODULE(Gui)
 
 #ifdef __OBJC__
 @class NSView;
+#else
+typedef struct objc_object NSView;
 #endif
 
 class QtMacNativeWidget : public QWidget
 {
     Q_OBJECT
 public:
-#ifdef __OBJC__
     QtMacNativeWidget(NSView *parentView = 0);
-#else
-    QtMacNativeWidget(void *parentView = 0);
-#endif
     ~QtMacNativeWidget();
 
-#ifdef __OBJC__
     NSView *nativeView() const;
-#else
-    void *nativeView() const;
-#endif
 
     QSize sizeHint() const;
 protected:
