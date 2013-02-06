@@ -64,8 +64,12 @@ void qt_mac_set_dock_menu(QMenu *menu)
     QPlatformMenu *platformMenu = menu->platformMenu();
 
     // Get the setDockMenu function and call it.
-    typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
-    reinterpret_cast<SetDockMenuFunction>(resolvePlatformFunction("setdockmenu"))(platformMenu);
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("setdockmenu");
+    if (function)
+    {
+        typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
+        reinterpret_cast<SetDockMenuFunction>(function)(platformMenu);
+    }
 }
 
 
@@ -79,8 +83,14 @@ void qt_mac_set_dock_menu(QMenu *menu)
 */
 CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 {
-    typedef CGImageRef (*QImageToCGIamgeFunction)(const QImage &image);
-    return reinterpret_cast<QImageToCGIamgeFunction>(resolvePlatformFunction("qimagetocgimage"))(pixmap.toImage());
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qimagetocgimage");
+    if (function)
+    {
+        typedef CGImageRef (*QImageToCGIamgeFunction)(const QImage &image);
+        return reinterpret_cast<QImageToCGIamgeFunction>(function)(pixmap.toImage());
+    }
+
+    return 0;
 }
 
 /*!
@@ -90,7 +100,13 @@ CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 */
 QPixmap fromMacCGImageRef(CGImageRef image)
 {
-    typedef QImage (*CGImageToQImageFunction)(CGImageRef image);
-    return QPixmap::fromImage(reinterpret_cast<CGImageToQImageFunction>(resolvePlatformFunction("cgimagetoqimage"))(image));
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("cgimagetoqimage");
+    if (function)
+    {
+        typedef QImage (*CGImageToQImageFunction)(CGImageRef image);
+        return QPixmap::fromImage(reinterpret_cast<CGImageToQImageFunction>(function)(image));
+    }
+
+    return QPixmap();
 }
 
