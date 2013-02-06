@@ -40,9 +40,11 @@
  ****************************************************************************/
 
 #include "qtmacnativewidget.h"
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QtGui/QWindow>
 #include <QtGui/QGuiApplication>
 #include <qpa/qplatformnativeinterface.h>
+#endif
 #include <qdebug.h>
 
 #import <Cocoa/Cocoa.h>
@@ -67,6 +69,7 @@
 
 QT_BEGIN_NAMESPACE
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 NSView *getEmbeddableView(QWindow *qtWindow)
 {
     // Set Qt::SubWindow flag. Should be done before crate() is
@@ -83,6 +86,7 @@ NSView *getEmbeddableView(QWindow *qtWindow)
     NSView *qtView = (NSView *)platformNativeInterface->nativeResourceForWindow("nsview", qtWindow);
     return qtView; // qtView is ready for use.
 }
+#endif
 
 /*!
     Create a QtMacNativeWidget with \a parentView as its "superview" (i.e.,
@@ -101,8 +105,12 @@ QtMacNativeWidget::QtMacNativeWidget(NSView *parentView)
 
 NSView *QtMacNativeWidget::nativeView() const
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     winId();
     return getEmbeddableView(windowHandle());
+#else
+    return reinterpret_cast<NSView*>(winId());
+#endif
 }
 
 /*!
@@ -119,9 +127,14 @@ QSize QtMacNativeWidget::sizeHint() const
 {
     // QtMacNativeWidget really does not have any other choice
     // than to fill its designated area.
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     if (windowHandle())
         return windowHandle()->size();
     return QWidget::sizeHint();
+#else
+    NSRect frame = [nativeView() frame];
+    return QSize(frame.size.width, frame.size.height);
+#endif
 }
 /*!
     \reimp
