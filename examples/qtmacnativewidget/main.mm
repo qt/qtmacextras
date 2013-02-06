@@ -39,7 +39,14 @@
 **
 ****************************************************************************/
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QDebug>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QPainter>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QWidget>
 #include <Cocoa/Cocoa.h>
 #include <qtmacnativewidget.h>
 
