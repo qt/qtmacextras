@@ -37,7 +37,10 @@
 ****************************************************************************/
 
 
-#include <QtWidgets/QtWidgets>
+#include <QApplication>
+#include <QMenu>
+#include <QPixmap>
+#include <QWidget>
 #include <qtmacfunctions.h>
 
 int main(int argc, char **argv)
