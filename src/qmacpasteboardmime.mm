@@ -66,8 +66,10 @@ extern QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePla
 void qRegisterDraggedTypes(const QStringList &types)
 {
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("registerdraggedtypes");
-    typedef void (*RegisterDraggedTypesFunction)(const QStringList &types);
-    reinterpret_cast<RegisterDraggedTypesFunction>(function)(types);
+    if (function) {
+        typedef void (*RegisterDraggedTypesFunction)(const QStringList &types);
+        reinterpret_cast<RegisterDraggedTypesFunction>(function)(types);
+    }
 }
 
 /*!
@@ -120,8 +122,10 @@ void qRegisterDraggedTypes(const QStringList &types)
 QMacPasteboardMime::QMacPasteboardMime(char t) : type(t)
 {
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("addToMimeList");
-    typedef void (*AddToGlobalMimeListFunction)(QMacPasteboardMime *);
-    reinterpret_cast<AddToGlobalMimeListFunction>(function)(this);
+    if (function) {
+        typedef void (*AddToGlobalMimeListFunction)(QMacPasteboardMime *);
+        reinterpret_cast<AddToGlobalMimeListFunction>(function)(this);
+    }
 }
 
 /*!
@@ -131,8 +135,10 @@ QMacPasteboardMime::QMacPasteboardMime(char t) : type(t)
 QMacPasteboardMime::~QMacPasteboardMime()
 {
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("removeFromMimeList");
-    typedef void (*RemoveFromGlobalMimeListFunction)(QMacPasteboardMime *);
-    reinterpret_cast<RemoveFromGlobalMimeListFunction>(function)(this);
+    if (function) {
+        typedef void (*RemoveFromGlobalMimeListFunction)(QMacPasteboardMime *);
+        reinterpret_cast<RemoveFromGlobalMimeListFunction>(function)(this);
+    }
 }
 
 /*!
