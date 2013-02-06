@@ -41,6 +41,8 @@
 #import <Cocoa/Cocoa.h>
 
 #include "qtmacfunctions.h"
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QtCore/qDebug.h>
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QMenu>
@@ -71,6 +73,7 @@ void qt_mac_set_dock_menu(QMenu *menu)
     }
 }
 
+#endif
 
 /*!
     Creates a \c CGImageRef equivalent to the QPixmap. Returns the \c CGImageRef handle.
@@ -84,6 +87,7 @@ void qt_mac_set_dock_menu(QMenu *menu)
 */
 CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qimagetocgimage");
     if (function) {
         typedef CGImageRef (*QImageToCGIamgeFunction)(const QImage &image);
@@ -91,6 +95,9 @@ CGImageRef toMacCGImageRef(const QPixmap &pixmap)
     }
 
     return NULL;
+#else
+    return pixmap.toMacCGImageRef();
+#endif
 }
 
 /*!
@@ -102,6 +109,7 @@ CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 */
 QPixmap fromMacCGImageRef(CGImageRef image)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("cgimagetoqimage");
     if (function) {
         typedef QImage (*CGImageToQImageFunction)(CGImageRef image);
@@ -109,5 +117,8 @@ QPixmap fromMacCGImageRef(CGImageRef image)
     }
 
     return QPixmap();
+#else
+    return QPixmap::fromMacCGImageRef(image);
+#endif
 }
 
