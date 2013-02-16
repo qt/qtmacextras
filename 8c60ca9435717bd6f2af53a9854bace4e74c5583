@@ -1,0 +1,8 @@
+Sanity-Review+1: Jason McDonald <macadder1@gmail.com>
+Sanity-Review-1: Qt Sanity Bot <qt_sanity_bot@ovi.com>
+Code-Review+2: Jason McDonald <macadder1@gmail.com>
+Submitted-by: Jake Petroules <jake.petroules@petroules.com>
+Submitted-at: Sat, 16 Feb 2013 02:50:03 +0100
+Reviewed-on: https://codereview.qt-project.org/47989
+Project: playground/qtmacextras
+Branch: refs/heads/master
