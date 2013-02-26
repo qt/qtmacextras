@@ -42,6 +42,10 @@
 #ifndef QTMACFUNCTIONS_H
 #define QTMACFUNCTIONS_H
 
+#if 0
+#pragma qt_class(QtMacFunctions)
+#endif
+
 #include <ApplicationServices/ApplicationServices.h>
 #include <QtGui/QPixmap>
 
