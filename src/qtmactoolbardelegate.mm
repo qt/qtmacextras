@@ -45,6 +45,10 @@
 #include <QImage>
 #include <QPixmap>
 
+#include <QDebug>
+#include <QMacNativeWidget>
+#include <QVBoxLayout>
+
 NSString *toNSString(const QString &string)
 {
     return [NSString
@@ -151,13 +155,53 @@ QString qt_strippedText(QString s)
     [toolbarItem setPaletteLabel:[toolbarItem label]];
     [toolbarItem setToolTip: toNSString(toolButton->m_action->toolTip())];
 
-    QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
-    if (icon.isNull() == false) {
-        [toolbarItem setImage : [[NSImage alloc] initWithCGImage:toMacCGImageRef(icon) size:NSZeroSize]];
-    }
+    if (toolButton->m_widget)
+    {
+        // TODO: Should this have a parent?
+        QMacNativeWidget *nativeWidget = new QMacNativeWidget();
+        QVBoxLayout *layout = new QVBoxLayout();
+        layout->setMargin(0);
+        toolButton->m_widget->setParent(nativeWidget);
+        layout->addWidget(toolButton->m_widget);
 
-    [toolbarItem setTarget : self];
-    [toolbarItem setAction : @selector(itemClicked:)];
+        NSView *nativeWidgetView = reinterpret_cast<NSView*>(nativeWidget->winId());
+        [nativeWidgetView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+        [nativeWidgetView setAutoresizesSubviews:YES];
+        NSView *widgetView = reinterpret_cast<NSView*>(toolButton->m_widget->winId());
+        [widgetView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+
+        [toolbarItem setView:widgetView];
+
+        // For some reason, setting the maxSize is necessary despite the documentation claiming:
+        // Note: As of OS X v10.5, if you call setView: on an NSToolbarItem object without also
+        // calling setMinSize: or setMaxSize:, the toolbar item sets its minimum and maximum size
+        // equal to the view's frame.
+        // TODO: This might cause issues for some controls, for example if a button's text changes
+        // its sizeHint will change and thus we'll probably have to update the max size here
+        // TODO: Showing customization sheet == invisible widget, that needs fixing
+
+        // TODO: App won't exit on close, how do we properly delete these widgets?
+        // TODO: QComboBox widgets behave somewhat oddly when in an NSToolbar
+        // TODO: Can't focus QLineEdits (and presumably other controls)
+        // TODO: src/gui/widgets/qmainwindowlayout_mac.mm essentially does the same
+        // thing we're doing here but with none of the listed problems... hints from there?
+        QSize widgetSizeHint = toolButton->m_widget->sizeHint();
+        [toolbarItem setMaxSize:NSMakeSize(widgetSizeHint.width(), widgetSizeHint.height())];
+
+        nativeWidget->show();
+        toolButton->m_widget->show();
+    }
+    else
+    {
+        // TODO: Under some conditions, icons on tool buttons become corrupted
+        QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
+        if (icon.isNull() == false) {
+            [toolbarItem setImage : [[NSImage alloc] initWithCGImage:toMacCGImageRef(icon) size:NSZeroSize]];
+        }
+
+        [toolbarItem setTarget : self];
+        [toolbarItem setAction : @selector(itemClicked:)];
+    }
 
     return toolbarItem;
 }
@@ -227,6 +271,17 @@ QString qt_strippedText(QString s)
     QtMacToolButton *button = new QtMacToolButton(action);
     button->m_action = action;
     button->setStandardItem(standardItem);
+    allowedItems.append(button);
+    return action;
+}
+
+- (QAction *)addWidget:(QWidget *)widget
+{
+    QAction *action = new QAction(0);
+    QtMacToolButton *button = new QtMacToolButton(action);
+    button->m_action = action;
+    button->m_widget = widget;
+    items.append(button);
     allowedItems.append(button);
     return action;
 }

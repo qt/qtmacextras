@@ -75,6 +75,8 @@ class QIcon;
 - (QAction *)addAllowedAction:(QAction *)action;
 - (QAction *)addAllowedStandardItem:(QtMacToolButton::StandardItem)standardItem;
 
+- (QAction *)addWidget:(QWidget *)widget;
+
 - (IBAction)itemClicked:(id)sender;
 @end
 

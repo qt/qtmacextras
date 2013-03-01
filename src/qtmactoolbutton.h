@@ -86,6 +86,7 @@ private:
     StandardItem m_standardItem;
 public: // (not really public)
     QAction *m_action;
+    QWidget *m_widget;
     void emitActivated() { emit activated(); }
 };
 

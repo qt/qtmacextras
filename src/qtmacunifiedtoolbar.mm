@@ -47,6 +47,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QToolBar>
+#include <QToolButton>
 #include <QUuid>
 #include <QWidget>
 
@@ -269,10 +270,12 @@ QtMacUnifiedToolBar::~QtMacUnifiedToolBar()
 
 QtMacUnifiedToolBar *QtMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar, const QString &identifier)
 {
-    // TODO: add the QToolBar's QWidgets to the Mac toolbar once it supports this
     QtMacUnifiedToolBar *macToolBar = new QtMacUnifiedToolBar(identifier);
-    foreach (QAction *action, toolBar->actions())
-    {
+    foreach (QAction *action, toolBar->actions()) {
+        QWidget *widget = toolBar->widgetForAction(action);
+        if (widget && !dynamic_cast<QToolButton*>(widget))
+            macToolBar->addWidget(widget);
+        else
         macToolBar->addAction(action);
     }
 
@@ -582,4 +585,8 @@ QAction *QtMacUnifiedToolBar::addAllowedStandardItem(QtMacToolButton::StandardIt
     return [d->delegate addAllowedStandardItem:standardItem];
 }
 
+QAction *QtMacUnifiedToolBar::addWidget(QWidget *widget)
+{
+    return [d->delegate addWidget:widget];
+}
 

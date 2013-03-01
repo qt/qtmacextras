@@ -44,6 +44,7 @@
 #include "preferenceswindow.h"
 #include "qtmacunifiedtoolbar.h"
 #include <QDesktopWidget>
+#include <QLineEdit>
 #include <QMenuBar>
 #include <QTimer>
 
@@ -75,6 +76,17 @@ Window::Window(QWidget *parent) :
     d->toolBar->addStandardItem(QtMacToolButton::ShowColors);
     d->toolBar->addStandardItem(QtMacToolButton::ShowFonts);
     d->toolBar->addStandardItem(QtMacToolButton::PrintItem);
+    d->toolBar->addStandardItem(QtMacToolButton::FlexibleSpace);
+
+    QAction *displayModeAction = d->toolBar->addWidget(ui->displayModeComboBox);
+    displayModeAction->setText("Display mode");
+
+    QAction *sizeModeAction = d->toolBar->addWidget(ui->sizeModeComboBox);
+    sizeModeAction->setText("Size mode");
+
+    d->toolBar->addStandardItem(QtMacToolButton::FlexibleSpace);
+
+    d->toolBar->addWidget(new QLineEdit);
 
     d->toolBar->addAllowedAction(QIcon(":/qtlogo.png"), "Extra Button 1");
     d->toolBar->addAllowedAction(QIcon(":/qtlogo.png"), "Extra Button 2");
