@@ -1,6 +1,9 @@
-/** Contact: http://www.qt-project.org/legal
+/****************************************************************************
 **
-** This file is part of QtMacExtras in the Qt Toolkit.
+** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Contact: http://www.qt-project.org/legal
+**
+** This file is part of the QtMacExtras module of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
