@@ -39,31 +39,47 @@
 **
 ****************************************************************************/
 
-#ifndef QTMACFUNCTIONS_H
-#define QTMACFUNCTIONS_H
+#include <QString>
+#include <QtTest>
+#include <QCoreApplication>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QMainWindow>
+#include <qtmacfunctions.h>
 
-#if 0
-#pragma qt_class(QtMacFunctions)
-#endif
+#import <AppKit/AppKit.h>
 
-#include <ApplicationServices/ApplicationServices.h>
-#include <QtGui/QPixmap>
+class tst_QtMacFunctions : public QObject
+{
+    Q_OBJECT
 
-#ifdef __OBJC__
-@class NSMenu;
-#else
-typedef struct objc_object NSMenu;
-#endif
+public:
+    tst_QtMacFunctions();
 
-class QMenu;
+private Q_SLOTS:
+    void testQMenuToNSMenu();
+};
 
-void qt_mac_set_dock_menu(QMenu *menu);
+tst_QtMacFunctions::tst_QtMacFunctions()
+{
+}
 
-NSMenu *toNSMenu(QMenu *menu);
-CGImageRef toMacCGImageRef(const QPixmap &pixmap);
-QPixmap fromMacCGImageRef(CGImageRef image);
+void tst_QtMacFunctions::testQMenuToNSMenu()
+{
+    QMainWindow window;
+    QMenu *qMenu = new QMenu("Menu", &window);
+    QAction *action = new QAction("&Item", &window);
+    qMenu->addAction(action);
+    window.menuBar()->addMenu(qMenu);
 
+    NSMenu *nsMenu = toNSMenu(qMenu);
+    QVERIFY(nsMenu != NULL);
+    QCOMPARE([[nsMenu title] UTF8String], "Menu");
 
-#endif //QTMACFUNCTIONS
+    NSMenuItem *item = [nsMenu itemAtIndex:0];
+    QCOMPARE([[item title] UTF8String], "Item");
+}
 
+QTEST_MAIN(tst_QtMacFunctions)
 
+#include "tst_qtmacfunctions.moc"
