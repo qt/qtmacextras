@@ -47,12 +47,20 @@
 #endif
 
 #include <ApplicationServices/ApplicationServices.h>
+#include <CoreFoundation/CoreFoundation.h>
 #include <QtGui/QPixmap>
+
+#ifdef __OBJC__
+@class NSMenu;
+#else
+typedef struct objc_object NSMenu;
+#endif
 
 class QMenu;
 
 void qt_mac_set_dock_menu(QMenu *menu);
 
+NSMenu *toNSMenu(QMenu *menu);
 CGImageRef toMacCGImageRef(const QPixmap &pixmap);
 QPixmap fromMacCGImageRef(CGImageRef image);
 

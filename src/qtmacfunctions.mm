@@ -74,6 +74,21 @@ void qt_mac_set_dock_menu(QMenu *menu)
     }
 }
 
+NSMenu *toNSMenu(QMenu *menu)
+{
+    // Get the platform menu, which will be a QCocoaMenu
+    QPlatformMenu *platformMenu = menu->platformMenu();
+    
+    // Get the qMenuToNSMenu function and call it.
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qmenutonsmenu");
+    if (function) {
+        typedef void* (*QMenuToNSMenuFunction)(QPlatformMenu *platformMenu);
+        return reinterpret_cast<NSMenu *>(reinterpret_cast<QMenuToNSMenuFunction>(function)(platformMenu));
+        
+    }
+    return nil;
+}
+
 #endif
 
 /*!
