@@ -1,0 +1,9 @@
+Code-Review+2: Morten Johan Sørvig <morten.sorvig@digia.com>
+Sanity-Review+1: Qt Sanity Bot <qt_sanity_bot@ovi.com>
+Code-Review+1: Laszlo Papp <lpapp@kde.org>
+Code-Review+1: Harri Porten <porten@froglogic.com>
+Submitted-by: Jake Petroules <jake.petroules@petroules.com>
+Submitted-at: Tue, 19 Mar 2013 23:13:11 +0100
+Reviewed-on: https://codereview.qt-project.org/50979
+Project: qt/qtmacextras
+Branch: refs/heads/master
