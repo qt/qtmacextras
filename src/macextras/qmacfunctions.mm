@@ -53,6 +53,7 @@ QT_BEGIN_NAMESPACE
 #include <QtCore/qDebug.h>
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
 #include <qpa/qplatformmenu.h>
 #include <qpa/qplatformnativeinterface.h>
 
@@ -95,6 +96,20 @@ NSMenu *QtMacExtras::toNSMenu(QMenu *menu)
     return nil;
 }
 #endif
+
+NSMenu *QtMacExtras::toNSMenu(QMenuBar *menubar)
+{
+    // Get the platform menubar, which will be a QCocoaMenuBar
+    QPlatformMenuBar *platformMenuBar = menubar->platformMenuBar();
+
+    // Get the qMenuBarToNSMenu function and call it.
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qmenubartonsmenu");
+    if (function) {
+        typedef void* (*QMenuBarToNSMenuFunction)(QPlatformMenuBar *platformMenuBar);
+        return reinterpret_cast<NSMenu *>(reinterpret_cast<QMenuBarToNSMenuFunction>(function)(platformMenuBar));
+    }
+    return nil;
+}
 
 #endif
 

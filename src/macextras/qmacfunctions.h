@@ -64,6 +64,7 @@ typedef struct objc_object NSMenu;
 QT_BEGIN_NAMESPACE
 
 class QMenu;
+class QMenuBar;
 class QPixmap;
 class QString;
 
@@ -80,6 +81,7 @@ Q_MACEXTRAS_EXPORT QPixmap fromMacCGImageRef(CGImageRef image);
 
 #ifndef Q_OS_IOS
 Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
+Q_MACEXTRAS_EXPORT NSMenu *toNSMenu(QMenuBar *menubar);
 Q_MACEXTRAS_EXPORT NSImage* toMacNSImage(const QPixmap &pixmap);
 Q_MACEXTRAS_EXPORT NSImage* toMacNSImage(const QPixmap &pixmap);
 #endif
