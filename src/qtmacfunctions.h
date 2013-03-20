@@ -56,10 +56,12 @@ typedef struct objc_object NSMenu;
 #endif
 
 class QMenu;
+class QMenuBar;
 
 void qt_mac_set_dock_menu(QMenu *menu);
 
 NSMenu *toNSMenu(QMenu *menu);
+NSMenu *toNSMenu(QMenuBar *menubar);
 CGImageRef toMacCGImageRef(const QPixmap &pixmap);
 QPixmap fromMacCGImageRef(CGImageRef image);
 

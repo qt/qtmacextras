@@ -47,6 +47,7 @@
 #include <QtCore/qDebug.h>
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
 #include <qpa/qplatformmenu.h>
 #include <qpa/qplatformnativeinterface.h>
 
@@ -84,6 +85,20 @@ NSMenu *toNSMenu(QMenu *menu)
     if (function) {
         typedef void* (*QMenuToNSMenuFunction)(QPlatformMenu *platformMenu);
         return reinterpret_cast<NSMenu *>(reinterpret_cast<QMenuToNSMenuFunction>(function)(platformMenu));
+    }
+    return nil;
+}
+
+NSMenu *toNSMenu(QMenuBar *menubar)
+{
+    // Get the platform menubar, which will be a QCocoaMenuBar
+    QPlatformMenuBar *platformMenuBar = menubar->platformMenuBar();
+
+    // Get the qMenuBarToNSMenu function and call it.
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qmenubartonsmenu");
+    if (function) {
+        typedef void* (*QMenuBarToNSMenuFunction)(QPlatformMenuBar *platformMenuBar);
+        return reinterpret_cast<NSMenu *>(reinterpret_cast<QMenuBarToNSMenuFunction>(function)(platformMenuBar));
     }
     return nil;
 }
