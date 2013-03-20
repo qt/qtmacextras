@@ -57,14 +57,14 @@ public:
     tst_QMacFunctions();
 
 private slots:
-    void testQMenuToNSMenu();
+    void testToNSMenu();
 };
 
 tst_QMacFunctions::tst_QMacFunctions()
 {
 }
 
-void tst_QMacFunctions::testQMenuToNSMenu()
+void tst_QMacFunctions::testToNSMenu()
 {
     QMainWindow window;
     QMenu *qMenu = new QMenu("Menu", &window);
@@ -78,6 +78,14 @@ void tst_QMacFunctions::testQMenuToNSMenu()
 
     NSMenuItem *item = [nsMenu itemAtIndex:0];
     QCOMPARE([[item title] UTF8String], "Item");
+
+    // get NSMenu from QMenuBar
+    nsMenu = QtMacExtras::toNSMenu(window.menuBar());
+    QVERIFY(nsMenu != NULL);
+
+    // the first item should be our menu
+    item = [nsMenu itemAtIndex:0];
+    QCOMPARE([[item title] UTF8String], "Menu");
 }
 
 QTEST_MAIN(tst_QMacFunctions)
