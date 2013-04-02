@@ -2,9 +2,7 @@ TEMPLATE = app
 TARGET = macfunctions
 DEPENDPATH += .
 INCLUDEPATH += .
-QT += widgets
-
-include (../../src/qtmacextras.pri)
+QT += widgets macextras
 
 # Input
 SOURCES += main.cpp
