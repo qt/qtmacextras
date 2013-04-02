@@ -1,4 +1,4 @@
-include (../../src/qtmacextras.pri)
+QT += macextras
 
 SOURCES += main.cpp
 
