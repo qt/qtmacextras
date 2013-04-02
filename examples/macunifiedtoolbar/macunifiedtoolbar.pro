@@ -1,6 +1,4 @@
-include (../../src/qtmacextras.pri)
-
-QT += core gui
+QT += core gui macextras
 greaterThan(QT_MAJOR_VERSION, 4):QT += widgets
 
 SOURCES += \

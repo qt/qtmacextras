@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS = auto
+macx:!ios:SUBDIRS = auto
