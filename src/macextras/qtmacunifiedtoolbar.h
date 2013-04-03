@@ -42,14 +42,16 @@
 #ifndef QTMACTOOLBAR_H
 #define QTMACTOOLBAR_H
 
+#include "qmacextrasglobal.h"
+
 #include <QString>
 
 class QToolBar;
 class QWidget;
 class QtMacUnifiedToolBar;
 
-QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
-QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on = true);
+Q_MACEXTRAS_EXPORT QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
+Q_MACEXTRAS_EXPORT QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on = true);
 
 #include "qtmactoolbutton.h"
 #include <QObject>
@@ -60,7 +62,7 @@ class QAction;
 class QWindow;
 
 class QtMacUnifiedToolBarPrivate;
-class QtMacUnifiedToolBar : public QObject
+class Q_MACEXTRAS_EXPORT QtMacUnifiedToolBar : public QObject
 {
     friend class QtMacUnifiedToolBarPrivate;
 

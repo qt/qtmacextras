@@ -46,6 +46,8 @@
 #pragma qt_class(QtMacFunctions)
 #endif
 
+#include "qmacextrasglobal.h"
+
 #include <ApplicationServices/ApplicationServices.h>
 #include <QtGui/QPixmap>
 
@@ -57,11 +59,11 @@ typedef struct objc_object NSMenu;
 
 class QMenu;
 
-void qt_mac_set_dock_menu(QMenu *menu);
+Q_MACEXTRAS_EXPORT void qt_mac_set_dock_menu(QMenu *menu);
 
-NSMenu *toNSMenu(QMenu *menu);
-CGImageRef toMacCGImageRef(const QPixmap &pixmap);
-QPixmap fromMacCGImageRef(CGImageRef image);
+Q_MACEXTRAS_EXPORT NSMenu *toNSMenu(QMenu *menu);
+Q_MACEXTRAS_EXPORT CGImageRef toMacCGImageRef(const QPixmap &pixmap);
+Q_MACEXTRAS_EXPORT QPixmap fromMacCGImageRef(CGImageRef image);
 
 
 #endif //QTMACFUNCTIONS

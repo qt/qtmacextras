@@ -42,16 +42,18 @@
 #if !defined(QMACMIME_H) && !defined(QMIME_H)
 #define QMACMIME_H
 
+#include "qmacextrasglobal.h"
+
 #include <QtCore>
 
 #include <CoreFoundation/CoreFoundation.h>
 
 QT_BEGIN_NAMESPACE
 
-void qRegisterDraggedTypes(const QStringList &types);
+Q_MACEXTRAS_EXPORT void qRegisterDraggedTypes(const QStringList &types);
 
 // Duplicate of QMacPasteboardMime in the Cocoa Platform Plugin. Keep in sync!
-class QMacPasteboardMime {
+class Q_MACEXTRAS_EXPORT QMacPasteboardMime {
     char type;
 public:
     enum QMacPasteboardMimeType { MIME_DND=0x01,
