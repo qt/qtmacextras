@@ -42,6 +42,8 @@
 #ifndef QTMACNATIVEWIDGET_H
 #define QTMACNATIVEWIDGET_H
 
+#include "qmacextrasglobal.h"
+
 #include <QWidget>
 #import <Availability.h>
 
@@ -57,7 +59,7 @@ QT_MODULE(Gui)
 typedef struct objc_object NSView;
 #endif
 
-class QtMacNativeWidget : public QWidget
+class Q_MACEXTRAS_EXPORT QtMacNativeWidget : public QWidget
 {
     Q_OBJECT
 public:
