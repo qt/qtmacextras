@@ -40,7 +40,12 @@
 ****************************************************************************/
 
 #include "qtmacfunctions.h"
+#ifdef Q_OS_IOS
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#else
 #import <Cocoa/Cocoa.h>
+#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -62,6 +67,7 @@ QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFu
     return function;
 }
 
+#ifndef Q_OS_IOS
 void qt_mac_set_dock_menu(QMenu *menu)
 {
     // Get the platform menu, which will be a QCocoaMenu
@@ -88,6 +94,7 @@ NSMenu *toNSMenu(QMenu *menu)
     }
     return nil;
 }
+#endif
 
 #endif
 
@@ -136,6 +143,7 @@ CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 #endif
 }
 
+#ifndef Q_OS_IOS
 NSImage* toMacNSImage(const QPixmap &pixmap)
 {
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:toMacCGImageRef(pixmap)];
@@ -144,6 +152,7 @@ NSImage* toMacNSImage(const QPixmap &pixmap)
     [bitmapRep release];
     return image;
 }
+#endif
 
 /*!
     Returns a QPixmap that is equivalent to the given \a image.
