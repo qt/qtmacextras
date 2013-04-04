@@ -47,6 +47,7 @@ QtMacToolButton::QtMacToolButton()
    m_standardItem = NoItem;
    m_selectable = false;
    m_action = 0;
+   m_widget = 0;
 }
 
 QtMacToolButton::QtMacToolButton(QObject *parent)
@@ -55,6 +56,7 @@ QtMacToolButton::QtMacToolButton(QObject *parent)
     m_standardItem = NoItem;
     m_selectable = false;
     m_action = 0;
+    m_widget = 0;
 }
 
 QtMacToolButton::~QtMacToolButton()
