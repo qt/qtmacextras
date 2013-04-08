@@ -1,0 +1,8 @@
+Sanity-Review+1: Qt Sanity Bot <qt_sanitybot@qt-project.org>
+Code-Review+2: Gabriel de Dietrich <gabriel.dedietrich@digia.com>
+Code-Review+1: Jake Petroules <jake.petroules@petroules.com>
+Submitted-by: Gabriel de Dietrich <gabriel.dedietrich@digia.com>
+Submitted-at: Mon, 08 Apr 2013 13:26:19 +0200
+Reviewed-on: https://codereview.qt-project.org/52760
+Project: qt/qtmacextras
+Branch: refs/heads/master
