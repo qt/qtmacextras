@@ -50,12 +50,14 @@
 
 typedef struct CGImage *CGImageRef;
 
-@class NSImage;
-@class NSString;
 
 #ifdef __OBJC__
+@class NSImage;
+@class NSString;
 @class NSMenu;
 #else
+typedef struct objc_object NSImage;
+typedef struct objc_object NSString;
 typedef struct objc_object NSMenu;
 #endif
 
