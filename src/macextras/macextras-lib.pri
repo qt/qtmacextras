@@ -3,6 +3,7 @@ INCLUDEPATH += $$PWD
 PUBLIC_HEADERS += \
     $$PWD/qtmacfunctions.h \
     $$PWD/qtmacnativewidget.h \
+    $$PWD/qtmaccocoaviewcontainer.h \
     $$PWD/qtmactoolbutton.h \
     $$PWD/qtmacunifiedtoolbar.h
 
@@ -14,6 +15,7 @@ macx:!ios {
     OBJECTIVE_SOURCES += \
         $$PWD/qtmacfunctions.mm \
         $$PWD/qtmacnativewidget.mm \
+        $$PWD/qtmaccocoaviewcontainer.mm \
         $$PWD/qtmactoolbardelegate.mm \
         $$PWD/qtmactoolbutton.mm \
         $$PWD/qtmacunifiedtoolbar.mm \
