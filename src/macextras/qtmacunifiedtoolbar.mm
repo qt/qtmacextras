@@ -65,17 +65,17 @@
 #define kNSToolbarIconSizeRegular 32
 #define kNSToolbarIconSizeDefault kNSToolbarIconSizeRegular
 
-NSString *toNSStandardItem(QtMacToolButton::StandardItem standardItem)
+NSString *toNSStandardItem(QMacToolButton::StandardItem standardItem)
 {
-    if (standardItem == QtMacToolButton::ShowColors)
+    if (standardItem == QMacToolButton::ShowColors)
         return NSToolbarShowColorsItemIdentifier;
-    else if (standardItem == QtMacToolButton::ShowFonts)
+    else if (standardItem == QMacToolButton::ShowFonts)
         return NSToolbarShowFontsItemIdentifier;
-    else if (standardItem == QtMacToolButton::PrintItem)
+    else if (standardItem == QMacToolButton::PrintItem)
         return NSToolbarPrintItemIdentifier;
-    else if (standardItem == QtMacToolButton::Space)
+    else if (standardItem == QMacToolButton::Space)
         return NSToolbarSpaceItemIdentifier;
-    else if (standardItem == QtMacToolButton::FlexibleSpace)
+    else if (standardItem == QMacToolButton::FlexibleSpace)
         return NSToolbarFlexibleSpaceItemIdentifier;
     return @"";
 }
@@ -116,20 +116,20 @@ Qt::ToolButtonStyle toQtToolButtonStyle(NSToolbarDisplayMode toolbarDisplayMode)
 @interface QtNSToolbarNotifier : NSObject
 {
 @public
-    QtMacUnifiedToolBarPrivate *pimpl;
+    QMacUnifiedToolBarPrivate *pimpl;
 }
 - (void)notification:(NSNotification*)note;
 @end
 
-class QtMacUnifiedToolBarPrivate
+class QMacUnifiedToolBarPrivate
 {
 public:
-    QtMacUnifiedToolBar *qtToolbar;
+    QMacUnifiedToolBar *qtToolbar;
     NSToolbar *toolbar;
     QtMacToolbarDelegate *delegate;
     QtNSToolbarNotifier *notifier;
 
-    QtMacUnifiedToolBarPrivate(QtMacUnifiedToolBar *parent, const QString &identifier = QString())
+    QMacUnifiedToolBarPrivate(QMacUnifiedToolBar *parent, const QString &identifier = QString())
     {
         qtToolbar = parent;
         toolbar = [[QtNSToolbar alloc] initWithIdentifier:QtMacExtras::toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
@@ -143,7 +143,7 @@ public:
         [[NSNotificationCenter defaultCenter] addObserver:notifier selector:@selector(notification:) name:nil object:toolbar];
     }
 
-    ~QtMacUnifiedToolBarPrivate()
+    ~QMacUnifiedToolBarPrivate()
     {
         [[NSNotificationCenter defaultCenter] removeObserver:notifier name:nil object:toolbar];
     }
@@ -199,12 +199,12 @@ public:
 
 @end
 
-QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on)
+QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on)
 {
     return setUnifiedTitleAndToolBarOnMac(toolbar, QString(), on);
 }
 
-QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on)
+QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on)
 {
     if (!toolbar)
     {
@@ -223,15 +223,15 @@ QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QSt
 
     // Check if we've already created a Mac equivalent for this toolbar
     QVariant toolBarProperty = toolbar->property(macToolBarProperty);
-    QtMacUnifiedToolBar *macToolBar = NULL;
-    if (toolBarProperty.canConvert<QtMacUnifiedToolBar*>())
-        macToolBar = toolBarProperty.value<QtMacUnifiedToolBar*>();
+    QMacUnifiedToolBar *macToolBar = NULL;
+    if (toolBarProperty.canConvert<QMacUnifiedToolBar*>())
+        macToolBar = toolBarProperty.value<QMacUnifiedToolBar*>();
 
     // Create one if not, but only if we're turning it on - no point in creating
     // a toolbar for the sole purpose of turning it off immediately
     if (!macToolBar && on)
     {
-        macToolBar = QtMacUnifiedToolBar::fromQToolBar(toolbar, identifier);
+        macToolBar = QMacUnifiedToolBar::fromQToolBar(toolbar, identifier);
         macToolBar->setParent(toolbar);
         toolbar->setProperty(macToolBarProperty, QVariant::fromValue(macToolBar));
     }
@@ -245,30 +245,30 @@ QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QSt
     return macToolBar;
 }
 
-QtMacUnifiedToolBar::QtMacUnifiedToolBar(QObject *parent)
-    : QObject(parent), targetWindow(NULL), targetWidget(NULL), d(new QtMacUnifiedToolBarPrivate(this))
+QMacUnifiedToolBar::QMacUnifiedToolBar(QObject *parent)
+    : QObject(parent), targetWindow(NULL), targetWidget(NULL), d(new QMacUnifiedToolBarPrivate(this))
 {
     setAllowsUserCustomization(true);
     setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
-QtMacUnifiedToolBar::QtMacUnifiedToolBar(const QString &identifier, QObject *parent)
-    : QObject(parent), targetWindow(NULL), targetWidget(NULL), d(new QtMacUnifiedToolBarPrivate(this, identifier))
+QMacUnifiedToolBar::QMacUnifiedToolBar(const QString &identifier, QObject *parent)
+    : QObject(parent), targetWindow(NULL), targetWidget(NULL), d(new QMacUnifiedToolBarPrivate(this, identifier))
 {
     setAllowsUserCustomization(true);
     setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
-QtMacUnifiedToolBar::~QtMacUnifiedToolBar()
+QMacUnifiedToolBar::~QMacUnifiedToolBar()
 {
     [d->toolbar release];
     delete d;
 }
 
-QtMacUnifiedToolBar *QtMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar, const QString &identifier)
+QMacUnifiedToolBar *QMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar, const QString &identifier)
 {
     // TODO: add the QToolBar's QWidgets to the Mac toolbar once it supports this
-    QtMacUnifiedToolBar *macToolBar = new QtMacUnifiedToolBar(identifier);
+    QMacUnifiedToolBar *macToolBar = new QMacUnifiedToolBar(identifier);
     foreach (QAction *action, toolBar->actions())
     {
         macToolBar->addAction(action);
@@ -277,47 +277,47 @@ QtMacUnifiedToolBar *QtMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar, 
     return macToolBar;
 }
 
-QString QtMacUnifiedToolBar::identifier() const
+QString QMacUnifiedToolBar::identifier() const
 {
     return QtMacExtras::fromNSString([d->toolbar identifier]);
 }
 
-bool QtMacUnifiedToolBar::isVisible() const
+bool QMacUnifiedToolBar::isVisible() const
 {
     return [d->toolbar isVisible];
 }
 
-void QtMacUnifiedToolBar::setVisible(bool visible)
+void QMacUnifiedToolBar::setVisible(bool visible)
 {
     [d->toolbar setVisible:visible];
 }
 
-bool QtMacUnifiedToolBar::showsBaselineSeparator() const
+bool QMacUnifiedToolBar::showsBaselineSeparator() const
 {
     return [d->toolbar showsBaselineSeparator];
 }
 
-void QtMacUnifiedToolBar::setShowsBaselineSeparator(bool show)
+void QMacUnifiedToolBar::setShowsBaselineSeparator(bool show)
 {
     [d->toolbar setShowsBaselineSeparator:show];
 }
 
-bool QtMacUnifiedToolBar::allowsUserCustomization() const
+bool QMacUnifiedToolBar::allowsUserCustomization() const
 {
     return [d->toolbar allowsUserCustomization];
 }
 
-void QtMacUnifiedToolBar::setAllowsUserCustomization(bool allow)
+void QMacUnifiedToolBar::setAllowsUserCustomization(bool allow)
 {
     [d->toolbar setAllowsUserCustomization:allow];
 }
 
-Qt::ToolButtonStyle QtMacUnifiedToolBar::toolButtonStyle() const
+Qt::ToolButtonStyle QMacUnifiedToolBar::toolButtonStyle() const
 {
     return toQtToolButtonStyle([d->toolbar displayMode]);
 }
 
-void QtMacUnifiedToolBar::setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle)
+void QMacUnifiedToolBar::setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle)
 {
     [d->toolbar setDisplayMode:toNSToolbarDisplayMode(toolButtonStyle)];
 
@@ -326,90 +326,90 @@ void QtMacUnifiedToolBar::setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle
         d->fireToolButtonStyleChanged();
 }
 
-QSize QtMacUnifiedToolBar::iconSize() const
+QSize QMacUnifiedToolBar::iconSize() const
 {
     switch (iconSizeType())
     {
-    case QtMacToolButton::IconSizeRegular:
+    case QMacToolButton::IconSizeRegular:
         return QSize(kNSToolbarIconSizeRegular, kNSToolbarIconSizeRegular);
-    case QtMacToolButton::IconSizeSmall:
+    case QMacToolButton::IconSizeSmall:
         return QSize(kNSToolbarIconSizeSmall, kNSToolbarIconSizeSmall);
-    case QtMacToolButton::IconSizeDefault:
+    case QMacToolButton::IconSizeDefault:
     default:
         return QSize(kNSToolbarIconSizeDefault, kNSToolbarIconSizeDefault);
     }
 }
 
-QtMacToolButton::IconSize QtMacUnifiedToolBar::iconSizeType() const
+QMacToolButton::IconSize QMacUnifiedToolBar::iconSizeType() const
 {
     switch ([d->toolbar sizeMode])
     {
     case NSToolbarSizeModeRegular:
-        return QtMacToolButton::IconSizeRegular;
+        return QMacToolButton::IconSizeRegular;
     case NSToolbarSizeModeSmall:
-        return QtMacToolButton::IconSizeSmall;
+        return QMacToolButton::IconSizeSmall;
     case NSToolbarSizeModeDefault:
     default:
-        return QtMacToolButton::IconSizeDefault;
+        return QMacToolButton::IconSizeDefault;
     }
 }
 
-void QtMacUnifiedToolBar::setIconSize(const QSize &iconSize)
+void QMacUnifiedToolBar::setIconSize(const QSize &iconSize)
 {
     if (iconSize.isEmpty())
-        setIconSize(QtMacToolButton::IconSizeDefault);
+        setIconSize(QMacToolButton::IconSizeDefault);
     else if (iconSize.width() <= kNSToolbarIconSizeSmall && iconSize.height() <= kNSToolbarIconSizeSmall)
-        setIconSize(QtMacToolButton::IconSizeSmall);
+        setIconSize(QMacToolButton::IconSizeSmall);
     else
-        setIconSize(QtMacToolButton::IconSizeRegular);
+        setIconSize(QMacToolButton::IconSizeRegular);
 }
 
-void QtMacUnifiedToolBar::setIconSize(QtMacToolButton::IconSize iconSize)
+void QMacUnifiedToolBar::setIconSize(QMacToolButton::IconSize iconSize)
 {
     switch (iconSize)
     {
-    case QtMacToolButton::IconSizeRegular:
+    case QMacToolButton::IconSizeRegular:
         [d->toolbar setSizeMode:NSToolbarSizeModeRegular];
         break;
-    case QtMacToolButton::IconSizeSmall:
+    case QMacToolButton::IconSizeSmall:
         [d->toolbar setSizeMode:NSToolbarSizeModeSmall];
         break;
-    case QtMacToolButton::IconSizeDefault:
+    case QMacToolButton::IconSizeDefault:
     default:
         [d->toolbar setSizeMode:NSToolbarSizeModeDefault];
         break;
     }
 }
 
-void QtMacUnifiedToolBar::showCustomizationSheet()
+void QMacUnifiedToolBar::showCustomizationSheet()
 {
     [d->toolbar runCustomizationPalette:nil];
 }
 
-QList<QtMacToolButton *> QtMacUnifiedToolBar::buttons()
+QList<QMacToolButton *> QMacUnifiedToolBar::buttons()
 {
     return d->delegate->items;
 }
 
-QList<QtMacToolButton *> QtMacUnifiedToolBar::allowedButtons()
+QList<QMacToolButton *> QMacUnifiedToolBar::allowedButtons()
 {
     return d->delegate->allowedItems;
 }
 
-void QtMacUnifiedToolBar::showInWindow(QWindow *window)
+void QMacUnifiedToolBar::showInWindow(QWindow *window)
 {
     targetWindow = window;
     QTimer::singleShot(100, this, SLOT(showInWindow_impl())); // ### hackety hack
 }
 
-void QtMacUnifiedToolBar::showInWindowForWidget(QWidget *widget)
+void QMacUnifiedToolBar::showInWindowForWidget(QWidget *widget)
 {
     targetWidget = widget;
     widget->winId(); // create window
     showInWindow_impl();
 }
 
-void QtMacUnifiedToolBar::showInMainWindow()
+void QMacUnifiedToolBar::showInMainWindow()
 {
     QWidgetList widgets = QApplication::topLevelWidgets();
     if (widgets.isEmpty())
@@ -423,7 +423,7 @@ void QtMacUnifiedToolBar::showInMainWindow()
 }
 
 
-void QtMacUnifiedToolBar::showInWindow_impl()
+void QMacUnifiedToolBar::showInWindow_impl()
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     if (!targetWindow)
@@ -450,7 +450,7 @@ void QtMacUnifiedToolBar::showInWindow_impl()
 }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-void QtMacUnifiedToolBar::removeFromWindow(QWindow *window)
+void QMacUnifiedToolBar::removeFromWindow(QWindow *window)
 {
     if (!window)
         return;
@@ -461,7 +461,7 @@ void QtMacUnifiedToolBar::removeFromWindow(QWindow *window)
 }
 #endif
 
-void QtMacUnifiedToolBar::removeFromWindowForWidget(QWidget *widget)
+void QMacUnifiedToolBar::removeFromWindowForWidget(QWidget *widget)
 {
     if (!widget)
         return;
@@ -470,12 +470,12 @@ void QtMacUnifiedToolBar::removeFromWindowForWidget(QWidget *widget)
     [macWindow setToolbar:nil];
 }
 
-void QtMacUnifiedToolBar::setSelectedItem()
+void QMacUnifiedToolBar::setSelectedItem()
 {
     setSelectedItem(qobject_cast<QAction*>(sender()));
 }
 
-QAction *QtMacUnifiedToolBar::setSelectedItem(QAction *action)
+QAction *QMacUnifiedToolBar::setSelectedItem(QAction *action)
 {
     // If this action is checkable, find the corresponding NSToolBarItem on the
     // real NSToolbar and set it to the selected item if it is checked
@@ -483,7 +483,7 @@ QAction *QtMacUnifiedToolBar::setSelectedItem(QAction *action)
     {
         checkSelectableItemSanity();
 
-        foreach (QtMacToolButton *toolButton, allowedButtons())
+        foreach (QMacToolButton *toolButton, allowedButtons())
         {
             if (toolButton->m_action && toolButton->m_action->isChecked())
             {
@@ -500,11 +500,11 @@ QAction *QtMacUnifiedToolBar::setSelectedItem(QAction *action)
     return action;
 }
 
-void QtMacUnifiedToolBar::checkSelectableItemSanity()
+void QMacUnifiedToolBar::checkSelectableItemSanity()
 {
     // Find a list of all selectable actions
     QList<QAction*> selectableActions;
-    foreach (QtMacToolButton *button, allowedButtons())
+    foreach (QMacToolButton *button, allowedButtons())
         if (button->m_action && button->m_action->isCheckable())
             selectableActions.append(button->m_action);
 
@@ -526,56 +526,56 @@ void QtMacUnifiedToolBar::checkSelectableItemSanity()
             // The group not being exclusive is a failure
             if (!group || (group != action->actionGroup()) || (group && !group->isExclusive()))
             {
-                qWarning() << "All selectable actions in a QtMacUnifiedToolBar should belong to the same exclusive QActionGroup if there is more than one selectable action.";
+                qWarning() << "All selectable actions in a QMacUnifiedToolBar should belong to the same exclusive QActionGroup if there is more than one selectable action.";
                 break;
             }
         }
     }
 }
 
-QAction *QtMacUnifiedToolBar::addAction(const QString &text)
+QAction *QMacUnifiedToolBar::addAction(const QString &text)
 {
     return [d->delegate addActionWithText:&text];
 }
 
-QAction *QtMacUnifiedToolBar::addAction(const QIcon &icon, const QString &text)
+QAction *QMacUnifiedToolBar::addAction(const QIcon &icon, const QString &text)
 {
     return [d->delegate addActionWithText:&text icon:&icon];
 }
 
-QAction *QtMacUnifiedToolBar::addAction(QAction *action)
+QAction *QMacUnifiedToolBar::addAction(QAction *action)
 {
     connect(action, SIGNAL(triggered()), this, SLOT(setSelectedItem()));
     return setSelectedItem([d->delegate addAction:action]);
 }
 
-void QtMacUnifiedToolBar::addSeparator()
+void QMacUnifiedToolBar::addSeparator()
 {
-    addStandardItem(QtMacToolButton::Space); // No Seprator on OS X.
+    addStandardItem(QMacToolButton::Space); // No Seprator on OS X.
 }
 
-QAction *QtMacUnifiedToolBar::addStandardItem(QtMacToolButton::StandardItem standardItem)
+QAction *QMacUnifiedToolBar::addStandardItem(QMacToolButton::StandardItem standardItem)
 {
     return [d->delegate addStandardItem:standardItem];
 }
 
-QAction *QtMacUnifiedToolBar::addAllowedAction(const QString &text)
+QAction *QMacUnifiedToolBar::addAllowedAction(const QString &text)
 {
     return [d->delegate addAllowedActionWithText:&text];
 }
 
-QAction *QtMacUnifiedToolBar::addAllowedAction(const QIcon &icon, const QString &text)
+QAction *QMacUnifiedToolBar::addAllowedAction(const QIcon &icon, const QString &text)
 {
     return [d->delegate addAllowedActionWithText:&text icon:&icon];
 }
 
-QAction *QtMacUnifiedToolBar::addAllowedAction(QAction *action)
+QAction *QMacUnifiedToolBar::addAllowedAction(QAction *action)
 {
     connect(action, SIGNAL(triggered()), this, SLOT(setSelectedItem()));
     return setSelectedItem([d->delegate addAllowedAction:action]);
 }
 
-QAction *QtMacUnifiedToolBar::addAllowedStandardItem(QtMacToolButton::StandardItem standardItem)
+QAction *QMacUnifiedToolBar::addAllowedStandardItem(QMacToolButton::StandardItem standardItem)
 {
     return [d->delegate addAllowedStandardItem:standardItem];
 }

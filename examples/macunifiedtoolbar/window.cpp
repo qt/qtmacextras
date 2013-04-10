@@ -52,7 +52,7 @@ class WindowPrivate
 public:
     PreferencesWindow *preferencesWindow;
     QMenuBar *mainMenuBar;
-    QtMacUnifiedToolBar *toolBar;
+    QMacUnifiedToolBar *toolBar;
 };
 
 Window::Window(QWidget *parent) :
@@ -68,13 +68,13 @@ Window::Window(QWidget *parent) :
     QMenu *toolsMenu = d->mainMenuBar->addMenu("Tools");
     toolsMenu->addAction("Options", d->preferencesWindow, SLOT(show()));
 
-    d->toolBar = new QtMacUnifiedToolBar(this);
+    d->toolBar = new QMacUnifiedToolBar(this);
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "Hello");
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "World");
-    d->toolBar->addStandardItem(QtMacToolButton::FlexibleSpace);
-    d->toolBar->addStandardItem(QtMacToolButton::ShowColors);
-    d->toolBar->addStandardItem(QtMacToolButton::ShowFonts);
-    d->toolBar->addStandardItem(QtMacToolButton::PrintItem);
+    d->toolBar->addStandardItem(QMacToolButton::FlexibleSpace);
+    d->toolBar->addStandardItem(QMacToolButton::ShowColors);
+    d->toolBar->addStandardItem(QMacToolButton::ShowFonts);
+    d->toolBar->addStandardItem(QMacToolButton::PrintItem);
 
     d->toolBar->addAllowedAction(QIcon(":/qtlogo.png"), "Extra Button 1");
     d->toolBar->addAllowedAction(QIcon(":/qtlogo.png"), "Extra Button 2");
@@ -84,7 +84,7 @@ Window::Window(QWidget *parent) :
     connect(d->toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), SLOT(displayModeChanged(Qt::ToolButtonStyle)));
     ui->displayModeComboBox->setCurrentIndex(d->toolBar->toolButtonStyle());
 
-    connect(d->toolBar, SIGNAL(iconSizeChanged(QtMacToolButton::IconSize)), SLOT(sizeModeChanged(QtMacToolButton::IconSize)));
+    connect(d->toolBar, SIGNAL(iconSizeChanged(QMacToolButton::IconSize)), SLOT(sizeModeChanged(QMacToolButton::IconSize)));
     ui->sizeModeComboBox->setCurrentIndex(d->toolBar->iconSizeType());
 
     connect(ui->visibleCheckBox, SIGNAL(clicked(bool)), d->toolBar, SLOT(setVisible(bool)));
@@ -126,10 +126,10 @@ void Window::displayModeChanged(Qt::ToolButtonStyle toolButtonStyle)
 
 void Window::changeSizeMode(int sizeMode)
 {
-    d->toolBar->setIconSize(static_cast<QtMacToolButton::IconSize>(sizeMode));
+    d->toolBar->setIconSize(static_cast<QMacToolButton::IconSize>(sizeMode));
 }
 
-void Window::sizeModeChanged(QtMacToolButton::IconSize size)
+void Window::sizeModeChanged(QMacToolButton::IconSize size)
 {
     ui->sizeModeComboBox->setCurrentIndex(size);
 }

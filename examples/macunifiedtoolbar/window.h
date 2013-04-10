@@ -63,7 +63,7 @@ private slots:
     void displayModeChanged(Qt::ToolButtonStyle);
 
     void changeSizeMode(int);
-    void sizeModeChanged(QtMacToolButton::IconSize);
+    void sizeModeChanged(QMacToolButton::IconSize);
 
     void positionWindow();
 
