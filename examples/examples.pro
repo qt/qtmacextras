@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
-SUBDIRS = embeddedqwindow \
-          macfunctions \
+
+mac:SUBDIRS = macfunctions
+mac:!ios:SUBDIRS += embeddedqwindow \
           macpasteboardmime	\
           macunifiedtoolbar	\
           qtmaccocoaviewcontainer \
