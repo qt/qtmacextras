@@ -59,12 +59,12 @@ QT_MODULE(Gui)
 typedef struct objc_object NSView;
 #endif
 
-class Q_MACEXTRAS_EXPORT QtMacNativeWidget : public QWidget
+class Q_MACEXTRAS_EXPORT QMacNativeWidget : public QWidget
 {
     Q_OBJECT
 public:
-    QtMacNativeWidget(NSView *parentView = 0);
-    ~QtMacNativeWidget();
+    QMacNativeWidget(NSView *parentView = 0);
+    ~QMacNativeWidget();
 
     NSView *nativeView() const;
 
