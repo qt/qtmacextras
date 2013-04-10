@@ -44,7 +44,7 @@
 #include <QMenu>
 #include <QPixmap>
 #include <QWidget>
-#include <qtmacfunctions.h>
+#include <qmacfunctions.h>
 
 int main(int argc, char **argv)
 {

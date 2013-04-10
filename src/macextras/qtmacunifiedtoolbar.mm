@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qtmacfunctions.h"
+#include "qmacfunctions.h"
 #include "qtmacunifiedtoolbar.h"
 #include "qtmactoolbardelegate.h"
 #include "qtnstoolbar.h"

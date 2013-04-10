@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qtmacfunctions.h"
+#include "qmacfunctions.h"
 #include "qtmactoolbardelegate.h"
 #include <QAction>
 #include <QImage>
