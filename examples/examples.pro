@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = embeddedqwindow \
+macx:!ios:SUBDIRS = embeddedqwindow \
           macfunctions \
           macpasteboardmime	\
           macunifiedtoolbar	\
