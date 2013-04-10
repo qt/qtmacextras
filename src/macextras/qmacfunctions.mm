@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qtmacfunctions.h"
+#include "qmacfunctions.h"
 #ifdef Q_OS_IOS
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>

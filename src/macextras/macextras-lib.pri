@@ -1,8 +1,8 @@
 INCLUDEPATH += $$PWD
 
 mac {
-    PUBLIC_HEADERS += $$PWD/qtmacfunctions.h
-    OBJECTIVE_SOURCES += $$PWD/qtmacfunctions.mm
+    PUBLIC_HEADERS += $$PWD/qmacfunctions.h
+    OBJECTIVE_SOURCES += $$PWD/qmacfunctions.mm
 }
 
 macx:!ios {
