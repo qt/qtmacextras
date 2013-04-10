@@ -48,7 +48,7 @@ class WindowWidget : public QWidget
 public:
     WindowWidget()
     {
-        QMacCocoaViewContainer *cocoaViewContainer = new QtMacCocoaViewContainer(0, this);
+        QMacCocoaViewContainer *cocoaViewContainer = new QMacCocoaViewContainer(0, this);
         cocoaViewContainer->move(100, 100);
         cocoaViewContainer->resize(300, 300);
         NSTextView *text = [[NSTextView alloc] initWithFrame : NSMakeRect(0, 0, 300, 300)];
