@@ -45,26 +45,26 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QMainWindow>
-#include <qtmacfunctions.h>
+#include <qmacfunctions.h>
 
 #import <AppKit/AppKit.h>
 
-class tst_QtMacFunctions : public QObject
+class tst_QMacFunctions : public QObject
 {
     Q_OBJECT
 
 public:
-    tst_QtMacFunctions();
+    tst_QMacFunctions();
 
 private slots:
     void testQMenuToNSMenu();
 };
 
-tst_QtMacFunctions::tst_QtMacFunctions()
+tst_QMacFunctions::tst_QMacFunctions()
 {
 }
 
-void tst_QtMacFunctions::testQMenuToNSMenu()
+void tst_QMacFunctions::testQMenuToNSMenu()
 {
     QMainWindow window;
     QMenu *qMenu = new QMenu("Menu", &window);
@@ -72,7 +72,7 @@ void tst_QtMacFunctions::testQMenuToNSMenu()
     qMenu->addAction(action);
     window.menuBar()->addMenu(qMenu);
 
-    NSMenu *nsMenu = toNSMenu(qMenu);
+    NSMenu *nsMenu = QtMacExtras::toNSMenu(qMenu);
     QVERIFY(nsMenu != NULL);
     QCOMPARE([[nsMenu title] UTF8String], "Menu");
 
@@ -80,6 +80,6 @@ void tst_QtMacFunctions::testQMenuToNSMenu()
     QCOMPARE([[item title] UTF8String], "Item");
 }
 
-QTEST_MAIN(tst_QtMacFunctions)
+QTEST_MAIN(tst_QMacFunctions)
 
-#include "tst_qtmacfunctions.moc"
+#include "tst_qmacfunctions.moc"
