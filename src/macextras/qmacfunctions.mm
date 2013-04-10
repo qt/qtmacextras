@@ -81,7 +81,7 @@ void qt_mac_set_dock_menu(QMenu *menu)
     }
 }
 
-NSMenu *toNSMenu(QMenu *menu)
+NSMenu *QtMacExtras::toNSMenu(QMenu *menu)
 {
     // Get the platform menu, which will be a QCocoaMenu
     QPlatformMenu *platformMenu = menu->platformMenu();
