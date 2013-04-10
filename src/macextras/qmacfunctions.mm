@@ -98,7 +98,7 @@ NSMenu *toNSMenu(QMenu *menu)
 
 #endif
 
-namespace Qt
+namespace QtMacExtras
 {
 
 NSString *toNSString(const QString &string)
@@ -176,6 +176,6 @@ QPixmap fromMacCGImageRef(CGImageRef image)
 #endif
 }
 
-} // namespace Qt
+} // namespace QtMacExtras
 
 QT_END_NAMESPACE
