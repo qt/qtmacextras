@@ -41,7 +41,7 @@
 
 #include "preferenceswindow.h"
 #include "ui_preferenceswindow.h"
-#include "qtmacunifiedtoolbar.h"
+#include "qmacunifiedtoolbar.h"
 #include <QTimer>
 
 PreferencesWindow::PreferencesWindow(QWidget *parent) :

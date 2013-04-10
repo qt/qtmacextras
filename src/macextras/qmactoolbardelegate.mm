@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmacfunctions.h"
-#include "qtmactoolbardelegate.h"
+#include "qmactoolbardelegate.h"
 #include <QAction>
 #include <QImage>
 #include <QPixmap>

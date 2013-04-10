@@ -39,51 +39,43 @@
 **
 ****************************************************************************/
 
-#include "qtmactoolbutton.h"
-#include <QAction>
+#ifndef QMACNATIVEWIDGET_H
+#define QMACNATIVEWIDGET_H
 
-QMacToolButton::QMacToolButton()
+#include "qmacextrasglobal.h"
+
+#include <QWidget>
+#import <Availability.h>
+
+QT_BEGIN_HEADER
+
+QT_BEGIN_NAMESPACE
+
+QT_MODULE(Gui)
+
+#ifdef __OBJC__
+@class NSView;
+#else
+typedef struct objc_object NSView;
+#endif
+
+class Q_MACEXTRAS_EXPORT QMacNativeWidget : public QWidget
 {
-   m_standardItem = NoItem;
-   m_selectable = false;
-   m_action = 0;
-}
+    Q_OBJECT
+public:
+    QMacNativeWidget(NSView *parentView = 0);
+    ~QMacNativeWidget();
 
-QMacToolButton::QMacToolButton(QObject *parent)
-    :QObject(parent)
-{
-    m_standardItem = NoItem;
-    m_selectable = false;
-    m_action = 0;
-}
+    NSView *nativeView() const;
 
-QMacToolButton::~QMacToolButton()
-{
+    QSize sizeHint() const;
+protected:
+    void init(void *parentView);
+    bool event(QEvent *ev);
+};
 
-}
+QT_END_NAMESPACE
 
-bool QMacToolButton::selectable() const
-{
-    if (m_action)
-        return m_action->isCheckable();
+QT_END_HEADER
 
-    return m_selectable;
-}
-
-void QMacToolButton::setSelectable(bool selectable)
-{
-    if (m_action)
-        m_action->setCheckable(selectable);
-    else
-        m_selectable = selectable;
-}
-
-QMacToolButton::StandardItem QMacToolButton::standardItem() const
-{
-    return m_standardItem;
-}
-
-void QMacToolButton::setStandardItem(StandardItem standardItem)
-{
-    m_standardItem = standardItem;
-}
+#endif // QMACNATIVEWIDGET_H

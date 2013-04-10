@@ -39,11 +39,11 @@
 **
 ****************************************************************************/
 
-#ifndef QTMACTOOLBARDELEGATE_H
-#define QTMACTOOLBARDELEGATE_H
+#ifndef QMACTOOLBARDELEGATE_H
+#define QMACTOOLBARDELEGATE_H
 
 #import <AppKit/AppKit.h>
-#include "qtmactoolbutton.h"
+#include "qmactoolbutton.h"
 //#include <QString>
 //#include <QHash>
 

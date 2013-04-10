@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qtmacnativewidget.h"
+#include "qmacnativewidget.h"
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QtGui/QWindow>
 #include <QtGui/QGuiApplication>

@@ -7,22 +7,22 @@ mac {
 
 macx:!ios {
     PUBLIC_HEADERS += \
-        $$PWD/qtmaccocoaviewcontainer.h \
-        $$PWD/qtmacnativewidget.h \
-        $$PWD/qtmactoolbutton.h \
-        $$PWD/qtmacunifiedtoolbar.h
+        $$PWD/qmaccocoaviewcontainer.h \
+        $$PWD/qmacnativewidget.h \
+        $$PWD/qmactoolbutton.h \
+        $$PWD/qmacunifiedtoolbar.h
 
     PRIVATE_HEADERS += \
-        $$PWD/qtmactoolbardelegate.h \
-        $$PWD/qtnstoolbar.h
+        $$PWD/qmactoolbardelegate.h \
+        $$PWD/qnstoolbar.h
 
     OBJECTIVE_SOURCES += \
-        $$PWD/qtmaccocoaviewcontainer.mm \
-        $$PWD/qtmacnativewidget.mm \
-        $$PWD/qtmactoolbardelegate.mm \
-        $$PWD/qtmactoolbutton.mm \
-        $$PWD/qtmacunifiedtoolbar.mm \
-        $$PWD/qtnstoolbar.mm
+        $$PWD/qmaccocoaviewcontainer.mm \
+        $$PWD/qmacnativewidget.mm \
+        $$PWD/qmactoolbardelegate.mm \
+        $$PWD/qmactoolbutton.mm \
+        $$PWD/qmacunifiedtoolbar.mm \
+        $$PWD/qnstoolbar.mm
 
     greaterThan(QT_MAJOR_VERSION, 4) {
         PUBLIC_HEADERS += $$PWD/qmacpasteboardmime.h
@@ -31,7 +31,7 @@ macx:!ios {
 
     LIBS *= -framework AppKit
 } else {
-    SOURCES += $$PWD/qtmacunifiedtoolbar.cpp
+    SOURCES += $$PWD/qmacunifiedtoolbar.cpp
 }
 
 HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS

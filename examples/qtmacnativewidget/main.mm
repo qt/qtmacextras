@@ -48,7 +48,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <Cocoa/Cocoa.h>
-#include <qtmacnativewidget.h>
+#include <qmacnativewidget.h>
 
 class RedWidget : public QWidget
 {

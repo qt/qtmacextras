@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTMACFUNCTIONS_H
-#define QTMACFUNCTIONS_H
+#ifndef QMACFUNCTIONS_H
+#define QMACFUNCTIONS_H
 
 #if 0
 #pragma qt_class(QtMacFunctions)
@@ -87,4 +87,4 @@ Q_MACEXTRAS_EXPORT NSImage* toMacNSImage(const QPixmap &pixmap);
 
 QT_END_NAMESPACE
 
-#endif //QTMACFUNCTIONS
+#endif //QMACFUNCTIONS

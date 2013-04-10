@@ -43,7 +43,7 @@
 #define WINDOW_H
 
 #include <QWidget>
-#include "qtmactoolbutton.h"
+#include "qmactoolbutton.h"
 
 namespace Ui {
 class Window;
