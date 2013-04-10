@@ -39,43 +39,54 @@
 **
 ****************************************************************************/
 
-#ifndef QTMACNATIVEWIDGET_H
-#define QTMACNATIVEWIDGET_H
+#ifndef QMACTOOLBUTTON_H
+#define QMACTOOLBUTTON_H
 
-#include "qmacextrasglobal.h"
+#include <QObject>
 
-#include <QWidget>
-#import <Availability.h>
+class QAction;
 
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
-
-QT_MODULE(Gui)
-
-#ifdef __OBJC__
-@class NSView;
-#else
-typedef struct objc_object NSView;
-#endif
-
-class Q_MACEXTRAS_EXPORT QMacNativeWidget : public QWidget
+class QMacToolButton : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool selectable READ selectable WRITE setSelectable)
+    Q_PROPERTY(StandardItem standardItem READ standardItem WRITE setStandardItem)
+    Q_ENUMS(StandardItem)
 public:
-    QMacNativeWidget(NSView *parentView = 0);
-    ~QMacNativeWidget();
+    enum StandardItem
+    {
+        NoItem,
+        ShowColors,
+        ShowFonts,
+        PrintItem,
+        Space,
+        FlexibleSpace
+    };
 
-    NSView *nativeView() const;
+    enum IconSize
+    {
+        IconSizeDefault,
+        IconSizeRegular,
+        IconSizeSmall
+    };
 
-    QSize sizeHint() const;
-protected:
-    void init(void *parentView);
-    bool event(QEvent *ev);
+    QMacToolButton();
+    QMacToolButton(QObject *parent);
+    virtual ~QMacToolButton();
+
+    bool selectable() const;
+    void setSelectable(bool selectable);
+
+    StandardItem standardItem() const;
+    void setStandardItem(StandardItem standardItem);
+signals:
+    void activated();
+private:
+    bool m_selectable;
+    StandardItem m_standardItem;
+public: // (not really public)
+    QAction *m_action;
+    void emitActivated() { emit activated(); }
 };
 
-QT_END_NAMESPACE
-
-QT_END_HEADER
-
-#endif // QTMACNATIVEWIDGET_H
+#endif

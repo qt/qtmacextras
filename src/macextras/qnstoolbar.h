@@ -39,54 +39,19 @@
 **
 ****************************************************************************/
 
-#ifndef QTMACTOOLBUTTON_H
-#define QTMACTOOLBUTTON_H
+#ifndef QNSTOOLBAR_H
+#define QNSTOOLBAR_H
 
-#include <QObject>
+#include <AppKit/NSToolbar.h>
 
-class QAction;
+extern NSString *QtNSToolbarDisplayModeChangedNotification;
+extern NSString *QtNSToolbarShowsBaselineSeparatorChangedNotification;
+extern NSString *QtNSToolbarAllowsUserCustomizationChangedNotification;
+extern NSString *QtNSToolbarSizeModeChangedNotification;
+extern NSString *QtNSToolbarVisibilityChangedNotification;
 
-class QMacToolButton : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(bool selectable READ selectable WRITE setSelectable)
-    Q_PROPERTY(StandardItem standardItem READ standardItem WRITE setStandardItem)
-    Q_ENUMS(StandardItem)
-public:
-    enum StandardItem
-    {
-        NoItem,
-        ShowColors,
-        ShowFonts,
-        PrintItem,
-        Space,
-        FlexibleSpace
-    };
+@interface QtNSToolbar : NSToolbar
 
-    enum IconSize
-    {
-        IconSizeDefault,
-        IconSizeRegular,
-        IconSizeSmall
-    };
+@end
 
-    QMacToolButton();
-    QMacToolButton(QObject *parent);
-    virtual ~QMacToolButton();
-
-    bool selectable() const;
-    void setSelectable(bool selectable);
-
-    StandardItem standardItem() const;
-    void setStandardItem(StandardItem standardItem);
-signals:
-    void activated();
-private:
-    bool m_selectable;
-    StandardItem m_standardItem;
-public: // (not really public)
-    QAction *m_action;
-    void emitActivated() { emit activated(); }
-};
-
-#endif
+#endif // QNSTOOLBAR_H

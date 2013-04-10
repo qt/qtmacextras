@@ -38,8 +38,8 @@
  ** $QT_END_LICENSE$
  **
  ****************************************************************************/
-#ifndef QTMACCOCOAVIEWCONTAINER_H
-#define QTMACCOCOAVIEWCONTAINER_H
+#ifndef QMACCOCOAVIEWCONTAINER_H
+#define QMACCOCOAVIEWCONTAINER_H
 
 #include "qmacextrasglobal.h"
 
@@ -74,5 +74,5 @@ QT_END_NAMESPACE
 
 QT_END_HEADER
 
-#endif // QTMACCOCOAVIEWCONTAINER_H
+#endif // QMACCOCOAVIEWCONTAINER_H
 

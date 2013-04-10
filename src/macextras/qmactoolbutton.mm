@@ -39,19 +39,51 @@
 **
 ****************************************************************************/
 
-#ifndef QTNSTOOLBAR_H
-#define QTNSTOOLBAR_H
+#include "qmactoolbutton.h"
+#include <QAction>
 
-#include <AppKit/NSToolbar.h>
+QMacToolButton::QMacToolButton()
+{
+   m_standardItem = NoItem;
+   m_selectable = false;
+   m_action = 0;
+}
 
-extern NSString *QtNSToolbarDisplayModeChangedNotification;
-extern NSString *QtNSToolbarShowsBaselineSeparatorChangedNotification;
-extern NSString *QtNSToolbarAllowsUserCustomizationChangedNotification;
-extern NSString *QtNSToolbarSizeModeChangedNotification;
-extern NSString *QtNSToolbarVisibilityChangedNotification;
+QMacToolButton::QMacToolButton(QObject *parent)
+    :QObject(parent)
+{
+    m_standardItem = NoItem;
+    m_selectable = false;
+    m_action = 0;
+}
 
-@interface QtNSToolbar : NSToolbar
+QMacToolButton::~QMacToolButton()
+{
 
-@end
+}
 
-#endif // QTNSTOOLBAR_H
+bool QMacToolButton::selectable() const
+{
+    if (m_action)
+        return m_action->isCheckable();
+
+    return m_selectable;
+}
+
+void QMacToolButton::setSelectable(bool selectable)
+{
+    if (m_action)
+        m_action->setCheckable(selectable);
+    else
+        m_selectable = selectable;
+}
+
+QMacToolButton::StandardItem QMacToolButton::standardItem() const
+{
+    return m_standardItem;
+}
+
+void QMacToolButton::setStandardItem(StandardItem standardItem)
+{
+    m_standardItem = standardItem;
+}

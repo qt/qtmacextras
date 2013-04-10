@@ -42,7 +42,7 @@
 #include "window.h"
 #include "ui_window.h"
 #include "preferenceswindow.h"
-#include "qtmacunifiedtoolbar.h"
+#include "qmacunifiedtoolbar.h"
 #include <QDesktopWidget>
 #include <QMenuBar>
 #include <QTimer>

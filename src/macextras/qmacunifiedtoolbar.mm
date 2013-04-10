@@ -40,9 +40,9 @@
 ****************************************************************************/
 
 #include "qmacfunctions.h"
-#include "qtmacunifiedtoolbar.h"
-#include "qtmactoolbardelegate.h"
-#include "qtnstoolbar.h"
+#include "qmacunifiedtoolbar.h"
+#include "qmactoolbardelegate.h"
+#include "qnstoolbar.h"
 #include <QAction>
 #include <QApplication>
 #include <QDebug>

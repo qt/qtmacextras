@@ -41,7 +41,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "qtmaccocoaviewcontainer.h"
+#include "qmaccocoaviewcontainer.h"
 
 #include <qpa/qplatformnativeinterface.h>
 #include <QtGui/QWindow>
