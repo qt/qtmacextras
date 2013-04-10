@@ -55,19 +55,19 @@ QT_BEGIN_NAMESPACE
 typedef struct objc_object NSView;
 #endif
 
-class QtMacCocoaViewContainerPrivate;
-class Q_MACEXTRAS_EXPORT QtMacCocoaViewContainer : public QWidget
+class QMacCocoaViewContainerPrivate;
+class Q_MACEXTRAS_EXPORT QMacCocoaViewContainer : public QWidget
 {
     Q_OBJECT
 public:
-    QtMacCocoaViewContainer(NSView *cocoaViewToWrap, QWidget *parent = 0);
-    virtual ~QtMacCocoaViewContainer();
+    QMacCocoaViewContainer(NSView *cocoaViewToWrap, QWidget *parent = 0);
+    virtual ~QMacCocoaViewContainer();
 
     void setCocoaView(NSView *virew);
     NSView *cocoaView() const;
 
 private:
-    QtMacCocoaViewContainerPrivate *d;
+    QMacCocoaViewContainerPrivate *d;
 };
 
 QT_END_NAMESPACE

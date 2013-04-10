@@ -47,19 +47,19 @@
 #include <QtGui/QWindow>
 
 /*!
-    \class QtMacCocoaViewContainer
+    \class QMacCocoaViewContainer
 
-    \brief The QtMacCocoaViewContainer class provides a widget for Mac OS X that can be used to wrap arbitrary
+    \brief The QMacCocoaViewContainer class provides a widget for Mac OS X that can be used to wrap arbitrary
     Cocoa views (i.e., NSView subclasses) and insert them into Qt hierarchies.
 
     \ingroup advanced
 
     While Qt offers a lot of classes for writing your application, Apple's
     Cocoa framework offers lots of functionality that is not currently in Qt or
-    may never end up in Qt. Using QtMacCocoaViewContainer, it is possible to put an
+    may never end up in Qt. Using QMacCocoaViewContainer, it is possible to put an
     arbitrary NSView-derived class from Cocoa and put it in a Qt hierarchy.
     Depending on how comfortable you are with using objective-C, you can use
-    QtMacCocoaViewContainer directly, or subclass it to wrap further functionality
+    QMacCocoaViewContainer directly, or subclass it to wrap further functionality
     of the underlying NSView.
 
     It should be also noted that at the low level on Mac OS X, there is a
@@ -68,67 +68,67 @@
     doesn't end up as a top-level. The best way to ensure this is to make sure
     you always have a parent and not set the parent to 0.
 
-    If you are using QtMacCocoaViewContainer as a sub-class and are mixing and
+    If you are using QMacCocoaViewContainer as a sub-class and are mixing and
     matching objective-C with C++ (a.k.a. objective-C++). It is probably
     simpler to have your file end with \tt{.mm} than \tt{.cpp}. Most Apple tools will
     correctly identify the source as objective-C++.
 
-    QtMacCocoaViewContainer requires knowledge of how Cocoa works, especially in
+    QMacCocoaViewContainer requires knowledge of how Cocoa works, especially in
     regard to its reference counting (retain/release) nature. It is noted in
     the functions below if there is any change in the reference count. Cocoa
     views often generate temporary objects that are released by an autorelease
     pool. If this is done outside of a running event loop, it is up to the
     developer to provide the autorelease pool.
 
-    The following is a snippet of subclassing QtMacCocoaViewContainer to wrap a NSSearchField.
+    The following is a snippet of subclassing QMacCocoaViewContainer to wrap a NSSearchField.
     \snippet demos/macmainwindow/macmainwindow.mm 0
 
 */
 
 QT_BEGIN_NAMESPACE
 
-class QtMacCocoaViewContainerPrivate
+class QMacCocoaViewContainerPrivate
 {
 public:
     NSView *nsview;
-    QtMacCocoaViewContainerPrivate();
-    ~QtMacCocoaViewContainerPrivate();
+    QMacCocoaViewContainerPrivate();
+    ~QMacCocoaViewContainerPrivate();
 };
 
-QtMacCocoaViewContainerPrivate::QtMacCocoaViewContainerPrivate()
+QMacCocoaViewContainerPrivate::QMacCocoaViewContainerPrivate()
      : nsview(0)
 {
 }
 
-QtMacCocoaViewContainerPrivate::~QtMacCocoaViewContainerPrivate()
+QMacCocoaViewContainerPrivate::~QMacCocoaViewContainerPrivate()
 {
     [nsview release];
 }
 
 /*!
-    \fn QtMacCocoaViewContainer::QtMacCocoaViewContainer(NSView *cocoaViewToWrap, QWidget *parent)
+    \fn QMacCocoaViewContainer::QMacCocoaViewContainer(NSView *cocoaViewToWrap, QWidget *parent)
 
-    Create a new QtMacCocoaViewContainer using the NSView pointer in \a
-    cocoaViewToWrap with parent, \a parent. QtMacCocoaViewContainer will
+    Create a new QMacCocoaViewContainer using the NSView pointer in \a
+    cocoaViewToWrap with parent, \a parent. QMacCocoaViewContainer will
     retain \a cocoaViewToWrap.
 
 */
-QtMacCocoaViewContainer::QtMacCocoaViewContainer(NSView *view, QWidget *parent)
+QMacCocoaViewContainer::QMacCocoaViewContainer(NSView *view, QWidget *parent)
    : QWidget(parent, 0)
-   , d(new QtMacCocoaViewContainerPrivate)
+   , d(new QMacCocoaViewContainerPrivate)
 {
 
     if (view)
         setCocoaView(view);
 
-    // QtMacCocoaViewContainer requires a native window handle.
+    // QMacCocoaViewContainer requires a native window handle.
     setAttribute(Qt::WA_NativeWindow);
 }
 
 /*!
-    Destroy the QtMacCocoaViewContainer and release the wrapped view.
+    Destroy the QMacCocoaViewContainer and release the wrapped view.
 */
-QtMacCocoaViewContainer::~QtMacCocoaViewContainer()
+QMacCocoaViewContainer::~QMacCocoaViewContainer()
 {
     delete d;
 }
@@ -136,7 +136,7 @@ QtMacCocoaViewContainer::~QtMacCocoaViewContainer()
 /*!
     Returns the NSView that has been set on this container.
 */
-NSView *QtMacCocoaViewContainer::cocoaView() const
+NSView *QMacCocoaViewContainer::cocoaView() const
 {
     return d->nsview;
 }
@@ -145,7 +145,7 @@ NSView *QtMacCocoaViewContainer::cocoaView() const
     Sets the NSView to contain to be \a cocoaViewToWrap and retains it. If this
     container already had a view set, it will release the previously set view.
 */
-void QtMacCocoaViewContainer::setCocoaView(NSView *view)
+void QMacCocoaViewContainer::setCocoaView(NSView *view)
 {
     NSView *oldView = d->nsview;
     [view retain];
