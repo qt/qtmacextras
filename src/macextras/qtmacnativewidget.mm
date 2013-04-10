@@ -50,18 +50,18 @@
 #import <Cocoa/Cocoa.h>
 
 /*!
-    \class QtMacNativeWidget
-    \brief The QtMacNativeWidget class provides a widget for Mac OS X that provides a way to put Qt widgets
+    \class QMacNativeWidget
+    \brief The QMacNativeWidget class provides a widget for Mac OS X that provides a way to put Qt widgets
     into Cocoa hierarchies.
 
-    QtMacNativeWidget bridges the gap between NSViews and QWidgets and makes it possible to put a
+    QMacNativeWidget bridges the gap between NSViews and QWidgets and makes it possible to put a
     hierarchy of Qt widgets into a non-Qt window or view.
 
-    QtMacNativeWidget pretends it is a window (i.e. isWindow() will return true),
+    QMacNativeWidget pretends it is a window (i.e. isWindow() will return true),
     but it cannot be shown on its own. It needs to be put into a window
     when it is created or later through a native call.
 
-    Note that QtMacNativeWidget requires knowledge of Cocoa. All it
+    Note that QMacNativeWidget requires knowledge of Cocoa. All it
     does is get the Qt hierarchy into a window not owned by Qt. It is then up
     to the programmer to ensure it is placed correctly in the window and
     responds correctly to events.
@@ -89,10 +89,10 @@ NSView *getEmbeddableView(QWindow *qtWindow)
 #endif
 
 /*!
-    Create a QtMacNativeWidget with \a parentView as its "superview" (i.e.,
+    Create a QMacNativeWidget with \a parentView as its "superview" (i.e.,
     parent). The \a parentView is  a NSView pointer.
 */
-QtMacNativeWidget::QtMacNativeWidget(NSView *parentView)
+QMacNativeWidget::QMacNativeWidget(NSView *parentView)
     : QWidget(0, Qt::Window | Qt::SubWindow)
 {
     Q_UNUSED(parentView);
@@ -103,7 +103,7 @@ QtMacNativeWidget::QtMacNativeWidget(NSView *parentView)
     setAttribute(Qt::WA_LayoutUsesWidgetRect);
 }
 
-NSView *QtMacNativeWidget::nativeView() const
+NSView *QMacNativeWidget::nativeView() const
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     winId();
@@ -114,18 +114,18 @@ NSView *QtMacNativeWidget::nativeView() const
 }
 
 /*!
-    Destroy the QtMacNativeWidget.
+    Destroy the QMacNativeWidget.
 */
-QtMacNativeWidget::~QtMacNativeWidget()
+QMacNativeWidget::~QMacNativeWidget()
 {
 }
 
 /*!
     \reimp
 */
-QSize QtMacNativeWidget::sizeHint() const
+QSize QMacNativeWidget::sizeHint() const
 {
-    // QtMacNativeWidget really does not have any other choice
+    // QMacNativeWidget really does not have any other choice
     // than to fill its designated area.
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     if (windowHandle())
@@ -139,7 +139,7 @@ QSize QtMacNativeWidget::sizeHint() const
 /*!
     \reimp
 */
-bool QtMacNativeWidget::event(QEvent *ev)
+bool QMacNativeWidget::event(QEvent *ev)
 {
     return QWidget::event(ev);
 }

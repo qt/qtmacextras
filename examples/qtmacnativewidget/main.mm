@@ -88,7 +88,7 @@ public:
     [window setTitle:@"NSWindow"];
 
     // Create widget hierarchy with QPushButton and QLineEdit
-    QtMacNativeWidget *nativeWidget = new QtMacNativeWidget();
+    QMacNativeWidget *nativeWidget = new QMacNativeWidget();
 
     QHBoxLayout *hlayout = new QHBoxLayout();
     hlayout->addWidget(new QPushButton("Push", nativeWidget));
