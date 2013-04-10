@@ -132,7 +132,7 @@ public:
     QtMacUnifiedToolBarPrivate(QtMacUnifiedToolBar *parent, const QString &identifier = QString())
     {
         qtToolbar = parent;
-        toolbar = [[QtNSToolbar alloc] initWithIdentifier:Qt::toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
+        toolbar = [[QtNSToolbar alloc] initWithIdentifier:QtMacExtras::toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
         [toolbar setAutosavesConfiguration:NO];
 
         delegate = [[QtMacToolbarDelegate alloc] init];
@@ -279,7 +279,7 @@ QtMacUnifiedToolBar *QtMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar, 
 
 QString QtMacUnifiedToolBar::identifier() const
 {
-    return Qt::fromNSString([d->toolbar identifier]);
+    return QtMacExtras::fromNSString([d->toolbar identifier]);
 }
 
 bool QtMacUnifiedToolBar::isVisible() const
@@ -487,7 +487,7 @@ QAction *QtMacUnifiedToolBar::setSelectedItem(QAction *action)
         {
             if (toolButton->m_action && toolButton->m_action->isChecked())
             {
-                [d->toolbar setSelectedItemIdentifier:Qt::toNSString(QString::number(qulonglong(toolButton)))];
+                [d->toolbar setSelectedItemIdentifier:QtMacExtras::toNSString(QString::number(qulonglong(toolButton)))];
                 break;
             }
             else

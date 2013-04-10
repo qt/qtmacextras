@@ -71,7 +71,7 @@ class QString;
 Q_MACEXTRAS_EXPORT void qt_mac_set_dock_menu(QMenu *menu);
 #endif
 
-namespace Qt
+namespace QtMacExtras
 {
 Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
 Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
@@ -80,6 +80,7 @@ Q_MACEXTRAS_EXPORT QPixmap fromMacCGImageRef(CGImageRef image);
 
 #ifndef Q_OS_IOS
 Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
+Q_MACEXTRAS_EXPORT NSImage* toMacNSImage(const QPixmap &pixmap);
 Q_MACEXTRAS_EXPORT NSImage* toMacNSImage(const QPixmap &pixmap);
 #endif
 }
