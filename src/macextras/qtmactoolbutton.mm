@@ -42,14 +42,14 @@
 #include "qtmactoolbutton.h"
 #include <QAction>
 
-QtMacToolButton::QtMacToolButton()
+QMacToolButton::QMacToolButton()
 {
    m_standardItem = NoItem;
    m_selectable = false;
    m_action = 0;
 }
 
-QtMacToolButton::QtMacToolButton(QObject *parent)
+QMacToolButton::QMacToolButton(QObject *parent)
     :QObject(parent)
 {
     m_standardItem = NoItem;
@@ -57,12 +57,12 @@ QtMacToolButton::QtMacToolButton(QObject *parent)
     m_action = 0;
 }
 
-QtMacToolButton::~QtMacToolButton()
+QMacToolButton::~QMacToolButton()
 {
 
 }
 
-bool QtMacToolButton::selectable() const
+bool QMacToolButton::selectable() const
 {
     if (m_action)
         return m_action->isCheckable();
@@ -70,7 +70,7 @@ bool QtMacToolButton::selectable() const
     return m_selectable;
 }
 
-void QtMacToolButton::setSelectable(bool selectable)
+void QMacToolButton::setSelectable(bool selectable)
 {
     if (m_action)
         m_action->setCheckable(selectable);
@@ -78,12 +78,12 @@ void QtMacToolButton::setSelectable(bool selectable)
         m_selectable = selectable;
 }
 
-QtMacToolButton::StandardItem QtMacToolButton::standardItem() const
+QMacToolButton::StandardItem QMacToolButton::standardItem() const
 {
     return m_standardItem;
 }
 
-void QtMacToolButton::setStandardItem(StandardItem standardItem)
+void QMacToolButton::setStandardItem(StandardItem standardItem)
 {
     m_standardItem = standardItem;
 }

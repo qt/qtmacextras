@@ -42,14 +42,14 @@
 #include <QString>
 
 class QToolBar;
-class QtMacUnifiedToolBar;
+class QMacUnifiedToolBar;
 
-QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar*, bool)
+QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar*, bool)
 {
     return 0;
 }
 
-QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar*, const QString&, bool)
+QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar*, const QString&, bool)
 {
     return NULL;
 }

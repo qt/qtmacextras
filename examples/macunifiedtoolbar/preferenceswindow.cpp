@@ -56,7 +56,7 @@ PreferencesWindow::PreferencesWindow(QWidget *parent) :
         items->addAction(action);
 
     // This single line of code is all that's needed to transform a QToolBar into
-    // a QtMacUnifiedToolBar. It is available on all platforms and is simply a no-op
+    // a QMacUnifiedToolBar. It is available on all platforms and is simply a no-op
     // on platforms other than OS X.
     ::setUnifiedTitleAndToolBarOnMac(ui->toolBar, ui->useNativeToolbarCheckBox->isChecked());
 

@@ -48,10 +48,10 @@
 
 class QToolBar;
 class QWidget;
-class QtMacUnifiedToolBar;
+class QMacUnifiedToolBar;
 
-Q_MACEXTRAS_EXPORT QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
-Q_MACEXTRAS_EXPORT QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on = true);
+Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
+Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on = true);
 
 #include "qtmactoolbutton.h"
 #include <QObject>
@@ -61,20 +61,20 @@ Q_MACEXTRAS_EXPORT QtMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar 
 class QAction;
 class QWindow;
 
-class QtMacUnifiedToolBarPrivate;
-class Q_MACEXTRAS_EXPORT QtMacUnifiedToolBar : public QObject
+class QMacUnifiedToolBarPrivate;
+class Q_MACEXTRAS_EXPORT QMacUnifiedToolBar : public QObject
 {
-    friend class QtMacUnifiedToolBarPrivate;
+    friend class QMacUnifiedToolBarPrivate;
 
     Q_OBJECT
-    Q_PROPERTY(QList<QtMacToolButton *> buttons READ buttons)
-    Q_PROPERTY(QList<QtMacToolButton *> allowedButtons READ allowedButtons)
+    Q_PROPERTY(QList<QMacToolButton *> buttons READ buttons)
+    Q_PROPERTY(QList<QMacToolButton *> allowedButtons READ allowedButtons)
 public:
-    QtMacUnifiedToolBar(QObject *parent = 0);
-    QtMacUnifiedToolBar(const QString &identifier, QObject *parent = 0);
-    ~QtMacUnifiedToolBar();
+    QMacUnifiedToolBar(QObject *parent = 0);
+    QMacUnifiedToolBar(const QString &identifier, QObject *parent = 0);
+    ~QMacUnifiedToolBar();
 
-    static QtMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar, const QString &identifier = QString());
+    static QMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar, const QString &identifier = QString());
 
     QString identifier() const;
     bool isVisible() const;
@@ -82,10 +82,10 @@ public:
     bool allowsUserCustomization() const;
     Qt::ToolButtonStyle toolButtonStyle() const;
     QSize iconSize() const;
-    QtMacToolButton::IconSize iconSizeType() const;
+    QMacToolButton::IconSize iconSizeType() const;
 
-    QList<QtMacToolButton *> buttons();
-    QList<QtMacToolButton *> allowedButtons();
+    QList<QMacToolButton *> buttons();
+    QList<QMacToolButton *> allowedButtons();
 
     void showInWindow(QWindow *window);
     void showInWindowForWidget(QWidget *widget);
@@ -99,13 +99,13 @@ public:
     Q_INVOKABLE QAction *addAction(const QIcon &icon, const QString &text);
     Q_INVOKABLE QAction *addAction(QAction *action);
     Q_INVOKABLE void addSeparator();
-    Q_INVOKABLE QAction *addStandardItem(QtMacToolButton::StandardItem standardItem);
+    Q_INVOKABLE QAction *addStandardItem(QMacToolButton::StandardItem standardItem);
 
     // Add actions to the "Customize Toolbar" menu
     Q_INVOKABLE QAction *addAllowedAction(const QString &text);
     Q_INVOKABLE QAction *addAllowedAction(const QIcon &icon, const QString &text);
     Q_INVOKABLE QAction *addAllowedAction(QAction *action);
-    Q_INVOKABLE QAction *addAllowedStandardItem(QtMacToolButton::StandardItem standardItem);
+    Q_INVOKABLE QAction *addAllowedStandardItem(QMacToolButton::StandardItem standardItem);
 
 signals:
     void visibilityChanged(bool visible);
@@ -113,7 +113,7 @@ signals:
     void allowsUserCustomizationChanged(bool allow);
     void toolButtonStyleChanged(Qt::ToolButtonStyle toolButtonStyle);
     void iconSizeChanged(const QSize &iconSize);
-    void iconSizeChanged(QtMacToolButton::IconSize iconSize);
+    void iconSizeChanged(QMacToolButton::IconSize iconSize);
 
 public Q_SLOTS:
     void setVisible(bool visible);
@@ -121,7 +121,7 @@ public Q_SLOTS:
     void setAllowsUserCustomization(bool allow);
     void setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle);
     void setIconSize(const QSize &iconSize);
-    void setIconSize(QtMacToolButton::IconSize iconSize);
+    void setIconSize(QMacToolButton::IconSize iconSize);
     void showCustomizationSheet();
 
 private Q_SLOTS:
@@ -132,12 +132,12 @@ private Q_SLOTS:
 private:
     QWindow *targetWindow;
     QWidget *targetWidget;
-    QList<QtMacToolButton *> m_buttons;
-    QList<QtMacToolButton *> m_allowedButtons;
-    QtMacUnifiedToolBarPrivate *d;
+    QList<QMacToolButton *> m_buttons;
+    QList<QMacToolButton *> m_allowedButtons;
+    QMacUnifiedToolBarPrivate *d;
 };
 
-Q_DECLARE_METATYPE(QtMacUnifiedToolBar*)
+Q_DECLARE_METATYPE(QMacUnifiedToolBar*)
 
 #endif
 

@@ -53,8 +53,8 @@ class QIcon;
 @interface QtMacToolbarDelegate : NSObject <NSToolbarDelegate>
 {
 @public
-    QList<QtMacToolButton *> items;
-    QList<QtMacToolButton *> allowedItems;
+    QList<QMacToolButton *> items;
+    QList<QMacToolButton *> allowedItems;
 
 //    QHash<QString, QAction*> actions;
 //    QHash<QString, QAction*> allowedActions;
@@ -68,12 +68,12 @@ class QIcon;
 - (QAction *)addActionWithText:(const QString *)text;
 - (QAction *)addActionWithText:(const QString *)text icon:(const QIcon *)icon;
 - (QAction *)addAction:(QAction *)action;
-- (QAction *)addStandardItem:(QtMacToolButton::StandardItem)standardItem;
+- (QAction *)addStandardItem:(QMacToolButton::StandardItem)standardItem;
 
 - (QAction *)addAllowedActionWithText:(const QString *)text;
 - (QAction *)addAllowedActionWithText:(const QString *)text icon:(const QIcon *)icon;
 - (QAction *)addAllowedAction:(QAction *)action;
-- (QAction *)addAllowedStandardItem:(QtMacToolButton::StandardItem)standardItem;
+- (QAction *)addAllowedStandardItem:(QMacToolButton::StandardItem)standardItem;
 
 - (IBAction)itemClicked:(id)sender;
 @end

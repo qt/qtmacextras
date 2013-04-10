@@ -46,7 +46,7 @@
 
 class QAction;
 
-class QtMacToolButton : public QObject
+class QMacToolButton : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool selectable READ selectable WRITE setSelectable)
@@ -70,9 +70,9 @@ public:
         IconSizeSmall
     };
 
-    QtMacToolButton();
-    QtMacToolButton(QObject *parent);
-    virtual ~QtMacToolButton();
+    QMacToolButton();
+    QMacToolButton(QObject *parent);
+    virtual ~QMacToolButton();
 
     bool selectable() const;
     void setSelectable(bool selectable);
