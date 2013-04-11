@@ -113,7 +113,7 @@ Qt::ToolButtonStyle toQtToolButtonStyle(NSToolbarDisplayMode toolbarDisplayMode)
     }
 }
 
-@interface QtNSToolbarNotifier : NSObject
+@interface QNSToolbarNotifier : NSObject
 {
 @public
     QMacUnifiedToolBarPrivate *pimpl;
@@ -126,8 +126,8 @@ class QMacUnifiedToolBarPrivate
 public:
     QMacUnifiedToolBar *qtToolbar;
     NSToolbar *toolbar;
-    QtMacToolbarDelegate *delegate;
-    QtNSToolbarNotifier *notifier;
+    QMacToolbarDelegate *delegate;
+    QNSToolbarNotifier *notifier;
 
     QMacUnifiedToolBarPrivate(QMacUnifiedToolBar *parent, const QString &identifier = QString())
     {
@@ -135,10 +135,10 @@ public:
         toolbar = [[QtNSToolbar alloc] initWithIdentifier:QtMacExtras::toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
         [toolbar setAutosavesConfiguration:NO];
 
-        delegate = [[QtMacToolbarDelegate alloc] init];
+        delegate = [[QMacToolbarDelegate alloc] init];
         [toolbar setDelegate:delegate];
 
-        notifier = [[QtNSToolbarNotifier alloc] init];
+        notifier = [[QNSToolbarNotifier alloc] init];
         notifier->pimpl = this;
         [[NSNotificationCenter defaultCenter] addObserver:notifier selector:@selector(notification:) name:nil object:toolbar];
     }
@@ -180,7 +180,7 @@ public:
     }
 };
 
-@implementation QtNSToolbarNotifier
+@implementation QNSToolbarNotifier
 
 - (void)notification:(NSNotification*)note
 {
