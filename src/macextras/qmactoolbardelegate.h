@@ -50,7 +50,7 @@
 class QAction;
 class QIcon;
 
-@interface QtMacToolbarDelegate : NSObject <NSToolbarDelegate>
+@interface QMacToolbarDelegate : NSObject <NSToolbarDelegate>
 {
 @public
     QList<QMacToolButton *> items;
@@ -79,4 +79,4 @@ class QIcon;
 @end
 
 
-#endif // QTMACTOOLBARDELEGATE_H
+#endif // QMACTOOLBARDELEGATE_H
