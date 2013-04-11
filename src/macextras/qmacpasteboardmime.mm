@@ -52,13 +52,13 @@ extern QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePla
 
 /*!
     \fn void qRegisterDraggedTypes(const QStringList &types)
-    \relates QtMacPasteboardMime
+    \relates QMacPasteboardMime
 
     Registers the given \a types as custom pasteboard types.
 
     This function should be called to enable the Drag and Drop events
     for custom pasteboard types on Cocoa implementations. This is required
-    in addition to a QtMacPasteboardMime subclass implementation. By default
+    in addition to a QMacPasteboardMime subclass implementation. By default
     drag and drop is enabled for all standard pasteboard types.
 
     \sa QMacPasteboardMime
