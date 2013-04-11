@@ -87,7 +87,7 @@ QString qt_strippedText(QString s)
     return s.trimmed();
 }
 
-@implementation QtMacToolbarDelegate
+@implementation QMacToolbarDelegate
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
