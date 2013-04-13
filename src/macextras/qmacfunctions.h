@@ -50,7 +50,6 @@
 
 typedef struct CGImage *CGImageRef;
 
-
 #ifdef __OBJC__
 @class NSImage;
 @class NSString;
@@ -72,13 +71,15 @@ namespace QtMacExtras
 {
 Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
 Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
+
 Q_MACEXTRAS_EXPORT CGImageRef toCGImageRef(const QPixmap &pixmap);
 Q_MACEXTRAS_EXPORT QPixmap fromCGImageRef(CGImageRef image);
 
 #ifndef Q_OS_IOS
-Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
-Q_MACEXTRAS_EXPORT NSMenu *toNSMenu(QMenuBar *menubar);
 Q_MACEXTRAS_EXPORT NSImage* toNSImage(const QPixmap &pixmap);
+
+Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
+Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenuBar *menubar);
 
 Q_MACEXTRAS_EXPORT void setDockMenu(QMenu *menu);
 #endif
@@ -91,4 +92,4 @@ inline void qt_mac_set_dock_menu(QMenu *menu) { QtMacExtras::setDockMenu(menu); 
 
 QT_END_NAMESPACE
 
-#endif //QMACFUNCTIONS
+#endif // QMACFUNCTIONS_H

@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD
 
 mac {
     PUBLIC_HEADERS += $$PWD/qmacfunctions.h
+    PRIVATE_HEADERS += $$PWD/qmacfunctions_p.h
     OBJECTIVE_SOURCES += $$PWD/qmacfunctions.mm
 
     !ios {
@@ -17,6 +18,7 @@ mac {
 
         OBJECTIVE_SOURCES += \
             $$PWD/qmaccocoaviewcontainer.mm \
+            $$PWD/qmacfunctions_mac.mm \
             $$PWD/qmacnativetoolbar.mm \
             $$PWD/qmacnativewidget.mm \
             $$PWD/qmactoolbardelegate.mm \
