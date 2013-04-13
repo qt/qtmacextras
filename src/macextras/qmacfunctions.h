@@ -68,10 +68,6 @@ class QMenuBar;
 class QPixmap;
 class QString;
 
-#ifndef Q_OS_IOS
-Q_MACEXTRAS_EXPORT void qt_mac_set_dock_menu(QMenu *menu);
-#endif
-
 namespace QtMacExtras
 {
 Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
@@ -83,8 +79,15 @@ Q_MACEXTRAS_EXPORT QPixmap fromCGImageRef(CGImageRef image);
 Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
 Q_MACEXTRAS_EXPORT NSMenu *toNSMenu(QMenuBar *menubar);
 Q_MACEXTRAS_EXPORT NSImage* toNSImage(const QPixmap &pixmap);
+
+Q_MACEXTRAS_EXPORT void setDockMenu(QMenu *menu);
 #endif
 }
+
+#ifndef Q_OS_IOS
+// ### Qt 4 compatibility; remove in Qt 6
+inline void qt_mac_set_dock_menu(QMenu *menu) { QtMacExtras::setDockMenu(menu); }
+#endif
 
 QT_END_NAMESPACE
 

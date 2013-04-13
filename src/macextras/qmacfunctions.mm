@@ -69,19 +69,6 @@ QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFu
 }
 
 #ifndef Q_OS_IOS
-void qt_mac_set_dock_menu(QMenu *menu)
-{
-    // Get the platform menu, which will be a QCocoaMenu
-    QPlatformMenu *platformMenu = menu->platformMenu();
-
-    // Get the setDockMenu function and call it.
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("setdockmenu");
-    if (function) {
-        typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
-        reinterpret_cast<SetDockMenuFunction>(function)(platformMenu);
-    }
-}
-
 NSMenu *QtMacExtras::toNSMenu(QMenu *menu)
 {
     // Get the platform menu, which will be a QCocoaMenu
@@ -166,6 +153,19 @@ NSImage* toNSImage(const QPixmap &pixmap)
     [image addRepresentation:bitmapRep];
     [bitmapRep release];
     return image;
+}
+
+void setDockMenu(QMenu *menu)
+{
+    // Get the platform menu, which will be a QCocoaMenu
+    QPlatformMenu *platformMenu = menu->platformMenu();
+
+    // Get the setDockMenu function and call it.
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("setdockmenu");
+    if (function) {
+        typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
+        reinterpret_cast<SetDockMenuFunction>(function)(platformMenu);
+    }
 }
 #endif
 
