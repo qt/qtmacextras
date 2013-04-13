@@ -48,12 +48,12 @@
 
 class QToolBar;
 class QWidget;
-class QMacUnifiedToolBar;
+class QMacNativeToolBar;
 
 namespace QtMacExtras
 {
-Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setNativeToolBar(QToolBar *toolbar, bool on = true);
-Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on = true);
+Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, bool on = true);
+Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on = true);
 }
 
 #include "qmactoolbutton.h"
@@ -70,22 +70,22 @@ class QWindow;
 typedef struct objc_object NSToolbar;
 #endif
 
-class QMacUnifiedToolBarPrivate;
-class Q_MACEXTRAS_EXPORT QMacUnifiedToolBar : public QObject
+class QMacNativeToolBarPrivate;
+class Q_MACEXTRAS_EXPORT QMacNativeToolBar : public QObject
 {
-    friend class QMacUnifiedToolBarPrivate;
+    friend class QMacNativeToolBarPrivate;
 
     Q_OBJECT
     Q_PROPERTY(QList<QMacToolButton *> buttons READ buttons)
     Q_PROPERTY(QList<QMacToolButton *> allowedButtons READ allowedButtons)
 public:
-    QMacUnifiedToolBar(QObject *parent = 0);
-    QMacUnifiedToolBar(const QString &identifier, QObject *parent = 0);
-    ~QMacUnifiedToolBar();
+    QMacNativeToolBar(QObject *parent = 0);
+    QMacNativeToolBar(const QString &identifier, QObject *parent = 0);
+    ~QMacNativeToolBar();
 
     NSToolbar* nativeToolbar() const;
 
-    static QMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar, const QString &identifier = QString());
+    static QMacNativeToolBar* fromQToolBar(const QToolBar *toolBar, const QString &identifier = QString());
 
     QString identifier() const;
     bool isVisible() const;
@@ -145,10 +145,10 @@ private:
     QWidget *targetWidget;
     QList<QMacToolButton *> m_buttons;
     QList<QMacToolButton *> m_allowedButtons;
-    QMacUnifiedToolBarPrivate *d;
+    QMacNativeToolBarPrivate *d;
 };
 
-Q_DECLARE_METATYPE(QMacUnifiedToolBar*)
+Q_DECLARE_METATYPE(QMacNativeToolBar*)
 
 #endif
 
