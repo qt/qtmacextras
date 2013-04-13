@@ -55,10 +55,8 @@ PreferencesWindow::PreferencesWindow(QWidget *parent) :
     foreach (QAction *action, ui->toolBar->actions())
         items->addAction(action);
 
-    // This single line of code is all that's needed to transform a QToolBar into
-    // a QMacUnifiedToolBar. It is available on all platforms and is simply a no-op
-    // on platforms other than OS X.
-    ::setUnifiedTitleAndToolBarOnMac(ui->toolBar, ui->useNativeToolbarCheckBox->isChecked());
+    // This single line of code is all that's needed to transform a QToolBar into a native toolbar!
+    QtMacExtras::setNativeToolBar(ui->toolBar, ui->useNativeToolbarCheckBox->isChecked());
 
     QTimer::singleShot(0, this, SLOT(pack()));
 }
@@ -94,7 +92,7 @@ void PreferencesWindow::toolbarItemTriggered()
 
 void PreferencesWindow::useNativeToolBarToggled(bool on)
 {
-    ::setUnifiedTitleAndToolBarOnMac(ui->toolBar, on);
+    QtMacExtras::setNativeToolBar(ui->toolBar, on);
     QTimer::singleShot(0, this, SLOT(pack()));
 }
 

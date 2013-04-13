@@ -199,16 +199,16 @@ public:
 
 @end
 
-QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on)
+QMacUnifiedToolBar* QtMacExtras::setNativeToolBar(QToolBar *toolbar, bool on)
 {
-    return setUnifiedTitleAndToolBarOnMac(toolbar, QString(), on);
+    return QtMacExtras::setNativeToolBar(toolbar, QString(), on);
 }
 
-QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on)
+QMacUnifiedToolBar* QtMacExtras::setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on)
 {
     if (!toolbar)
     {
-        qWarning() << "setNativeToolBarOnMac: toolbar was NULL";
+        qWarning() << "setNativeToolBar: toolbar was NULL";
         return NULL;
     }
 
