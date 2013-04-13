@@ -42,7 +42,7 @@
 #include "window.h"
 #include "ui_window.h"
 #include "preferenceswindow.h"
-#include "qmacunifiedtoolbar.h"
+#include <QMacNativeToolBar>
 #include <QDesktopWidget>
 #include <QMenuBar>
 #include <QTimer>
@@ -52,7 +52,7 @@ class WindowPrivate
 public:
     PreferencesWindow *preferencesWindow;
     QMenuBar *mainMenuBar;
-    QMacUnifiedToolBar *toolBar;
+    QMacNativeToolBar *toolBar;
 };
 
 Window::Window(QWidget *parent) :
@@ -68,7 +68,7 @@ Window::Window(QWidget *parent) :
     QMenu *toolsMenu = d->mainMenuBar->addMenu("Tools");
     toolsMenu->addAction("Options", d->preferencesWindow, SLOT(show()));
 
-    d->toolBar = new QMacUnifiedToolBar(this);
+    d->toolBar = new QMacNativeToolBar(this);
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "Hello");
     d->toolBar->addAction(QIcon(":/qtlogo.png"), "World");
     d->toolBar->addStandardItem(QMacToolButton::FlexibleSpace);

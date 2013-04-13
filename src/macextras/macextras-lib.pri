@@ -7,9 +7,9 @@ mac {
     !ios {
         PUBLIC_HEADERS += \
             $$PWD/qmaccocoaviewcontainer.h \
+            $$PWD/qmacnativetoolbar.h \
             $$PWD/qmacnativewidget.h \
-            $$PWD/qmactoolbutton.h \
-            $$PWD/qmacunifiedtoolbar.h
+            $$PWD/qmactoolbutton.h
 
         PRIVATE_HEADERS += \
             $$PWD/qmactoolbardelegate.h \
@@ -17,10 +17,10 @@ mac {
 
         OBJECTIVE_SOURCES += \
             $$PWD/qmaccocoaviewcontainer.mm \
+            $$PWD/qmacnativetoolbar.mm \
             $$PWD/qmacnativewidget.mm \
             $$PWD/qmactoolbardelegate.mm \
             $$PWD/qmactoolbutton.mm \
-            $$PWD/qmacunifiedtoolbar.mm \
             $$PWD/qnstoolbar.mm
 
         greaterThan(QT_MAJOR_VERSION, 4) {

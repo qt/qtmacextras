@@ -41,7 +41,7 @@
 
 #include "preferenceswindow.h"
 #include "ui_preferenceswindow.h"
-#include "qmacunifiedtoolbar.h"
+#include <QMacNativeToolBar>
 #include <QTimer>
 
 PreferencesWindow::PreferencesWindow(QWidget *parent) :
