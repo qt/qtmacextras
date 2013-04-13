@@ -39,81 +39,30 @@
 **
 ****************************************************************************/
 
+#ifndef QMACFUNCTIONS_P_H
+#define QMACFUNCTIONS_P_H
+
 #include "qmacfunctions.h"
-#include "qmacfunctions_p.h"
-#include <QPixmap>
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
 
 QT_BEGIN_NAMESPACE
 
-namespace QtMacExtras
-{
-
-NSString *toNSString(const QString &string)
-{
-    return [NSString stringWithCharacters:reinterpret_cast<const UniChar*>(string.unicode()) length:string.length()];
-}
-
-QString fromNSString(const NSString *string)
-{
-    if (!string)
-        return QString();
-
-    QString qstring;
-    qstring.resize([string length]);
-    [string getCharacters:reinterpret_cast<unichar*>(qstring.data()) range:NSMakeRange(0, [string length])];
-
-    return qstring;
-}
-
-/*!
-    Creates a \c CGImageRef equivalent to the QPixmap. Returns the \c CGImageRef handle.
-
-    It is the caller's responsibility to release the \c CGImageRef data
-    after use.
-
-    This function is not available in Qt 5.x until 5.0.2 and will return NULL in earlier versions.
-
-    \sa fromCGImageRef()
-*/
-CGImageRef toCGImageRef(const QPixmap &pixmap)
-{
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qimagetocgimage");
-    if (function) {
-        typedef CGImageRef (*QImageToCGImageFunction)(const QImage &image);
-        return reinterpret_cast<QImageToCGImageFunction>(function)(pixmap.toImage());
-    }
+#include <QtCore/QDebug>
+#include <QtGui/QGuiApplication>
+#include <qpa/qplatformnativeinterface.h>
 
-    return NULL;
-#else
-    return pixmap.toCGImageRef();
-#endif
-}
-
-/*!
-    Returns a QPixmap that is equivalent to the given \a image.
-
-    This function is not available in Qt 5.x until 5.0.2 and will return a null pixmap in earlier versions.
-
-    \sa toCGImageRef(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-*/
-QPixmap fromCGImageRef(CGImageRef image)
+inline QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("cgimagetoqimage");
-    if (function) {
-        typedef QImage (*CGImageToQImageFunction)(CGImageRef image);
-        return QPixmap::fromImage(reinterpret_cast<CGImageToQImageFunction>(function)(image));
-    }
-
-    return QPixmap();
-#else
-    return QPixmap::fromCGImageRef(image);
-#endif
+    QPlatformNativeInterface *nativeInterface = QGuiApplication::platformNativeInterface();
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function =
+        nativeInterface->nativeResourceFunctionForIntegration(functionName);
+    if (!function)
+         qWarning() << "Qt could not resolve function" << functionName
+                    << "from QGuiApplication::platformNativeInterface()->nativeResourceFunctionForIntegration()";
+    return function;
 }
-
-} // namespace QtMacExtras
+#endif
 
 QT_END_NAMESPACE
+
+#endif // QMACFUNCTIONS_P_H
