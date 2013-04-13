@@ -261,6 +261,11 @@ QMacUnifiedToolBar::~QMacUnifiedToolBar()
     delete d;
 }
 
+NSToolbar *QMacUnifiedToolBar::nativeToolbar() const
+{
+    return d->toolbar;
+}
+
 QMacUnifiedToolBar *QMacUnifiedToolBar::fromQToolBar(const QToolBar *toolBar, const QString &identifier)
 {
     // TODO: add the QToolBar's QWidgets to the Mac toolbar once it supports this

@@ -64,6 +64,12 @@ Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setNativeToolBar(QToolBar *toolbar, const
 class QAction;
 class QWindow;
 
+#ifdef __OBJC__
+@class NSToolbar;
+#else
+typedef struct objc_object NSToolbar;
+#endif
+
 class QMacUnifiedToolBarPrivate;
 class Q_MACEXTRAS_EXPORT QMacUnifiedToolBar : public QObject
 {
@@ -76,6 +82,8 @@ public:
     QMacUnifiedToolBar(QObject *parent = 0);
     QMacUnifiedToolBar(const QString &identifier, QObject *parent = 0);
     ~QMacUnifiedToolBar();
+
+    NSToolbar* nativeToolbar() const;
 
     static QMacUnifiedToolBar* fromQToolBar(const QToolBar *toolBar, const QString &identifier = QString());
 
