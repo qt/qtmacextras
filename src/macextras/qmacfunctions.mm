@@ -141,9 +141,9 @@ QString fromNSString(const NSString *string)
 
     This function is not available in Qt 5.x until 5.0.2 and will return NULL in earlier versions.
 
-    \sa fromMacCGImageRef()
+    \sa fromCGImageRef()
 */
-CGImageRef toMacCGImageRef(const QPixmap &pixmap)
+CGImageRef toCGImageRef(const QPixmap &pixmap)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qimagetocgimage");
@@ -154,14 +154,14 @@ CGImageRef toMacCGImageRef(const QPixmap &pixmap)
 
     return NULL;
 #else
-    return pixmap.toMacCGImageRef();
+    return pixmap.toCGImageRef();
 #endif
 }
 
 #ifndef Q_OS_IOS
-NSImage* toMacNSImage(const QPixmap &pixmap)
+NSImage* toNSImage(const QPixmap &pixmap)
 {
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:toMacCGImageRef(pixmap)];
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:toCGImageRef(pixmap)];
     NSImage *image = [[NSImage alloc] init];
     [image addRepresentation:bitmapRep];
     [bitmapRep release];
@@ -174,9 +174,9 @@ NSImage* toMacNSImage(const QPixmap &pixmap)
 
     This function is not available in Qt 5.x until 5.0.2 and will return a null pixmap in earlier versions.
 
-    \sa toMacCGImageRef(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
+    \sa toCGImageRef(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
 */
-QPixmap fromMacCGImageRef(CGImageRef image)
+QPixmap fromCGImageRef(CGImageRef image)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("cgimagetoqimage");
@@ -187,7 +187,7 @@ QPixmap fromMacCGImageRef(CGImageRef image)
 
     return QPixmap();
 #else
-    return QPixmap::fromMacCGImageRef(image);
+    return QPixmap::fromCGImageRef(image);
 #endif
 }
 

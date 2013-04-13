@@ -134,7 +134,7 @@ QString qt_strippedText(QString s)
 
     QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
-        [toolbarItem setImage : QtMacExtras::toMacNSImage(icon)];
+        [toolbarItem setImage : QtMacExtras::toNSImage(icon)];
     }
 
     [toolbarItem setTarget : self];
