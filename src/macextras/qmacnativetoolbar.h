@@ -64,11 +64,7 @@ Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, const 
 class QAction;
 class QWindow;
 
-#ifdef __OBJC__
-@class NSToolbar;
-#else
-typedef struct objc_object NSToolbar;
-#endif
+Q_OBJC_CLASS(NSToolbar);
 
 class QMacNativeToolBarPrivate;
 class Q_MACEXTRAS_EXPORT QMacNativeToolBar : public QObject

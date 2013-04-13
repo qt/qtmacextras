@@ -157,7 +157,7 @@ void QMacCocoaViewContainer::setCocoaView(NSView *view)
 
     // Set the new view as the content view for the window.
     extern QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName);
-    typedef void (*SetWindowContentViewFunction)(QPlatformWindow *window, void *nsview);
+    typedef void (*SetWindowContentViewFunction)(QPlatformWindow *window, NSView *nsview);
     reinterpret_cast<SetWindowContentViewFunction>(resolvePlatformFunction("setwindowcontentview"))(platformWindow, view);
 
     [oldView release];

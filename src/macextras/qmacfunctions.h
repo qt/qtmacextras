@@ -51,19 +51,11 @@
 typedef struct CGImage *CGImageRef;
 typedef struct CGContext *CGContextRef;
 
-#ifdef __OBJC__
-@class NSData;
-@class NSImage;
-@class NSString;
-@class NSMenu;
-@class NSURL;
-#else
-typedef struct objc_object NSData;
-typedef struct objc_object NSImage;
-typedef struct objc_object NSString;
-typedef struct objc_object NSMenu;
-typedef struct objc_object NSURL;
-#endif
+Q_OBJC_CLASS(NSData);
+Q_OBJC_CLASS(NSImage);
+Q_OBJC_CLASS(NSString);
+Q_OBJC_CLASS(NSMenu);
+Q_OBJC_CLASS(NSURL);
 
 QT_BEGIN_NAMESPACE
 

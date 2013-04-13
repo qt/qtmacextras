@@ -49,11 +49,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-#ifdef __OBJC__
-@class NSView;
-#else
-typedef struct objc_object NSView;
-#endif
+Q_OBJC_CLASS(NSView);
 
 class QMacCocoaViewContainerPrivate;
 class Q_MACEXTRAS_EXPORT QMacCocoaViewContainer : public QWidget
@@ -63,7 +59,7 @@ public:
     QMacCocoaViewContainer(NSView *cocoaViewToWrap, QWidget *parent = 0);
     virtual ~QMacCocoaViewContainer();
 
-    void setCocoaView(NSView *virew);
+    void setCocoaView(NSView *view);
     NSView *cocoaView() const;
 
 private:
