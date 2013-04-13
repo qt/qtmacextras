@@ -50,8 +50,11 @@ class QToolBar;
 class QWidget;
 class QMacUnifiedToolBar;
 
-Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, bool on = true);
-Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setUnifiedTitleAndToolBarOnMac(QToolBar *toolbar, const QString &identifier, bool on = true);
+namespace QtMacExtras
+{
+Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setNativeToolBar(QToolBar *toolbar, bool on = true);
+Q_MACEXTRAS_EXPORT QMacUnifiedToolBar* setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on = true);
+}
 
 #include "qmactoolbutton.h"
 #include <QObject>
