@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     QMenu menu;
     menu.addAction("Item 1");
     menu.addAction("Item 2");
-    qt_mac_set_dock_menu(&menu);
+    QtMacExtras::setDockMenu(&menu);
 
     // Pixmap <-> CGImage conversion
     QPixmap pixmap(":qtlogo.png");
