@@ -148,8 +148,8 @@ CGImageRef toCGImageRef(const QPixmap &pixmap)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qimagetocgimage");
     if (function) {
-        typedef CGImageRef (*QImageToCGIamgeFunction)(const QImage &image);
-        return reinterpret_cast<QImageToCGIamgeFunction>(function)(pixmap.toImage());
+        typedef CGImageRef (*QImageToCGImageFunction)(const QImage &image);
+        return reinterpret_cast<QImageToCGImageFunction>(function)(pixmap.toImage());
     }
 
     return NULL;
