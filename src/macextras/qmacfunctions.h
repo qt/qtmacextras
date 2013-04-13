@@ -50,15 +50,9 @@
 
 typedef struct CGImage *CGImageRef;
 
-#ifdef __OBJC__
-@class NSImage;
-@class NSString;
-@class NSMenu;
-#else
-typedef struct objc_object NSImage;
-typedef struct objc_object NSString;
-typedef struct objc_object NSMenu;
-#endif
+objc_class(NSImage);
+objc_class(NSString);
+objc_class(NSMenu);
 
 QT_BEGIN_NAMESPACE
 

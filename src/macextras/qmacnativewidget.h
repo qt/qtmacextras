@@ -45,7 +45,6 @@
 #include "qmacextrasglobal.h"
 
 #include <QWidget>
-#import <Availability.h>
 
 QT_BEGIN_HEADER
 
@@ -53,11 +52,7 @@ QT_BEGIN_NAMESPACE
 
 QT_MODULE(Gui)
 
-#ifdef __OBJC__
-@class NSView;
-#else
-typedef struct objc_object NSView;
-#endif
+objc_class(NSView);
 
 class Q_MACEXTRAS_EXPORT QMacNativeWidget : public QWidget
 {
@@ -70,7 +65,7 @@ public:
 
     QSize sizeHint() const;
 protected:
-    void init(void *parentView);
+    void init(NSView *parentView);
     bool event(QEvent *ev);
 };
 

@@ -52,6 +52,18 @@ QT_BEGIN_NAMESPACE
 #  define Q_MACEXTRAS_EXPORT Q_DECL_IMPORT
 #endif
 
+#ifdef __cplusplus
+#define cpp_class(ClassName) class ClassName
+#else
+#define cpp_class(ClassName) struct ClassName; typedef struct ClassName ClassName
+#endif
+
+#ifdef __OBJC__
+#define objc_class(ClassName) @class ClassName
+#else
+#define objc_class(ClassName) typedef struct objc_object ClassName
+#endif
+
 QT_END_NAMESPACE
 
 #endif // QMACEXTRASGLOBAL_H
