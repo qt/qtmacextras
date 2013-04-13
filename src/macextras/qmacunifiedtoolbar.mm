@@ -221,16 +221,12 @@ QMacUnifiedToolBar* QtMacExtras::setNativeToolBar(QToolBar *toolbar, const QStri
 
     static const char *macToolBarProperty = "_q_mac_native_toolbar";
 
-    // Check if we've already created a Mac equivalent for this toolbar
+    // Check if we've already created a Mac equivalent for this toolbar and create one if not
     QVariant toolBarProperty = toolbar->property(macToolBarProperty);
-    QMacUnifiedToolBar *macToolBar = NULL;
-    if (toolBarProperty.canConvert<QMacUnifiedToolBar*>())
+    QMacUnifiedToolBar *macToolBar;
+    if (toolBarProperty.canConvert<QMacUnifiedToolBar*>()) {
         macToolBar = toolBarProperty.value<QMacUnifiedToolBar*>();
-
-    // Create one if not, but only if we're turning it on - no point in creating
-    // a toolbar for the sole purpose of turning it off immediately
-    if (!macToolBar && on)
-    {
+    } else {
         macToolBar = QMacUnifiedToolBar::fromQToolBar(toolbar, identifier);
         macToolBar->setParent(toolbar);
         toolbar->setProperty(macToolBarProperty, QVariant::fromValue(macToolBar));
@@ -239,7 +235,7 @@ QMacUnifiedToolBar* QtMacExtras::setNativeToolBar(QToolBar *toolbar, const QStri
     toolbar->setVisible(!on);
     if (on)
         macToolBar->showInWindowForWidget(toolbar->window());
-    else if (macToolBar)
+    else
         macToolBar->removeFromWindowForWidget(toolbar->window());
 
     return macToolBar;
