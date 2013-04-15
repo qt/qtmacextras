@@ -41,7 +41,9 @@
 
 #include "qmacfunctions.h"
 #include "qmacfunctions_p.h"
+#include <QByteArray>
 #include <QPixmap>
+#include <QUrl>
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
@@ -65,6 +67,29 @@ QString fromNSString(const NSString *string)
     [string getCharacters:reinterpret_cast<unichar*>(qstring.data()) range:NSMakeRange(0, [string length])];
 
     return qstring;
+}
+
+NSURL* toNSURL(const QUrl &url)
+{
+    return [NSURL URLWithString:toNSString(url.toString())];
+}
+
+QUrl fromNSURL(const NSURL *url)
+{
+    return QUrl(fromNSString([url absoluteString]));
+}
+
+NSData* toNSData(const QByteArray &data)
+{
+    return [NSData dataWithBytes:data.constData() length:data.size()];
+}
+
+QByteArray fromNSData(const NSData *data)
+{
+    QByteArray ba;
+    ba.resize([data length]);
+    [data getBytes:ba.data() length:ba.size()];
+    return ba;
 }
 
 /*!
