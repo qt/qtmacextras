@@ -51,26 +51,38 @@
 typedef struct CGImage *CGImageRef;
 
 #ifdef __OBJC__
+@class NSData;
 @class NSImage;
 @class NSString;
 @class NSMenu;
+@class NSURL;
 #else
+typedef struct objc_object NSData;
 typedef struct objc_object NSImage;
 typedef struct objc_object NSString;
 typedef struct objc_object NSMenu;
+typedef struct objc_object NSURL;
 #endif
 
 QT_BEGIN_NAMESPACE
 
+class QByteArray;
 class QMenu;
 class QMenuBar;
 class QPixmap;
 class QString;
+class QUrl;
 
 namespace QtMacExtras
 {
 Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
 Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
+
+Q_MACEXTRAS_EXPORT NSURL* toNSURL(const QUrl &url);
+Q_MACEXTRAS_EXPORT QUrl fromNSURL(const NSURL *url);
+
+Q_MACEXTRAS_EXPORT NSData* toNSData(const QByteArray &data);
+Q_MACEXTRAS_EXPORT QByteArray fromNSData(const NSData *data);
 
 Q_MACEXTRAS_EXPORT CGImageRef toCGImageRef(const QPixmap &pixmap);
 Q_MACEXTRAS_EXPORT QPixmap fromCGImageRef(CGImageRef image);
