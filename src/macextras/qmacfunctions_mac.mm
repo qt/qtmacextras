@@ -110,6 +110,11 @@ void setDockMenu(QMenu *menu)
     }
 }
 
+CGContextRef currentCGContext()
+{
+    return reinterpret_cast<CGContextRef>([[NSGraphicsContext currentContext] graphicsPort]);
+}
+
 } // namespace QtMacExtras
 
 QT_END_NAMESPACE
