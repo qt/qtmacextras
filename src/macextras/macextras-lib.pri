@@ -5,7 +5,12 @@ mac {
     PRIVATE_HEADERS += $$PWD/qmacfunctions_p.h
     OBJECTIVE_SOURCES += $$PWD/qmacfunctions.mm
 
-    !ios {
+    ios {
+        OBJECTIVE_SOURCES += \
+            $$PWD/qmacfunctions_ios.mm
+
+        LIBS *= -framework UIKit
+    } else {
         PUBLIC_HEADERS += \
             $$PWD/qmaccocoaviewcontainer.h \
             $$PWD/qmacnativetoolbar.h \

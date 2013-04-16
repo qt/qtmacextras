@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Petroules Corporation.
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtMacExtras module of the Qt Toolkit.
@@ -39,72 +39,20 @@
 **
 ****************************************************************************/
 
-#ifndef QMACFUNCTIONS_H
-#define QMACFUNCTIONS_H
-
-#if 0
-#pragma qt_class(QtMacFunctions)
-#endif
-
-#include "qmacextrasglobal.h"
-
-typedef struct CGImage *CGImageRef;
-typedef struct CGContext *CGContextRef;
-
-#ifdef __OBJC__
-@class NSData;
-@class NSImage;
-@class NSString;
-@class NSMenu;
-@class NSURL;
-#else
-typedef struct objc_object NSData;
-typedef struct objc_object NSImage;
-typedef struct objc_object NSString;
-typedef struct objc_object NSMenu;
-typedef struct objc_object NSURL;
-#endif
+#include "qmacfunctions.h"
+#include "qmacfunctions_p.h"
+#import <UIKit/UIKit.h>
 
 QT_BEGIN_NAMESPACE
 
-class QByteArray;
-class QMenu;
-class QMenuBar;
-class QPixmap;
-class QString;
-class QUrl;
-
 namespace QtMacExtras
 {
-Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
-Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
 
-Q_MACEXTRAS_EXPORT NSURL* toNSURL(const QUrl &url);
-Q_MACEXTRAS_EXPORT QUrl fromNSURL(const NSURL *url);
-
-Q_MACEXTRAS_EXPORT NSData* toNSData(const QByteArray &data);
-Q_MACEXTRAS_EXPORT QByteArray fromNSData(const NSData *data);
-
-Q_MACEXTRAS_EXPORT CGImageRef toCGImageRef(const QPixmap &pixmap);
-Q_MACEXTRAS_EXPORT QPixmap fromCGImageRef(CGImageRef image);
-
-Q_MACEXTRAS_EXPORT CGContextRef currentCGContext();
-
-#ifndef Q_OS_IOS
-Q_MACEXTRAS_EXPORT NSImage* toNSImage(const QPixmap &pixmap);
-
-Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
-Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenuBar *menubar);
-
-Q_MACEXTRAS_EXPORT void setDockMenu(QMenu *menu);
-#endif
+CGContextRef currentCGContext()
+{
+    return UIGraphicsGetCurrentContext();
 }
 
-#ifndef Q_OS_IOS
-// ### Qt 4 compatibility; remove in Qt 6
-inline void qt_mac_set_dock_menu(QMenu *menu) { QtMacExtras::setDockMenu(menu); }
-#endif
+} // namespace QtMacExtras
 
 QT_END_NAMESPACE
-
-#endif // QMACFUNCTIONS_H
