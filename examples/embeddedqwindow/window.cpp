@@ -59,6 +59,7 @@ QColor colorTable[] =
 Window::Window(QScreen *screen)
     : QWindow(screen)
     , m_backgroundColorIndex(colorIndexId++)
+    , m_backingStore(0)
 {
     initialize();
 }
@@ -66,6 +67,7 @@ Window::Window(QScreen *screen)
 Window::Window(QWindow *parent)
     : QWindow(parent)
     , m_backgroundColorIndex(colorIndexId++)
+    , m_backingStore(0)
 {
     initialize();
 }
@@ -181,6 +183,8 @@ void Window::timerEvent(QTimerEvent *)
 
 void Window::render()
 {
+    if (!m_backingStore)
+        return;
     QRect rect(QPoint(), geometry().size());
 
     m_backingStore->resize(rect.size());
