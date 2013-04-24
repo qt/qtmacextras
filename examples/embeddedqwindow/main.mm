@@ -50,17 +50,17 @@
 
 NSView *getEmbeddableView(QWindow *qtWindow)
 {
-    // Set Qt::SubWindow flag. Should be done before crate() is
-    // called - if you call create() or caused it ot be called
-    // before calling this function you need to set SubWindow
-    // yourself
-    qtWindow->setFlags(qtWindow->flags() | Qt::SubWindow);
-
     // Make sure the platform window is created
     qtWindow->create();
 
-    // Get the Qt content NSView for the QWindow forom the Qt platform plugin
     QPlatformNativeInterface *platformNativeInterface = QGuiApplication::platformNativeInterface();
+
+    // Inform the window that it's a "guest" of a non-QWindow
+    typedef void (*SetEmbeddedInForeignViewFunction)(QPlatformWindow *window, bool embedded);
+    reinterpret_cast<SetEmbeddedInForeignViewFunction>(platformNativeInterface->
+        nativeResourceFunctionForIntegration("setEmbeddedInForeignView"))(qtWindow->handle(), true);
+
+    // Get the Qt content NSView for the QWindow forom the Qt platform plugin
     NSView *qtView = (NSView *)platformNativeInterface->nativeResourceForWindow("nsview", qtWindow);
     return qtView; // qtView is ready for use.
 }
