@@ -72,16 +72,17 @@ QT_BEGIN_NAMESPACE
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 NSView *getEmbeddableView(QWindow *qtWindow)
 {
-    // Set Qt::SubWindow flag. Should be done before crate() is
-    // called - if you call create() or caused it ot be called
-    // before calling this function you need to set SubWindow
-    // yourself
-    qtWindow->setFlags(qtWindow->flags() | Qt::SubWindow);
-
     // Make sure the platform window is created
     qtWindow->create();
 
-    // Get the Qt content NSView for the QWindow forom the Qt platform plugin
+    // Inform the window that it's a subwindow of a non-Qt window. This must be
+    // done after create() because we need to have a QPlatformWindow instance.
+    // The corresponding NSWindow will not be shown and can be deleted later.
+    extern QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName);
+    typedef void (*SetEmbeddedInForeignViewFunction)(QPlatformWindow *window, bool embedded);
+    reinterpret_cast<SetEmbeddedInForeignViewFunction>(resolvePlatformFunction("setEmbeddedInForeignView"))(qtWindow->handle(), true);
+
+    // Get the Qt content NSView for the QWindow from the Qt platform plugin
     QPlatformNativeInterface *platformNativeInterface = QGuiApplication::platformNativeInterface();
     NSView *qtView = (NSView *)platformNativeInterface->nativeResourceForWindow("nsview", qtWindow);
     return qtView; // qtView is ready for use.
@@ -93,7 +94,7 @@ NSView *getEmbeddableView(QWindow *qtWindow)
     parent). The \a parentView is  a NSView pointer.
 */
 QMacNativeWidget::QMacNativeWidget(NSView *parentView)
-    : QWidget(0, Qt::Window | Qt::SubWindow)
+    : QWidget(0)
 {
     Q_UNUSED(parentView);
 
