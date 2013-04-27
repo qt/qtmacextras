@@ -73,6 +73,8 @@ class QMenuBar;
 class QPixmap;
 class QString;
 class QUrl;
+class QWidget;
+class QWindow;
 
 namespace QtMacExtras
 {
@@ -97,6 +99,12 @@ Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
 Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenuBar *menubar);
 
 Q_MACEXTRAS_EXPORT void setDockMenu(QMenu *menu);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+Q_MACEXTRAS_EXPORT bool isMainWindow(QWindow *window);
+#endif
+
+Q_MACEXTRAS_EXPORT bool isMainWindow(QWidget *widget);
 #endif
 }
 
