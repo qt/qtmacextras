@@ -46,6 +46,7 @@
 QT_BEGIN_NAMESPACE
 
 #if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)
+#include <QtGui/QWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <qpa/qplatformmenu.h>
@@ -108,6 +109,32 @@ void setDockMenu(QMenu *menu)
         typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
         reinterpret_cast<SetDockMenuFunction>(function)(platformMenu);
     }
+}
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+bool isMainWindow(QWindow *window)
+{
+    NSWindow *macWindow = static_cast<NSWindow*>(
+        QGuiApplication::platformNativeInterface()->nativeResourceForWindow("nswindow", window));
+    if (!macWindow)
+        return false;
+
+    return [macWindow isMainWindow];
+}
+#endif
+
+bool isMainWindow(QWidget *widget)
+{
+    if (!widget)
+        return false;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    return isMainWindow(widget->windowHandle());
+#else
+    NSWindow *macWindow =
+            reinterpret_cast<NSWindow*>([reinterpret_cast<NSView*>(widget->window()->winId()) window]);
+    return [macWindow isMainWindow];
+#endif
 }
 
 CGContextRef currentCGContext()
