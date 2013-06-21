@@ -79,7 +79,7 @@ public:
 
     StandardItem standardItem() const;
     void setStandardItem(StandardItem standardItem);
-signals:
+Q_SIGNALS:
     void activated();
 private:
     bool m_selectable;

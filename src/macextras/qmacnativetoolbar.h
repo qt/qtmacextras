@@ -118,7 +118,7 @@ public:
     Q_INVOKABLE QAction *addAllowedAction(QAction *action);
     Q_INVOKABLE QAction *addAllowedStandardItem(QMacToolButton::StandardItem standardItem);
 
-signals:
+Q_SIGNALS:
     void visibilityChanged(bool visible);
     void showsBaselineSeparatorChanged(bool show);
     void allowsUserCustomizationChanged(bool allow);
