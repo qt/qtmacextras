@@ -45,8 +45,6 @@
 
 #include <QtWidgets/QWidget>
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE
 
 #ifdef __OBJC__
@@ -71,8 +69,6 @@ private:
 };
 
 QT_END_NAMESPACE
-
-QT_END_HEADER
 
 #endif // QMACCOCOAVIEWCONTAINER_H
 
