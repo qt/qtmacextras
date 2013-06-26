@@ -47,10 +47,13 @@
 //#include <QString>
 //#include <QHash>
 
-class QAction;
-class QIcon;
+#include <qglobal.h>
+#include <private/qcore_mac_p.h>
 
-@interface QMacToolbarDelegate : NSObject <NSToolbarDelegate>
+#include <QAction>
+#include <QIcon>
+
+@interface QT_MANGLE_NAMESPACE(QMacToolbarDelegate) : NSObject <NSToolbarDelegate>
 {
 @public
     QList<QMacToolButton *> items;
@@ -78,5 +81,6 @@ class QIcon;
 - (IBAction)itemClicked:(id)sender;
 @end
 
+QT_NAMESPACE_ALIAS_OBJC_CLASS(QMacToolbarDelegate);
 
 #endif // QMACTOOLBARDELEGATE_H

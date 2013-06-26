@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include "preferenceswindow.h"
-#include "ui_preferenceswindow.h"
 #include <QMacNativeToolBar>
 #include <QTimer>
 

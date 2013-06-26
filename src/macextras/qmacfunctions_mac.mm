@@ -43,14 +43,14 @@
 #include "qmacfunctions_p.h"
 #import <Cocoa/Cocoa.h>
 
-QT_BEGIN_NAMESPACE
-
 #if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)
 #include <QtGui/QWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <qpa/qplatformmenu.h>
 #endif
+
+QT_BEGIN_NAMESPACE
 
 namespace QtMacExtras
 {

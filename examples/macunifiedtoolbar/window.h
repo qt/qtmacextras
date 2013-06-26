@@ -44,10 +44,7 @@
 
 #include <QWidget>
 #include "qmactoolbutton.h"
-
-namespace Ui {
-class Window;
-}
+#include "ui_window.h"
 
 class WindowPrivate;
 class Window : public QWidget

@@ -45,9 +45,9 @@
 
 #include <QtWidgets/QWidget>
 
-QT_BEGIN_NAMESPACE
-
 Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
+
+QT_BEGIN_NAMESPACE
 
 class QMacCocoaViewContainerPrivate;
 class Q_MACEXTRAS_EXPORT QMacCocoaViewContainer : public QWidget

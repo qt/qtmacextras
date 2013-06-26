@@ -80,6 +80,8 @@ NSString *toNSStandardItem(QMacToolButton::StandardItem standardItem)
     return @"";
 }
 
+QT_BEGIN_NAMESPACE
+
 NSToolbarDisplayMode toNSToolbarDisplayMode(Qt::ToolButtonStyle toolButtonStyle)
 {
     switch (toolButtonStyle)
@@ -113,7 +115,11 @@ Qt::ToolButtonStyle toQtToolButtonStyle(NSToolbarDisplayMode toolbarDisplayMode)
     }
 }
 
-@interface QNSToolbarNotifier : NSObject
+QT_END_NAMESPACE
+
+#include <qglobal.h>
+
+@interface QT_MANGLE_NAMESPACE(QNSToolbarNotifier) : NSObject
 {
 @public
     QMacNativeToolBarPrivate *pimpl;
@@ -121,11 +127,15 @@ Qt::ToolButtonStyle toQtToolButtonStyle(NSToolbarDisplayMode toolbarDisplayMode)
 - (void)notification:(NSNotification*)note;
 @end
 
+QT_NAMESPACE_ALIAS_OBJC_CLASS(QNSToolbarNotifier);
+
+QT_BEGIN_NAMESPACE
+
 class QMacNativeToolBarPrivate
 {
 public:
     QMacNativeToolBar *qtToolbar;
-    NSToolbar *toolbar;
+    QtNSToolbar *toolbar;
     QMacToolbarDelegate *delegate;
     QNSToolbarNotifier *notifier;
 
@@ -179,25 +189,6 @@ public:
         Q_EMIT qtToolbar->allowsUserCustomizationChanged(qtToolbar->allowsUserCustomization());
     }
 };
-
-@implementation QNSToolbarNotifier
-
-- (void)notification:(NSNotification*)note
-{
-    Q_ASSERT(pimpl);
-    if ([[note name] isEqualToString:QtNSToolbarVisibilityChangedNotification])
-        pimpl->fireVisibilityChanged();
-    else if ([[note name] isEqualToString:QtNSToolbarShowsBaselineSeparatorChangedNotification])
-        pimpl->fireShowsBaselineSeparatorChanged();
-    else if ([[note name] isEqualToString:QtNSToolbarDisplayModeChangedNotification])
-        pimpl->fireToolButtonStyleChanged();
-    else if ([[note name] isEqualToString:QtNSToolbarSizeModeChangedNotification])
-        pimpl->fireSizeModeChangedNotification();
-    else if ([[note name] isEqualToString:QtNSToolbarAllowsUserCustomizationChangedNotification])
-        pimpl->fireAllowsUserCustomizationChanged();
-}
-
-@end
 
 QMacNativeToolBar* QtMacExtras::setNativeToolBar(QToolBar *toolbar, bool on)
 {
@@ -581,4 +572,25 @@ QAction *QMacNativeToolBar::addAllowedStandardItem(QMacToolButton::StandardItem 
     return [d->delegate addAllowedStandardItem:standardItem];
 }
 
+QT_END_NAMESPACE
 
+QT_USE_NAMESPACE
+
+@implementation QNSToolbarNotifier
+
+- (void)notification:(NSNotification*)note
+{
+    Q_ASSERT(pimpl);
+    if ([[note name] isEqualToString:QtNSToolbarVisibilityChangedNotification])
+        pimpl->fireVisibilityChanged();
+    else if ([[note name] isEqualToString:QtNSToolbarShowsBaselineSeparatorChangedNotification])
+        pimpl->fireShowsBaselineSeparatorChanged();
+    else if ([[note name] isEqualToString:QtNSToolbarDisplayModeChangedNotification])
+        pimpl->fireToolButtonStyleChanged();
+    else if ([[note name] isEqualToString:QtNSToolbarSizeModeChangedNotification])
+        pimpl->fireSizeModeChangedNotification();
+    else if ([[note name] isEqualToString:QtNSToolbarAllowsUserCustomizationChangedNotification])
+        pimpl->fireAllowsUserCustomizationChanged();
+}
+
+@end

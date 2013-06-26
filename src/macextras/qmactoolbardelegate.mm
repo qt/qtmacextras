@@ -45,6 +45,8 @@
 #include <QImage>
 #include <QPixmap>
 
+QT_USE_NAMESPACE
+
 NSArray *toNSArray(const QList<QString> &stringList)
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];

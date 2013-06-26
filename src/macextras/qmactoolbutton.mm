@@ -42,6 +42,8 @@
 #include "qmactoolbutton.h"
 #include <QAction>
 
+QT_BEGIN_NAMESPACE
+
 QMacToolButton::QMacToolButton()
 {
    m_standardItem = NoItem;
@@ -87,3 +89,5 @@ void QMacToolButton::setStandardItem(StandardItem standardItem)
 {
     m_standardItem = standardItem;
 }
+
+QT_END_NAMESPACE

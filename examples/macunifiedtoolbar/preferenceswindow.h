@@ -43,11 +43,7 @@
 #define PREFERENCESWINDOW_H
 
 #include <QMainWindow>
-
-namespace Ui
-{
-    class PreferencesWindow;
-}
+#include "ui_preferenceswindow.h"
 
 class PreferencesWindow : public QMainWindow
 {

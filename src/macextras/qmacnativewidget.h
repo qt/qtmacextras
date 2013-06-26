@@ -46,11 +46,11 @@
 
 #include <QWidget>
 
+Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
+
 QT_BEGIN_NAMESPACE
 
 QT_MODULE(Gui)
-
-Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
 
 class Q_MACEXTRAS_EXPORT QMacNativeWidget : public QWidget
 {

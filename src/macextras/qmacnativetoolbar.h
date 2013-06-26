@@ -43,11 +43,20 @@
 #define QMACTOOLBAR_H
 
 #include "qmacextrasglobal.h"
+#include "qmactoolbutton.h"
 
 #include <QString>
+#include <QObject>
+#include <QIcon>
+#include <QVariant>
+
+Q_FORWARD_DECLARE_OBJC_CLASS(NSToolbar);
+
+QT_BEGIN_NAMESPACE
 
 class QToolBar;
 class QWidget;
+
 class QMacNativeToolBar;
 
 namespace QtMacExtras
@@ -56,15 +65,8 @@ Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, bool o
 Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on = true);
 }
 
-#include "qmactoolbutton.h"
-#include <QObject>
-#include <QIcon>
-#include <QVariant>
-
 class QAction;
 class QWindow;
-
-Q_FORWARD_DECLARE_OBJC_CLASS(NSToolbar);
 
 class QMacNativeToolBarPrivate;
 class Q_MACEXTRAS_EXPORT QMacNativeToolBar : public QObject
@@ -143,6 +145,8 @@ private:
     QList<QMacToolButton *> m_allowedButtons;
     QMacNativeToolBarPrivate *d;
 };
+
+QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(QMacNativeToolBar*)
 

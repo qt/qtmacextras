@@ -47,6 +47,8 @@ NSString *QtNSToolbarAllowsUserCustomizationChangedNotification = @"QtNSToolbarA
 NSString *QtNSToolbarSizeModeChangedNotification = @"QtNSToolbarSizeModeChangedNotification";
 NSString *QtNSToolbarVisibilityChangedNotification = @"QtNSToolbarVisibilityChangedNotification";
 
+QT_USE_NAMESPACE
+
 @implementation QtNSToolbar
 
 - (void)setDisplayMode:(NSToolbarDisplayMode)displayMode

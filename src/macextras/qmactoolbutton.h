@@ -44,6 +44,8 @@
 
 #include <QObject>
 
+QT_BEGIN_NAMESPACE
+
 class QAction;
 
 class QMacToolButton : public QObject
@@ -88,5 +90,7 @@ public: // (not really public)
     QAction *m_action;
     void emitActivated() { emit activated(); }
 };
+
+QT_END_NAMESPACE
 
 #endif
