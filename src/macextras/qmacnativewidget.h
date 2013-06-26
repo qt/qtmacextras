@@ -50,11 +50,7 @@ QT_BEGIN_NAMESPACE
 
 QT_MODULE(Gui)
 
-#ifdef __OBJC__
-@class NSView;
-#else
-typedef struct objc_object NSView;
-#endif
+Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
 
 class Q_MACEXTRAS_EXPORT QMacNativeWidget : public QWidget
 {

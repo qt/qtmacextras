@@ -47,11 +47,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef __OBJC__
-@class NSView;
-#else
-typedef struct objc_object NSView;
-#endif
+Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
 
 class QMacCocoaViewContainerPrivate;
 class Q_MACEXTRAS_EXPORT QMacCocoaViewContainer : public QWidget
