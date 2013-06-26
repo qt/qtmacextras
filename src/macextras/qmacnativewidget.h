@@ -67,7 +67,7 @@ public:
 
     QSize sizeHint() const;
 protected:
-    void init(void *parentView);
+    void init(NSView *parentView);
     bool event(QEvent *ev);
 };
 
