@@ -61,7 +61,7 @@ public:
     QMacCocoaViewContainer(NSView *cocoaViewToWrap, QWidget *parent = 0);
     virtual ~QMacCocoaViewContainer();
 
-    void setCocoaView(NSView *virew);
+    void setCocoaView(NSView *view);
     NSView *cocoaView() const;
 
 private:
