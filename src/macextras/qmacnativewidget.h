@@ -45,7 +45,6 @@
 #include "qmacextrasglobal.h"
 
 #include <QWidget>
-#import <Availability.h>
 
 QT_BEGIN_NAMESPACE
 
