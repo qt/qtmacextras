@@ -39,9 +39,9 @@
 **
 ****************************************************************************/
 
+#import <Cocoa/Cocoa.h>
 #include "qmacfunctions.h"
 #include "qmacfunctions_p.h"
-#import <Cocoa/Cocoa.h>
 
 #if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)
 #include <QtGui/QWindow>

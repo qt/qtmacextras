@@ -39,6 +39,7 @@
 **
 ****************************************************************************/
 
+#import <AppKit/AppKit.h>
 #include "qmacfunctions.h"
 #include "qmacnativetoolbar.h"
 #include "qmactoolbardelegate.h"
@@ -58,7 +59,6 @@
 #include <QMainWindow>
 #endif
 
-#import <AppKit/AppKit.h>
 
 // from the Apple NSToolbar documentation
 #define kNSToolbarIconSizeSmall 24

@@ -39,6 +39,7 @@
 **
 ****************************************************************************/
 
+#import <Cocoa/Cocoa.h>
 #include "qmacnativewidget.h"
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QtGui/QWindow>
@@ -47,7 +48,6 @@
 #endif
 #include <qdebug.h>
 
-#import <Cocoa/Cocoa.h>
 
 /*!
     \class QMacNativeWidget

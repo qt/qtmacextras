@@ -45,7 +45,9 @@
 #include <QPixmap>
 #include <QUrl>
 #import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
+#ifdef Q_OS_IOS
+ #import <CoreGraphics/CoreGraphics.h>
+#endif
 
 QT_BEGIN_NAMESPACE
 
