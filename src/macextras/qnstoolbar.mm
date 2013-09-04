@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#import "qnstoolbar.h"
+#import "qnstoolbar_p.h"
 
 NSString *QtNSToolbarDisplayModeChangedNotification = @"QtNSToolbarDisplayModeChangedNotification";
 NSString *QtNSToolbarShowsBaselineSeparatorChangedNotification = @"QtNSToolbarShowsBaselineSeparatorChangedNotification";

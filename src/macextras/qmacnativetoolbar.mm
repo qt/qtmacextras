@@ -42,8 +42,8 @@
 #import <AppKit/AppKit.h>
 #include "qmacfunctions.h"
 #include "qmacnativetoolbar.h"
-#include "qmactoolbardelegate.h"
-#include "qnstoolbar.h"
+#include "qmactoolbardelegate_p.h"
+#include "qnstoolbar_p.h"
 #include <QAction>
 #include <QApplication>
 #include <QDebug>

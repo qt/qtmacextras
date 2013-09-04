@@ -18,8 +18,8 @@ mac {
             $$PWD/qmactoolbutton.h
 
         PRIVATE_HEADERS += \
-            $$PWD/qmactoolbardelegate.h \
-            $$PWD/qnstoolbar.h
+            $$PWD/qmactoolbardelegate_p.h \
+            $$PWD/qnstoolbar_p.h
 
         OBJECTIVE_SOURCES += \
             $$PWD/qmaccocoaviewcontainer.mm \
