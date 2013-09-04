@@ -1,3 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = macfunctions \
-    cmake
+SUBDIRS = \
+    cmake \
+    headersclean \
+    macfunctions
