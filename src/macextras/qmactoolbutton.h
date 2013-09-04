@@ -88,7 +88,7 @@ private:
     StandardItem m_standardItem;
 public: // (not really public)
     QAction *m_action;
-    void emitActivated() { emit activated(); }
+    void emitActivated() { Q_EMIT activated(); }
 };
 
 QT_END_NAMESPACE
