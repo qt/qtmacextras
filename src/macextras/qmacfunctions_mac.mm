@@ -52,7 +52,7 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace QtMacExtras
+namespace QtMac
 {
 
 NSImage* toNSImage(const QPixmap &pixmap)
@@ -142,6 +142,6 @@ CGContextRef currentCGContext()
     return reinterpret_cast<CGContextRef>([[NSGraphicsContext currentContext] graphicsPort]);
 }
 
-} // namespace QtMacExtras
+} // namespace QtMac
 
 QT_END_NAMESPACE

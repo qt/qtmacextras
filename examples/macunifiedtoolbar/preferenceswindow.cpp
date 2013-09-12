@@ -55,7 +55,7 @@ PreferencesWindow::PreferencesWindow(QWidget *parent) :
         items->addAction(action);
 
     // This single line of code is all that's needed to transform a QToolBar into a native toolbar!
-    QtMacExtras::setNativeToolBar(ui->toolBar, ui->useNativeToolbarCheckBox->isChecked());
+    QtMac::setNativeToolBar(ui->toolBar, ui->useNativeToolbarCheckBox->isChecked());
 
     QTimer::singleShot(0, this, SLOT(pack()));
 }
@@ -91,7 +91,7 @@ void PreferencesWindow::toolbarItemTriggered()
 
 void PreferencesWindow::useNativeToolBarToggled(bool on)
 {
-    QtMacExtras::setNativeToolBar(ui->toolBar, on);
+    QtMac::setNativeToolBar(ui->toolBar, on);
     QTimer::singleShot(0, this, SLOT(pack()));
 }
 

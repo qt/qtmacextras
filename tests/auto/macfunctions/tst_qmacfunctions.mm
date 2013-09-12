@@ -72,7 +72,7 @@ void tst_QMacFunctions::testToNSMenu()
     qMenu->addAction(action);
     window.menuBar()->addMenu(qMenu);
 
-    NSMenu *nsMenu = QtMacExtras::toNSMenu(qMenu);
+    NSMenu *nsMenu = QtMac::toNSMenu(qMenu);
     QVERIFY(nsMenu != NULL);
     QCOMPARE([[nsMenu title] UTF8String], "Menu");
 
@@ -80,7 +80,7 @@ void tst_QMacFunctions::testToNSMenu()
     QCOMPARE([[item title] UTF8String], "Item");
 
     // get NSMenu from QMenuBar
-    nsMenu = QtMacExtras::toNSMenu(window.menuBar());
+    nsMenu = QtMac::toNSMenu(window.menuBar());
     QVERIFY(nsMenu != NULL);
 
     // the first item should be our menu

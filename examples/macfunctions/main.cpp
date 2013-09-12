@@ -57,12 +57,12 @@ int main(int argc, char **argv)
     QMenu menu;
     menu.addAction("Item 1");
     menu.addAction("Item 2");
-    QtMacExtras::setDockMenu(&menu);
+    QtMac::setDockMenu(&menu);
 
     // Pixmap <-> CGImage conversion
     QPixmap pixmap(":qtlogo.png");
-    CGImageRef cgImage = QtMacExtras::toCGImageRef(pixmap);
-    QPixmap pixmap2 = QtMacExtras::fromCGImageRef(cgImage);
+    CGImageRef cgImage = QtMac::toCGImageRef(pixmap);
+    QPixmap pixmap2 = QtMac::fromCGImageRef(cgImage);
 
     return app.exec();
 }

@@ -142,7 +142,7 @@ public:
     QMacNativeToolBarPrivate(QMacNativeToolBar *parent, const QString &identifier = QString())
     {
         qtToolbar = parent;
-        toolbar = [[QtNSToolbar alloc] initWithIdentifier:QtMacExtras::toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
+        toolbar = [[QtNSToolbar alloc] initWithIdentifier:QtMac::toNSString(identifier.isEmpty() ? QUuid::createUuid().toString() : identifier)];
         [toolbar setAutosavesConfiguration:NO];
 
         delegate = [[QMacToolbarDelegate alloc] init];
@@ -190,12 +190,12 @@ public:
     }
 };
 
-QMacNativeToolBar* QtMacExtras::setNativeToolBar(QToolBar *toolbar, bool on)
+QMacNativeToolBar* QtMac::setNativeToolBar(QToolBar *toolbar, bool on)
 {
-    return QtMacExtras::setNativeToolBar(toolbar, QString(), on);
+    return QtMac::setNativeToolBar(toolbar, QString(), on);
 }
 
-QMacNativeToolBar* QtMacExtras::setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on)
+QMacNativeToolBar* QtMac::setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on)
 {
     if (!toolbar)
     {
@@ -271,7 +271,7 @@ QMacNativeToolBar *QMacNativeToolBar::fromQToolBar(const QToolBar *toolBar, cons
 
 QString QMacNativeToolBar::identifier() const
 {
-    return QtMacExtras::fromNSString([d->toolbar identifier]);
+    return QtMac::fromNSString([d->toolbar identifier]);
 }
 
 bool QMacNativeToolBar::isVisible() const
@@ -479,7 +479,7 @@ QAction *QMacNativeToolBar::setSelectedItem(QAction *action)
         {
             if (toolButton->m_action && toolButton->m_action->isChecked())
             {
-                [d->toolbar setSelectedItemIdentifier:QtMacExtras::toNSString(QString::number(qulonglong(toolButton)))];
+                [d->toolbar setSelectedItemIdentifier:QtMac::toNSString(QString::number(qulonglong(toolButton)))];
                 break;
             }
             else

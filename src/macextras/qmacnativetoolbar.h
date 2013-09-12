@@ -59,7 +59,7 @@ class QWidget;
 
 class QMacNativeToolBar;
 
-namespace QtMacExtras
+namespace QtMac
 {
 Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, bool on = true);
 Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on = true);

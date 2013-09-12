@@ -51,7 +51,7 @@ NSArray *toNSArray(const QList<QString> &stringList)
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     foreach (const QString &string, stringList) {
-        [array addObject : QtMacExtras::toNSString(string)];
+        [array addObject : QtMac::toNSString(string)];
     }
     return array;
 }
@@ -65,7 +65,7 @@ NSMutableArray *itemIdentifiers(const QList<QMacToolButton *> &items, bool cullU
         if (cullUnselectable && item->selectable() == false)
             continue;
         if (item->standardItem() == QMacToolButton::NoItem) {
-            [array addObject : QtMacExtras::toNSString(QString::number(qulonglong(item)))];
+            [array addObject : QtMac::toNSString(QString::number(qulonglong(item)))];
         } else {
             [array addObject : toNSStandardItem(item->standardItem())];
         }
@@ -114,7 +114,7 @@ QString qt_strippedText(QString s)
 - (IBAction)itemClicked:(id)sender
 {
     NSToolbarItem *item = reinterpret_cast<NSToolbarItem *>(sender);
-    QString identifier = QtMacExtras::fromNSString([item itemIdentifier]);
+    QString identifier = QtMac::fromNSString([item itemIdentifier]);
     QMacToolButton *toolButton = reinterpret_cast<QMacToolButton *>(identifier.toULongLong());
     if (toolButton->m_action) {
         toolButton->m_action->trigger();
@@ -126,17 +126,17 @@ QString qt_strippedText(QString s)
 {
     Q_UNUSED(toolbar);
     Q_UNUSED(willBeInserted);
-    const QString identifier = QtMacExtras::fromNSString(itemIdentifier);
+    const QString identifier = QtMac::fromNSString(itemIdentifier);
 
     QMacToolButton *toolButton = reinterpret_cast<QMacToolButton *>(identifier.toULongLong()); // string -> unisgned long long -> pointer
     NSToolbarItem *toolbarItem= [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
-    [toolbarItem setLabel: QtMacExtras::toNSString(qt_strippedText(toolButton->m_action->iconText()))];
+    [toolbarItem setLabel: QtMac::toNSString(qt_strippedText(toolButton->m_action->iconText()))];
     [toolbarItem setPaletteLabel:[toolbarItem label]];
-    [toolbarItem setToolTip: QtMacExtras::toNSString(toolButton->m_action->toolTip())];
+    [toolbarItem setToolTip: QtMac::toNSString(toolButton->m_action->toolTip())];
 
     QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
-        [toolbarItem setImage : QtMacExtras::toNSImage(icon)];
+        [toolbarItem setImage : QtMac::toNSImage(icon)];
     }
 
     [toolbarItem setTarget : self];

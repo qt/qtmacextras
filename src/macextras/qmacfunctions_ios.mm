@@ -45,7 +45,7 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace QtMacExtras
+namespace QtMac
 {
 
 CGContextRef currentCGContext()
@@ -53,6 +53,6 @@ CGContextRef currentCGContext()
     return UIGraphicsGetCurrentContext();
 }
 
-} // namespace QtMacExtras
+} // namespace QtMac
 
 QT_END_NAMESPACE

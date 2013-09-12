@@ -68,7 +68,7 @@ class QUrl;
 class QWidget;
 class QWindow;
 
-namespace QtMacExtras
+namespace QtMac
 {
 Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
 Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
@@ -102,7 +102,7 @@ Q_MACEXTRAS_EXPORT bool isMainWindow(QWidget *widget);
 
 #ifndef Q_OS_IOS
 // ### Qt 4 compatibility; remove in Qt 6
-inline void qt_mac_set_dock_menu(QMenu *menu) { QtMacExtras::setDockMenu(menu); }
+inline void qt_mac_set_dock_menu(QMenu *menu) { QtMac::setDockMenu(menu); }
 #endif
 
 QT_END_NAMESPACE
