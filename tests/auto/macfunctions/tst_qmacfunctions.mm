@@ -38,6 +38,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#import <AppKit/AppKit.h>
 
 #include <QString>
 #include <QtTest>
@@ -47,45 +48,16 @@
 #include <QtWidgets/QMainWindow>
 #include <qmacfunctions.h>
 
-#import <AppKit/AppKit.h>
-
 class tst_QMacFunctions : public QObject
 {
     Q_OBJECT
 
 public:
     tst_QMacFunctions();
-
-private slots:
-    void testToNSMenu();
 };
 
 tst_QMacFunctions::tst_QMacFunctions()
 {
-}
-
-void tst_QMacFunctions::testToNSMenu()
-{
-    QMainWindow window;
-    QMenu *qMenu = new QMenu("Menu", &window);
-    QAction *action = new QAction("&Item", &window);
-    qMenu->addAction(action);
-    window.menuBar()->addMenu(qMenu);
-
-    NSMenu *nsMenu = QtMac::toNSMenu(qMenu);
-    QVERIFY(nsMenu != NULL);
-    QCOMPARE([[nsMenu title] UTF8String], "Menu");
-
-    NSMenuItem *item = [nsMenu itemAtIndex:0];
-    QCOMPARE([[item title] UTF8String], "Item");
-
-    // get NSMenu from QMenuBar
-    nsMenu = QtMac::toNSMenu(window.menuBar());
-    QVERIFY(nsMenu != NULL);
-
-    // the first item should be our menu
-    item = [nsMenu itemAtIndex:0];
-    QCOMPARE([[item title] UTF8String], "Menu");
 }
 
 QTEST_MAIN(tst_QMacFunctions)

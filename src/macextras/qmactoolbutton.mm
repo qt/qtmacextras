@@ -39,8 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qmactoolbutton.h"
-#include <QAction>
+#include "qmactoolbutton_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -48,7 +47,6 @@ QMacToolButton::QMacToolButton()
 {
    m_standardItem = NoItem;
    m_selectable = false;
-   m_action = 0;
 }
 
 QMacToolButton::QMacToolButton(QObject *parent)
@@ -56,7 +54,6 @@ QMacToolButton::QMacToolButton(QObject *parent)
 {
     m_standardItem = NoItem;
     m_selectable = false;
-    m_action = 0;
 }
 
 QMacToolButton::~QMacToolButton()
@@ -66,18 +63,12 @@ QMacToolButton::~QMacToolButton()
 
 bool QMacToolButton::selectable() const
 {
-    if (m_action)
-        return m_action->isCheckable();
-
     return m_selectable;
 }
 
 void QMacToolButton::setSelectable(bool selectable)
 {
-    if (m_action)
-        m_action->setCheckable(selectable);
-    else
-        m_selectable = selectable;
+    m_selectable = selectable;
 }
 
 QMacToolButton::StandardItem QMacToolButton::standardItem() const
@@ -88,6 +79,26 @@ QMacToolButton::StandardItem QMacToolButton::standardItem() const
 void QMacToolButton::setStandardItem(StandardItem standardItem)
 {
     m_standardItem = standardItem;
+}
+
+QString QMacToolButton::text() const
+{
+    return m_text;
+}
+
+void QMacToolButton::setText(const QString &text)
+{
+    m_text = text;
+}
+
+QIcon QMacToolButton::icon() const
+{
+    return m_icon;
+}
+
+void QMacToolButton::setIcon(const QIcon &icon)
+{
+    m_icon = icon;
 }
 
 QT_END_NAMESPACE

@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QMenu>
 #include <QPixmap>
 #include <QWidget>
@@ -48,16 +48,10 @@
 
 int main(int argc, char **argv)
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     QWidget widget;
     widget.show();
-
-    // Dock menu
-    QMenu menu;
-    menu.addAction("Item 1");
-    menu.addAction("Item 2");
-    QtMac::setDockMenu(&menu);
 
     // Pixmap <-> CGImage conversion
     QPixmap pixmap(":qtlogo.png");

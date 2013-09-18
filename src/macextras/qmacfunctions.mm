@@ -40,10 +40,13 @@
 ****************************************************************************/
 
 #include "qmacfunctions.h"
-#include "qmacfunctions_p.h"
+
 #include <QByteArray>
 #include <QPixmap>
 #include <QUrl>
+
+#include "qmacfunctions_p.h"
+
 #import <Foundation/Foundation.h>
 #ifdef Q_OS_IOS
  #import <CoreGraphics/CoreGraphics.h>

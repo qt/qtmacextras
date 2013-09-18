@@ -41,10 +41,9 @@
 
 #include <Cocoa/Cocoa.h>
 #include "qmacpasteboardmime.h"
-#include <qpa/qplatformnativeinterface.h>
-#include <qapplication.h>
-#include <qlogging.h>
 
+#include <QtCore/qlogging.h>
+#include <qpa/qplatformnativeinterface.h>
 
 QT_BEGIN_NAMESPACE
 

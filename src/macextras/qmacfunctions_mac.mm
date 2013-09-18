@@ -64,53 +64,6 @@ NSImage* toNSImage(const QPixmap &pixmap)
     return image;
 }
 
-NSMenu* toNSMenu(QMenu *menu)
-{
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    // Get the platform menu, which will be a QCocoaMenu
-    QPlatformMenu *platformMenu = menu->platformMenu();
-
-    // Get the qMenuToNSMenu function and call it.
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qmenutonsmenu");
-    if (function) {
-        typedef void* (*QMenuToNSMenuFunction)(QPlatformMenu *platformMenu);
-        return reinterpret_cast<NSMenu *>(reinterpret_cast<QMenuToNSMenuFunction>(function)(platformMenu));
-    }
-    return nil;
-#else
-    return menu->nsMenu();
-#endif
-}
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-NSMenu* toNSMenu(QMenuBar *menubar)
-{
-    // Get the platform menubar, which will be a QCocoaMenuBar
-    QPlatformMenuBar *platformMenuBar = menubar->platformMenuBar();
-
-    // Get the qMenuBarToNSMenu function and call it.
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qmenubartonsmenu");
-    if (function) {
-        typedef void* (*QMenuBarToNSMenuFunction)(QPlatformMenuBar *platformMenuBar);
-        return reinterpret_cast<NSMenu *>(reinterpret_cast<QMenuBarToNSMenuFunction>(function)(platformMenuBar));
-    }
-    return nil;
-}
-#endif
-
-void setDockMenu(QMenu *menu)
-{
-    // Get the platform menu, which will be a QCocoaMenu
-    QPlatformMenu *platformMenu = menu->platformMenu();
-
-    // Get the setDockMenu function and call it.
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("setdockmenu");
-    if (function) {
-        typedef void (*SetDockMenuFunction)(QPlatformMenu *platformMenu);
-        reinterpret_cast<SetDockMenuFunction>(function)(platformMenu);
-    }
-}
-
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 bool isMainWindow(QWindow *window)
 {
@@ -122,20 +75,6 @@ bool isMainWindow(QWindow *window)
     return [macWindow isMainWindow];
 }
 #endif
-
-bool isMainWindow(QWidget *widget)
-{
-    if (!widget)
-        return false;
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    return isMainWindow(widget->windowHandle());
-#else
-    NSWindow *macWindow =
-            reinterpret_cast<NSWindow*>([reinterpret_cast<NSView*>(widget->window()->winId()) window]);
-    return [macWindow isMainWindow];
-#endif
-}
 
 CGContextRef currentCGContext()
 {

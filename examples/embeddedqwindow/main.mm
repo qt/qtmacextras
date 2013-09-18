@@ -39,13 +39,12 @@
 **
 ****************************************************************************/
 
+#include <Cocoa/Cocoa.h>
+
 #include "window.h"
 
 #include <QtGui>
 #include <qpa/qplatformnativeinterface.h>
-
-
-#include <Cocoa/Cocoa.h>
 
 
 NSView *getEmbeddableView(QWindow *qtWindow)

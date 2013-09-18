@@ -39,11 +39,14 @@
 **
 ****************************************************************************/
 
-#include "qmacfunctions.h"
 #include "qmactoolbardelegate_p.h"
-#include <QAction>
-#include <QImage>
-#include <QPixmap>
+
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+
+#include "qmacfunctions.h"
+#include "qmacfunctions_p.h"
+#include "qmacnativetoolbar_p.h"
 
 QT_USE_NAMESPACE
 
@@ -73,7 +76,7 @@ NSMutableArray *itemIdentifiers(const QList<QMacToolButton *> &items, bool cullU
     return array;
 }
 
-// from qaction.cpp
+// from QMacToolButton.cpp
 QString qt_strippedText(QString s)
 {
     s.remove( QString::fromLatin1("...") );
@@ -116,9 +119,6 @@ QString qt_strippedText(QString s)
     NSToolbarItem *item = reinterpret_cast<NSToolbarItem *>(sender);
     QString identifier = QtMac::fromNSString([item itemIdentifier]);
     QMacToolButton *toolButton = reinterpret_cast<QMacToolButton *>(identifier.toULongLong());
-    if (toolButton->m_action) {
-        toolButton->m_action->trigger();
-    }
     toolButton->emitActivated();
 }
 
@@ -129,14 +129,13 @@ QString qt_strippedText(QString s)
     const QString identifier = QtMac::fromNSString(itemIdentifier);
 
     QMacToolButton *toolButton = reinterpret_cast<QMacToolButton *>(identifier.toULongLong()); // string -> unisgned long long -> pointer
-    NSToolbarItem *toolbarItem= [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
-    [toolbarItem setLabel: QtMac::toNSString(qt_strippedText(toolButton->m_action->iconText()))];
-    [toolbarItem setPaletteLabel:[toolbarItem label]];
-    [toolbarItem setToolTip: QtMac::toNSString(toolButton->m_action->toolTip())];
+    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
+    [toolbarItem setLabel: QtMac::toNSString(toolButton->text())];
+    [toolbarItem setPaletteLabel :[toolbarItem label]];
 
-    QPixmap icon = toolButton->m_action->icon().pixmap(64, 64);
+    QPixmap icon = toolButton->icon().pixmap(64, 64);
     if (icon.isNull() == false) {
-        [toolbarItem setImage : QtMac::toNSImage(icon)];
+        [toolbarItem setImage: QtMac::toNSImage(icon)];
     }
 
     [toolbarItem setTarget : self];
@@ -145,73 +144,53 @@ QString qt_strippedText(QString s)
     return toolbarItem;
 }
 
-- (QAction *)addActionWithText:(const QString *)text
+- (QMacToolButton *)addActionWithText:(const QString *)text
 {
     QIcon nullIcon;
     return [self addActionWithText:text icon:&nullIcon];
 }
 
-- (QAction *)addActionWithText:(const QString *)text icon:(const QIcon *)icon
+- (QMacToolButton *)addActionWithText:(const QString *)text icon:(const QIcon *)icon
 {
-    QAction *action = new QAction(*icon, *text, 0);
-    QMacToolButton *button = new QMacToolButton(action);
-    button->m_action = action;
+    QMacToolButton *button = new QMacToolButton(0);
+    button->setText(*text);
+    button->setIcon(*icon);
     items.append(button);
     allowedItems.append(button);
-    return action;
+    return button;
 }
 
-- (QAction *)addAction:(QAction *)action
+- (QMacToolButton *)addStandardItem:(QMacToolButton::StandardItem) standardItem
 {
-    QMacToolButton *button = new QMacToolButton(action);
-    button->m_action = action;
-    items.append(button);
-    allowedItems.append(button);
-    return action;
-}
-
-- (QAction *)addStandardItem:(QMacToolButton::StandardItem) standardItem
-{
-    QAction *action = new QAction(0);
-    QMacToolButton *button = new QMacToolButton(action);
-    button->m_action = action;
+    QMacToolButton *button = new QMacToolButton(0);
     button->setStandardItem(standardItem);
     items.append(button);
     allowedItems.append(button);
-    return action;
+    return button;
 }
 
-- (QAction *)addAllowedActionWithText:(const QString *)text
+- (QMacToolButton *)addAllowedActionWithText:(const QString *)text
 {
     QIcon nullIcon;
     return [self addAllowedActionWithText:text icon:&nullIcon];
 }
 
-- (QAction *)addAllowedActionWithText:(const QString *)text icon:(const QIcon *)icon
+- (QMacToolButton *)addAllowedActionWithText:(const QString *)text icon:(const QIcon *)icon
 {
-    QAction *action = new QAction(*icon, *text, 0);
-    QMacToolButton *button = new QMacToolButton(action);
-    button->m_action = action;
+    QMacToolButton *button = new QMacToolButton(0);
+    button->setText(*text);
+    button->setIcon(*icon);
     allowedItems.append(button);
-    return action;
+    return button;
 }
 
-- (QAction *)addAllowedAction:(QAction *)action
+- (QMacToolButton *)addAllowedStandardItem:(QMacToolButton::StandardItem)standardItem
 {
-    QMacToolButton *button = new QMacToolButton(action);
-    button->m_action = action;
-    allowedItems.append(button);
-    return action;
-}
-
-- (QAction *)addAllowedStandardItem:(QMacToolButton::StandardItem)standardItem
-{
-    QAction *action = new QAction(0);
-    QMacToolButton *button = new QMacToolButton(action);
-    button->m_action = action;
+    QMacToolButton *button = new QMacToolButton(0);
     button->setStandardItem(standardItem);
     allowedItems.append(button);
-    return action;
+    return button;
 }
+
 
 @end
