@@ -73,6 +73,8 @@ void qRegisterDraggedTypes(const QStringList &types)
 
 /*!
   \class QMacPasteboardMime
+  \inmodule QtMacExtras
+  \since 5.2
   \brief The QMacPasteboardMime class converts between a MIME type and a
   \l{http://developer.apple.com/macosx/uniformtypeidentifiers.html}{Uniform
   Type Identifier (UTI)} format.
@@ -89,17 +91,28 @@ void qRegisterDraggedTypes(const QStringList &types)
   A subclass of QMacPasteboardMime will automatically be registered, and active, upon instantiation.
 
   Qt has predefined support for the following UTIs:
-  \list
-    \i public.utf8-plain-text - converts to "text/plain"
-    \i public.utf16-plain-text - converts to "text/plain"
-    \i public.html - converts to "text/html"
-    \i public.url - converts to "text/uri-list"
-    \i public.file-url - converts to "text/uri-list"
-    \i public.tiff - converts to "application/x-qt-image"
-    \i public.vcard - converts to "text/plain"
-    \i com.apple.traditional-mac-plain-text - converts to "text/plain"
-    \i com.apple.pict - converts to "application/x-qt-image"
-  \endlist
+  \table
+    \header \li UTI
+            \li Converts to
+    \row \li \c public.utf8-plain-text
+         \li \c text/plain
+    \row \li \c public.utf16-plain-text
+         \li \c text/plain
+    \row \li \c public.html
+         \li \c text/html
+    \row \li \c public.url
+         \li \c text/uri-list
+    \row \li \c public.file-url
+         \li \c text/uri-list
+    \row \li \c public.tiff
+         \li \c application/x-qt-image
+    \row \li \c public.vcard
+         \li \c text/plain
+    \row \li \c com.apple.traditional-mac-plain-text
+         \li \c text/plain
+    \row \li \c com.apple.pict
+         \li \c application/x-qt-image
+    \endtable
 
   When working with MIME data, Qt will interate through all instances of QMacPasteboardMime to
   find an instance that can convert to, or from, a specific MIME type. It will do this by calling
