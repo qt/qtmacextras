@@ -39,63 +39,24 @@
 **
 ****************************************************************************/
 
-#include "preferenceswindow.h"
-#include <QMacNativeToolBar>
-#include <QTimer>
 
-PreferencesWindow::PreferencesWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::PreferencesWindow)
+#include <QGuiApplication>
+#include <QMenu>
+#include <QPixmap>
+#include <QWidget>
+#include <qmacfunctions.h>
+
+int main(int argc, char **argv)
 {
-    ui->setupUi(this);
+    QGuiApplication app(argc, argv);
 
-    // Ensure we can only select one 'tab' at a time
-    QActionGroup *items = new QActionGroup(this);
-    foreach (QAction *action, ui->toolBar->actions())
-        items->addAction(action);
+    QWidget widget;
+    widget.show();
 
-    // This single line of code is all that's needed to transform a QToolBar into a native toolbar!
-    QtMac::setNativeToolBar(ui->toolBar, ui->useNativeToolbarCheckBox->isChecked());
+    // Pixmap <-> CGImage conversion
+    QPixmap pixmap(":qtlogo.png");
+    CGImageRef cgImage = QtMac::toCGImageRef(pixmap);
+    QPixmap pixmap2 = QtMac::fromCGImageRef(cgImage);
 
-    QTimer::singleShot(0, this, SLOT(pack()));
-}
-
-PreferencesWindow::~PreferencesWindow()
-{
-    delete ui;
-}
-
-void PreferencesWindow::toolbarItemTriggered()
-{
-    QAction *action = qobject_cast<QAction*>(sender());
-    if (action)
-    {
-        setWindowTitle(action->text());
-    }
-
-    if (sender() == ui->actionGeneral)
-    {
-        ui->stackedWidget->setCurrentWidget(ui->generalPage);
-    }
-    else if (sender() == ui->actionNetwork)
-    {
-        ui->stackedWidget->setCurrentWidget(ui->networkPage);
-    }
-    else if (sender() == ui->actionAdvanced)
-    {
-        ui->stackedWidget->setCurrentWidget(ui->advancedPage);
-    }
-
-    QTimer::singleShot(0, this, SLOT(pack()));
-}
-
-void PreferencesWindow::useNativeToolBarToggled(bool on)
-{
-    QtMac::setNativeToolBar(ui->toolBar, on);
-    QTimer::singleShot(0, this, SLOT(pack()));
-}
-
-void PreferencesWindow::pack()
-{
-    resize(QSize());
+    return app.exec();
 }

@@ -43,24 +43,17 @@
 #define QMACTOOLBARDELEGATE_H
 
 #import <AppKit/AppKit.h>
-#include "qmactoolbutton.h"
-//#include <QString>
-//#include <QHash>
+#include "qmactoolbutton_p.h"
 
-#include <qglobal.h>
+#include <QtCore/qglobal.h>
 #include <private/qcore_mac_p.h>
-
-#include <QAction>
-#include <QIcon>
+#include <QtGui/QIcon>
 
 @interface QT_MANGLE_NAMESPACE(QMacToolbarDelegate) : NSObject <NSToolbarDelegate>
 {
 @public
     QList<QMacToolButton *> items;
     QList<QMacToolButton *> allowedItems;
-
-//    QHash<QString, QAction*> actions;
-//    QHash<QString, QAction*> allowedActions;
 }
 
 - (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted;
@@ -68,15 +61,13 @@
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar;
 - (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
 
-- (QAction *)addActionWithText:(const QString *)text;
-- (QAction *)addActionWithText:(const QString *)text icon:(const QIcon *)icon;
-- (QAction *)addAction:(QAction *)action;
-- (QAction *)addStandardItem:(QMacToolButton::StandardItem)standardItem;
+- (QMacToolButton *)addActionWithText:(const QString *)text;
+- (QMacToolButton *)addActionWithText:(const QString *)text icon:(const QIcon *)icon;
+- (QMacToolButton *)addStandardItem:(QMacToolButton::StandardItem)standardItem;
 
-- (QAction *)addAllowedActionWithText:(const QString *)text;
-- (QAction *)addAllowedActionWithText:(const QString *)text icon:(const QIcon *)icon;
-- (QAction *)addAllowedAction:(QAction *)action;
-- (QAction *)addAllowedStandardItem:(QMacToolButton::StandardItem)standardItem;
+- (QMacToolButton *)addAllowedActionWithText:(const QString *)text;
+- (QMacToolButton *)addAllowedActionWithText:(const QString *)text icon:(const QIcon *)icon;
+- (QMacToolButton *)addAllowedStandardItem:(QMacToolButton::StandardItem)standardItem;
 
 - (IBAction)itemClicked:(id)sender;
 @end

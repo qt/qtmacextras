@@ -39,45 +39,37 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QDebug>
-#include <QHBoxLayout>
-#include <QLineEdit>
-#include <QPainter>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QWidget>
 #include <Cocoa/Cocoa.h>
-#include <qmacnativewidget.h>
 
-class RedWidget : public QWidget
+#include "window.h"
+
+#include <QtGui>
+#include <qpa/qplatformnativeinterface.h>
+
+
+NSView *getEmbeddableView(QWindow *qtWindow)
 {
-public:
-    RedWidget() {
+    // Make sure the platform window is created
+    qtWindow->create();
 
-    }
+    QPlatformNativeInterface *platformNativeInterface = QGuiApplication::platformNativeInterface();
 
-    void resizeEvent(QResizeEvent *)
-    {
-        qDebug() << "RedWidget::resize" << size();
-    }
+    // Inform the window that it's a "guest" of a non-QWindow
+    typedef void (*SetEmbeddedInForeignViewFunction)(QPlatformWindow *window, bool embedded);
+    reinterpret_cast<SetEmbeddedInForeignViewFunction>(platformNativeInterface->
+        nativeResourceFunctionForIntegration("setEmbeddedInForeignView"))(qtWindow->handle(), true);
 
-    void paintEvent(QPaintEvent *event)
-    {
-        QPainter p(this);
-        Q_UNUSED(event);
-        QRect rect(QPoint(0, 0), size());
-        qDebug() << "Painting geometry" << rect;
-        p.fillRect(rect, QColor(133, 50, 50));
-    }
-};
+    // Get the Qt content NSView for the QWindow from the Qt platform plugin
+    NSView *qtView = (NSView *)platformNativeInterface->nativeResourceForWindow("nsview", qtWindow);
+    return qtView; // qtView is ready for use.
+}
 
 @interface WindowCreator : NSObject {}
 - (void)createWindow;
 @end
 
 @implementation WindowCreator
-- (void)createWindow {
+- (void)createWindow {	
 
     // Create the NSWindow
     NSRect frame = NSMakeRect(500, 500, 500, 500);
@@ -85,28 +77,14 @@ public:
                         styleMask:NSTitledWindowMask |  NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
                         backing:NSBackingStoreBuffered
                         defer:NO];
+
     [window setTitle:@"NSWindow"];
+    [window setBackgroundColor:[NSColor blueColor]]; // if you see blue something is wrong
 
-    // Create widget hierarchy with QPushButton and QLineEdit
-    QMacNativeWidget *nativeWidget = new QMacNativeWidget();
-
-    QHBoxLayout *hlayout = new QHBoxLayout();
-    hlayout->addWidget(new QPushButton("Push", nativeWidget));
-    hlayout->addWidget(new QLineEdit);
-
-    QVBoxLayout *vlayout = new QVBoxLayout();
-    vlayout->addLayout(hlayout);
-
-    //RedWidget * redWidget = new RedWidget;
-    //vlayout->addWidget(redWidget);
-
-    nativeWidget->setLayout(vlayout);
-
-    // Get the NSView for QMacNativeWidget and set it as the content view for the NSWindow
-    [window setContentView:nativeWidget->nativeView()];
-
-    // show() must be called on nativeWiget to get the widgets int he correct state.
-    nativeWidget->show();
+    // Create the QWindow and embed its view.
+    Window *qtWindow = new Window(); // ### who owns this window?
+    NSView *qtView = getEmbeddableView(qtWindow);
+    [window setContentView:qtView];
 
     // Show the NSWindow
     [window makeKeyAndOrderFront:NSApp];
@@ -115,17 +93,17 @@ public:
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     // Start Cocoa. Create NSApplicaiton.
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [NSApplication sharedApplication];
 
-    // Schedule call to create the UI using a zero timer.
+    // Schedule call to create the UI using a timer.
     WindowCreator *windowCreator= [WindowCreator alloc];
     [NSTimer scheduledTimerWithTimeInterval:0 target:windowCreator selector:@selector(createWindow) userInfo:nil repeats:NO];
 
-    // Stare the Cocoa event loop.
+    // Starte the Cocoa event loop.
     [(NSApplication *)NSApp run];
     [NSApp release];
     [pool release];

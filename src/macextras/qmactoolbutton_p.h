@@ -39,27 +39,68 @@
 **
 ****************************************************************************/
 
-#ifndef PREFERENCESWINDOW_H
-#define PREFERENCESWINDOW_H
+#ifndef QMACTOOLBUTTON_H
+#define QMACTOOLBUTTON_H
 
-#include <QMainWindow>
-#include "ui_preferenceswindow.h"
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtGui/QIcon>
 
-class PreferencesWindow : public QMainWindow
+QT_BEGIN_NAMESPACE
+
+class QMacToolButton : public QObject
 {
     Q_OBJECT
-
+    Q_PROPERTY(bool selectable READ selectable WRITE setSelectable)
+    Q_PROPERTY(StandardItem standardItem READ standardItem WRITE setStandardItem)
+    Q_PROPERTY(QString text READ text WRITE setText)
+    Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
+    Q_ENUMS(StandardItem)
 public:
-    explicit PreferencesWindow(QWidget *parent = 0);
-    ~PreferencesWindow();
+    enum StandardItem
+    {
+        NoItem,
+        ShowColors,
+        ShowFonts,
+        PrintItem,
+        Space,
+        FlexibleSpace
+    };
 
-private slots:
-    void toolbarItemTriggered();
-    void useNativeToolBarToggled(bool);
-    void pack();
+    enum IconSize
+    {
+        IconSizeDefault,
+        IconSizeRegular,
+        IconSizeSmall
+    };
 
+    QMacToolButton();
+    QMacToolButton(QObject *parent);
+    virtual ~QMacToolButton();
+
+    bool selectable() const;
+    void setSelectable(bool selectable);
+
+    StandardItem standardItem() const;
+    void setStandardItem(StandardItem standardItem);
+
+    QString text() const;
+    void setText(const QString &text);
+
+    QIcon icon() const;
+    void setIcon(const QIcon &icon);
+Q_SIGNALS:
+    void activated();
 private:
-    Ui::PreferencesWindow *ui;
+    bool m_selectable;
+    StandardItem m_standardItem;
+    QString m_text;
+    QIcon m_icon;
+
+public: // (not really public)
+    void emitActivated() { Q_EMIT activated(); }
 };
 
-#endif // PREFERENCESWINDOW_H
+QT_END_NAMESPACE
+
+#endif

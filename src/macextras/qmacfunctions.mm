@@ -40,10 +40,13 @@
 ****************************************************************************/
 
 #include "qmacfunctions.h"
-#include "qmacfunctions_p.h"
+
 #include <QByteArray>
 #include <QPixmap>
 #include <QUrl>
+
+#include "qmacfunctions_p.h"
+
 #import <Foundation/Foundation.h>
 #ifdef Q_OS_IOS
  #import <CoreGraphics/CoreGraphics.h>
@@ -51,6 +54,13 @@
 
 QT_BEGIN_NAMESPACE
 
+/*!
+    \namespace QtMac
+    \inmodule QtMacExtras
+    \since 5.2
+    \brief The QtMac namespace contains miscellaneous functionality specific to Mac OS X and iOS operating systems.
+    \inheaderfile QMacFunctions
+ */
 namespace QtMac
 {
 

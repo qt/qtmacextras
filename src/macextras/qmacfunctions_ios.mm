@@ -41,6 +41,7 @@
 
 #include "qmacfunctions.h"
 #include "qmacfunctions_p.h"
+
 #import <UIKit/UIKit.h>
 
 QT_BEGIN_NAMESPACE

@@ -53,9 +53,6 @@ typedef struct CGContext *CGContextRef;
 
 Q_FORWARD_DECLARE_OBJC_CLASS(NSData);
 Q_FORWARD_DECLARE_OBJC_CLASS(NSImage);
-Q_FORWARD_DECLARE_OBJC_CLASS(NSString);
-Q_FORWARD_DECLARE_OBJC_CLASS(NSMenu);
-Q_FORWARD_DECLARE_OBJC_CLASS(NSURL);
 
 QT_BEGIN_NAMESPACE
 
@@ -65,18 +62,11 @@ class QMenuBar;
 class QPixmap;
 class QString;
 class QUrl;
-class QWidget;
 class QWindow;
 
 namespace QtMac
 {
-Q_MACEXTRAS_EXPORT NSString* toNSString(const QString &string);
-Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
-
-Q_MACEXTRAS_EXPORT NSURL* toNSURL(const QUrl &url);
-Q_MACEXTRAS_EXPORT QUrl fromNSURL(const NSURL *url);
-
-Q_MACEXTRAS_EXPORT NSData* toNSData(const QByteArray &data);
+Q_MACEXTRAS_EXPORT NSData *toNSData(const QByteArray &data);
 Q_MACEXTRAS_EXPORT QByteArray fromNSData(const NSData *data);
 
 Q_MACEXTRAS_EXPORT CGImageRef toCGImageRef(const QPixmap &pixmap);
@@ -85,25 +75,14 @@ Q_MACEXTRAS_EXPORT QPixmap fromCGImageRef(CGImageRef image);
 Q_MACEXTRAS_EXPORT CGContextRef currentCGContext();
 
 #ifndef Q_OS_IOS
-Q_MACEXTRAS_EXPORT NSImage* toNSImage(const QPixmap &pixmap);
-
-Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenu *menu);
-Q_MACEXTRAS_EXPORT NSMenu* toNSMenu(QMenuBar *menubar);
-
-Q_MACEXTRAS_EXPORT void setDockMenu(QMenu *menu);
+Q_MACEXTRAS_EXPORT NSImage *toNSImage(const QPixmap &pixmap);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 Q_MACEXTRAS_EXPORT bool isMainWindow(QWindow *window);
 #endif
 
-Q_MACEXTRAS_EXPORT bool isMainWindow(QWidget *widget);
 #endif
 }
-
-#ifndef Q_OS_IOS
-// ### Qt 4 compatibility; remove in Qt 6
-inline void qt_mac_set_dock_menu(QMenu *menu) { QtMac::setDockMenu(menu); }
-#endif
 
 QT_END_NAMESPACE
 

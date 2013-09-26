@@ -43,32 +43,21 @@
 #define QMACTOOLBAR_H
 
 #include "qmacextrasglobal.h"
-#include "qmactoolbutton.h"
+#include "qmactoolbutton_p.h"
 
-#include <QString>
-#include <QObject>
-#include <QIcon>
-#include <QVariant>
+#include <QtCore/QString>
+#include <QtCore/QObject>
+#include <QtCore/QVariant>
+#include <QtGui/QIcon>
 
 Q_FORWARD_DECLARE_OBJC_CLASS(NSToolbar);
 
 QT_BEGIN_NAMESPACE
 
-class QToolBar;
-class QWidget;
-
-class QMacNativeToolBar;
-
-namespace QtMac
-{
-Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, bool on = true);
-Q_MACEXTRAS_EXPORT QMacNativeToolBar* setNativeToolBar(QToolBar *toolbar, const QString &identifier, bool on = true);
-}
-
-class QAction;
 class QWindow;
-
+class QMacNativeToolBar;
 class QMacNativeToolBarPrivate;
+
 class Q_MACEXTRAS_EXPORT QMacNativeToolBar : public QObject
 {
     friend class QMacNativeToolBarPrivate;
@@ -83,8 +72,6 @@ public:
 
     NSToolbar* nativeToolbar() const;
 
-    static QMacNativeToolBar* fromQToolBar(const QToolBar *toolBar, const QString &identifier = QString());
-
     QString identifier() const;
     bool isVisible() const;
     bool showsBaselineSeparator() const;
@@ -97,24 +84,19 @@ public:
     QList<QMacToolButton *> allowedButtons();
 
     void showInWindow(QWindow *window);
-    void showInWindowForWidget(QWidget *widget);
-    Q_INVOKABLE void showInMainWindow();
 
     void removeFromWindow(QWindow *window);
-    void removeFromWindowForWidget(QWidget *widget);
 
     // Add actions to the toolbar
-    Q_INVOKABLE QAction *addAction(const QString &text);
-    Q_INVOKABLE QAction *addAction(const QIcon &icon, const QString &text);
-    Q_INVOKABLE QAction *addAction(QAction *action);
+    Q_INVOKABLE QMacToolButton *addAction(const QString &text);
+    Q_INVOKABLE QMacToolButton *addAction(const QIcon &icon, const QString &text);
     Q_INVOKABLE void addSeparator();
-    Q_INVOKABLE QAction *addStandardItem(QMacToolButton::StandardItem standardItem);
+    Q_INVOKABLE QMacToolButton *addStandardItem(QMacToolButton::StandardItem standardItem);
 
     // Add actions to the "Customize Toolbar" menu
-    Q_INVOKABLE QAction *addAllowedAction(const QString &text);
-    Q_INVOKABLE QAction *addAllowedAction(const QIcon &icon, const QString &text);
-    Q_INVOKABLE QAction *addAllowedAction(QAction *action);
-    Q_INVOKABLE QAction *addAllowedStandardItem(QMacToolButton::StandardItem standardItem);
+    Q_INVOKABLE QMacToolButton *addAllowedAction(const QString &text);
+    Q_INVOKABLE QMacToolButton *addAllowedAction(const QIcon &icon, const QString &text);
+    Q_INVOKABLE QMacToolButton *addAllowedStandardItem(QMacToolButton::StandardItem standardItem);
 
 Q_SIGNALS:
     void visibilityChanged(bool visible);
@@ -136,11 +118,14 @@ public Q_SLOTS:
 private Q_SLOTS:
     void showInWindow_impl();
     void setSelectedItem();
-    QAction *setSelectedItem(QAction *action);
+//### TODO- re-implement
+#if 0
+    QMacToolButton *setSelectedItem(QMacToolbarAction *action);
     void checkSelectableItemSanity();
+#endif
 private:
     QWindow *targetWindow;
-    QWidget *targetWidget;
+    void *targetWidget;
     QList<QMacToolButton *> m_buttons;
     QList<QMacToolButton *> m_allowedButtons;
     QMacNativeToolBarPrivate *d;

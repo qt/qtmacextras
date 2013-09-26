@@ -52,6 +52,8 @@ QT_BEGIN_NAMESPACE
 #  define Q_MACEXTRAS_EXPORT Q_DECL_IMPORT
 #endif
 
+
+// ### remove when merged to QtCore
 /*!
  * \macro Q_FORWARD_DECLARE_OBJC_CLASS(classname)
  *

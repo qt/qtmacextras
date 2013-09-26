@@ -1,4 +1,4 @@
-QT += macextras
+QT += macextras widgets
 
 SOURCES += main.cpp
 
