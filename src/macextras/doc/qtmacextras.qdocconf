@@ -40,3 +40,6 @@ qhp.QtMacExtras.subprojects.classes.sortPages = true
 qhp.QtMacExtras.subprojects.examples.title = Examples
 qhp.QtMacExtras.subprojects.examples.indexTitle = Qt Mac Extras Examples
 qhp.QtMacExtras.subprojects.examples.selectors = fake:example
+
+navigation.landingpage = "Qt Mac Extras"
+navigation.cppclassespage = "Qt Mac Extras C++ Classes"
