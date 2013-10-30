@@ -41,13 +41,12 @@
 
 #include <Cocoa/Cocoa.h>
 #include "qmacpasteboardmime.h"
+#include "qmacfunctions_p.h"
 
 #include <QtCore/qlogging.h>
 #include <qpa/qplatformnativeinterface.h>
 
 QT_BEGIN_NAMESPACE
-
-extern QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName);
 
 /*!
     \fn void qRegisterDraggedTypes(const QStringList &types)
