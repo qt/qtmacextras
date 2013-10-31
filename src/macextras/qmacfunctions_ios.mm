@@ -54,6 +54,16 @@ CGContextRef currentCGContext()
     return UIGraphicsGetCurrentContext();
 }
 
+void setApplicationIconBadgeNumber(int number)
+{
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: number];
+}
+
+int applicationIconBadgeNumber()
+{
+    return [[UIApplication sharedApplication] applicationIconBadgeNumber];
+}
+
 } // namespace QtMac
 
 QT_END_NAMESPACE

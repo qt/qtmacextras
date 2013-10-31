@@ -40,6 +40,8 @@
 ****************************************************************************/
 
 #import <Cocoa/Cocoa.h>
+#import <AppKit/NSApplication.h>
+
 #include "qmacfunctions.h"
 #include "qmacfunctions_p.h"
 
@@ -79,6 +81,16 @@ bool isMainWindow(QWindow *window)
 CGContextRef currentCGContext()
 {
     return reinterpret_cast<CGContextRef>([[NSGraphicsContext currentContext] graphicsPort]);
+}
+
+void setBadgeLabelText(const QString &text)
+{
+    [[[NSApplication sharedApplication] dockTile] setBadgeLabel:toNSString(text)];
+}
+
+QString badgeLabelText()
+{
+    return fromNSString([[[NSApplication sharedApplication] dockTile] badgeLabel]);
 }
 
 } // namespace QtMac

@@ -74,14 +74,21 @@ Q_MACEXTRAS_EXPORT QPixmap fromCGImageRef(CGImageRef image);
 
 Q_MACEXTRAS_EXPORT CGContextRef currentCGContext();
 
-#ifndef Q_OS_IOS
+#ifdef Q_OS_OSX
+Q_MACEXTRAS_EXPORT void setBadgeLabelText(const QString &text);
+Q_MACEXTRAS_EXPORT QString badgeLabelText();
+
 Q_MACEXTRAS_EXPORT NSImage *toNSImage(const QPixmap &pixmap);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 Q_MACEXTRAS_EXPORT bool isMainWindow(QWindow *window);
 #endif
+#endif // Q_OS_OSX
 
-#endif
+#ifdef Q_OS_IOS
+Q_MACEXTRAS_EXPORT void setApplicationIconBadgeNumber(int number);
+Q_MACEXTRAS_EXPORT int applicationIconBadgeNumber();
+#endif // Q_OS_IOS
 }
 
 QT_END_NAMESPACE

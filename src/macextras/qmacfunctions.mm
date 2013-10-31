@@ -48,6 +48,7 @@
 #include "qmacfunctions_p.h"
 
 #import <Foundation/Foundation.h>
+
 #ifdef Q_OS_IOS
  #import <CoreGraphics/CoreGraphics.h>
 #endif
