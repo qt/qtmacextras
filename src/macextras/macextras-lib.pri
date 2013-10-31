@@ -9,7 +9,7 @@ mac {
         OBJECTIVE_SOURCES += \
             $$PWD/qmacfunctions_ios.mm
 
-        LIBS *= -framework UIKit
+        LIBS_PRIVATE += -framework UIKit
     } else {
         PRIVATE_HEADERS += \
             $$PWD/qmacnativetoolbar_p.h \
@@ -29,7 +29,7 @@ mac {
             OBJECTIVE_SOURCES += $$PWD/qmacpasteboardmime.mm
         }
 
-        LIBS *= -framework AppKit
+        LIBS_PRIVATE += -framework AppKit
     }
 }
 
