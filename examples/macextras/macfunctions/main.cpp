@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QMenu>
 #include <QPixmap>
 #include <QWidget>
@@ -48,7 +48,7 @@
 
 int main(int argc, char **argv)
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QWidget widget;
     widget.show();

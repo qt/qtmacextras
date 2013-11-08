@@ -43,7 +43,7 @@
 #define QMACFUNCTIONS_H
 
 #if 0
-#pragma qt_class(QMacFunctions)
+#pragma qt_class(QtMac)
 #endif
 
 #include "qmacextrasglobal.h"
