@@ -132,6 +132,8 @@ void qRegisterDraggedTypes(const QStringList &types)
 */
 QMacPasteboardMime::QMacPasteboardMime(char t) : type(t)
 {
+    Q_UNUSED(type);
+
     QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("addToMimeList");
     if (function) {
         typedef void (*AddToGlobalMimeListFunction)(QMacPasteboardMime *);
