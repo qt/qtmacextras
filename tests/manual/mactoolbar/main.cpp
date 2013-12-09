@@ -39,29 +39,16 @@
 **
 ****************************************************************************/
 
-#ifndef QMACTOOLBARDELEGATE_H
-#define QMACTOOLBARDELEGATE_H
+#include "toolbarcontrollerwidget.h"
 
-#import <AppKit/AppKit.h>
-#include "qmactoolbar.h"
-#include "qmactoolbar_p.h"
+#include <QtGui/QGuiApplication>
 
-#include <QtCore/qglobal.h>
-#include <private/qcore_mac_p.h>
-
-@interface QT_MANGLE_NAMESPACE(QMacToolbarDelegate) : NSObject <NSToolbarDelegate>
+int main(int argc, char **argv)
 {
-@public
-    QMacToolBarPrivate *toolbarPrivate;
+    QApplication app(argc, argv);
+
+    ToolBarControllerWidget toolbarControllerWidget;
+    toolbarControllerWidget.show();
+
+    return app.exec();
 }
-
-- (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted;
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
-- (IBAction)itemClicked:(id)sender;
-@end
-
-QT_NAMESPACE_ALIAS_OBJC_CLASS(QMacToolbarDelegate);
-
-#endif // QMACTOOLBARDELEGATE_H

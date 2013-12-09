@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtMacExtras module of the Qt Toolkit.
@@ -39,66 +39,61 @@
 **
 ****************************************************************************/
 
-#include "qmactoolbutton_p.h"
+#ifndef QMACTOOLBARITEM_H
+#define QMACTOOLBARITEM_H
+
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtGui/QIcon>
+
+#include "qmacextrasglobal.h"
+
+Q_FORWARD_DECLARE_OBJC_CLASS(NSToolbarItem);
 
 QT_BEGIN_NAMESPACE
 
-QMacToolButton::QMacToolButton()
+class QMacToolBarItemPrivate;
+class Q_MACEXTRAS_EXPORT QMacToolBarItem : public QObject
 {
-   m_standardItem = NoItem;
-   m_selectable = false;
-}
+    Q_OBJECT
+    Q_PROPERTY(bool selectable READ selectable WRITE setSelectable)
+    Q_PROPERTY(StandardItem standardItem READ standardItem WRITE setStandardItem)
+    Q_PROPERTY(QString text READ text WRITE setText)
+    Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
+    Q_ENUMS(StandardItem)
 
-QMacToolButton::QMacToolButton(QObject *parent)
-    :QObject(parent)
-{
-    m_standardItem = NoItem;
-    m_selectable = false;
-}
+public:
+    enum StandardItem
+    {
+        NoStandardItem,
+        Space,
+        FlexibleSpace
+    };
 
-QMacToolButton::~QMacToolButton()
-{
+    QMacToolBarItem(QObject *parent = 0);
+    virtual ~QMacToolBarItem();
 
-}
+    bool selectable() const;
+    void setSelectable(bool selectable);
 
-bool QMacToolButton::selectable() const
-{
-    return m_selectable;
-}
+    StandardItem standardItem() const;
+    void setStandardItem(StandardItem standardItem);
 
-void QMacToolButton::setSelectable(bool selectable)
-{
-    m_selectable = selectable;
-}
+    QString text() const;
+    void setText(const QString &text);
 
-QMacToolButton::StandardItem QMacToolButton::standardItem() const
-{
-    return m_standardItem;
-}
+    QIcon icon() const;
+    void setIcon(const QIcon &icon);
 
-void QMacToolButton::setStandardItem(StandardItem standardItem)
-{
-    m_standardItem = standardItem;
-}
+    NSToolbarItem *nativeToolBarItem() const;
 
-QString QMacToolButton::text() const
-{
-    return m_text;
-}
-
-void QMacToolButton::setText(const QString &text)
-{
-    m_text = text;
-}
-
-QIcon QMacToolButton::icon() const
-{
-    return m_icon;
-}
-
-void QMacToolButton::setIcon(const QIcon &icon)
-{
-    m_icon = icon;
-}
+Q_SIGNALS:
+    void activated();
+private:
+    friend class QMacToolBarPrivate;
+    Q_DECLARE_PRIVATE(QMacToolBarItem)
+};
 
 QT_END_NAMESPACE
+
+#endif

@@ -39,29 +39,34 @@
 **
 ****************************************************************************/
 
-#ifndef QMACTOOLBARDELEGATE_H
-#define QMACTOOLBARDELEGATE_H
+#ifndef QMACTOOLBARITEM_P_H
+#define QMACTOOLBARITEM_P_H
 
+#undef slots
 #import <AppKit/AppKit.h>
-#include "qmactoolbar.h"
-#include "qmactoolbar_p.h"
 
-#include <QtCore/qglobal.h>
-#include <private/qcore_mac_p.h>
+#include <QtCore/private/qobject_p.h>
 
-@interface QT_MANGLE_NAMESPACE(QMacToolbarDelegate) : NSObject <NSToolbarDelegate>
+QT_BEGIN_NAMESPACE
+
+class QMacToolBarItem;
+class QMacToolBarItemPrivate : public QObjectPrivate
 {
-@public
-    QMacToolBarPrivate *toolbarPrivate;
-}
+public:
+    QMacToolBarItemPrivate();
+    ~QMacToolBarItemPrivate();
+    static NSString *toNSStandardItem(QMacToolBarItem::StandardItem standardItem);
+    NSString *itemIdentifier() const;
+    void initNativeToolbarItem();
 
-- (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted;
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
-- (IBAction)itemClicked:(id)sender;
-@end
+    bool selectable;
+    QMacToolBarItem::StandardItem standardItem;
+    QString text;
+    QIcon icon;
+    NSToolbarItem *toolbarItem;
+    Q_DECLARE_PUBLIC(QMacToolBarItem)
+};
 
-QT_NAMESPACE_ALIAS_OBJC_CLASS(QMacToolbarDelegate);
+QT_END_NAMESPACE
 
-#endif // QMACTOOLBARDELEGATE_H
+#endif

@@ -39,29 +39,42 @@
 **
 ****************************************************************************/
 
-#ifndef QMACTOOLBARDELEGATE_H
-#define QMACTOOLBARDELEGATE_H
-
+#ifndef QMACTOOLBAR_P_H
+#define QMACTOOLBAR_P_H
 #import <AppKit/AppKit.h>
+
 #include "qmactoolbar.h"
-#include "qmactoolbar_p.h"
 
-#include <QtCore/qglobal.h>
-#include <private/qcore_mac_p.h>
+#include "qmacextrasglobal.h"
+#include "qmactoolbaritem.h"
 
-@interface QT_MANGLE_NAMESPACE(QMacToolbarDelegate) : NSObject <NSToolbarDelegate>
+#include <QtCore/QString>
+#include <QtCore/QObject>
+#include <QtCore/private/qobject_p.h>
+
+Q_FORWARD_DECLARE_OBJC_CLASS(NSToolbar);
+
+QT_BEGIN_NAMESPACE
+
+class QMacToolBarPrivate : public QObjectPrivate
 {
-@public
-    QMacToolBarPrivate *toolbarPrivate;
-}
+public:
+    QMacToolBarPrivate(const QString &identifier = QString());
+    ~QMacToolBarPrivate();
 
-- (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted;
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
-- (IBAction)itemClicked:(id)sender;
-@end
+    static NSString *getItemIdentifier(const QMacToolBarItem *item);
+    static NSMutableArray *getItemIdentifiers(const QList<QMacToolBarItem *> &items, bool cullUnselectable);
+    void itemClicked(NSToolbarItem *itemClicked);
 
-QT_NAMESPACE_ALIAS_OBJC_CLASS(QMacToolbarDelegate);
+    NSToolbar *toolbar;
+    QWindow *targetWindow;
+    QList<QMacToolBarItem *> items;
+    QList<QMacToolBarItem *> allowedItems;
 
-#endif // QMACTOOLBARDELEGATE_H
+    Q_DECLARE_PUBLIC(QMacToolBar)
+};
+
+QT_END_NAMESPACE
+
+#endif
+

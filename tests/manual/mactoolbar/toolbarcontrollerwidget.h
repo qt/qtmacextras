@@ -39,29 +39,20 @@
 **
 ****************************************************************************/
 
-#ifndef QMACTOOLBARDELEGATE_H
-#define QMACTOOLBARDELEGATE_H
+#include <QtCore/qdebug.h>
+#include <QtWidgets>
+#include <QtMacExtras/QMacToolBar>
 
-#import <AppKit/AppKit.h>
-#include "qmactoolbar.h"
-#include "qmactoolbar_p.h"
-
-#include <QtCore/qglobal.h>
-#include <private/qcore_mac_p.h>
-
-@interface QT_MANGLE_NAMESPACE(QMacToolbarDelegate) : NSObject <NSToolbarDelegate>
+class ToolBarControllerWidget : public QWidget
 {
-@public
-    QMacToolBarPrivate *toolbarPrivate;
-}
+Q_OBJECT
+public:
+    ToolBarControllerWidget();
+public Q_SLOTS:
+    void activated();
+    void changeItemText(const QString &);
+private:
+    QVBoxLayout *layout;
+    QMacToolBarItem *fooItem;
+};
 
-- (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted;
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
-- (IBAction)itemClicked:(id)sender;
-@end
-
-QT_NAMESPACE_ALIAS_OBJC_CLASS(QMacToolbarDelegate);
-
-#endif // QMACTOOLBARDELEGATE_H

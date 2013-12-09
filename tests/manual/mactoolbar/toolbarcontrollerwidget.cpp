@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtMacExtras module of the Qt Toolkit.
@@ -39,68 +39,41 @@
 **
 ****************************************************************************/
 
-#ifndef QMACTOOLBUTTON_H
-#define QMACTOOLBUTTON_H
+#include "toolbarcontrollerwidget.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtGui/QIcon>
-
-QT_BEGIN_NAMESPACE
-
-class QMacToolButton : public QObject
+ToolBarControllerWidget::ToolBarControllerWidget()
+    :QWidget(0)
 {
-    Q_OBJECT
-    Q_PROPERTY(bool selectable READ selectable WRITE setSelectable)
-    Q_PROPERTY(StandardItem standardItem READ standardItem WRITE setStandardItem)
-    Q_PROPERTY(QString text READ text WRITE setText)
-    Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
-    Q_ENUMS(StandardItem)
-public:
-    enum StandardItem
-    {
-        NoItem,
-        ShowColors,
-        ShowFonts,
-        PrintItem,
-        Space,
-        FlexibleSpace
-    };
 
-    enum IconSize
-    {
-        IconSizeDefault,
-        IconSizeRegular,
-        IconSizeSmall
-    };
+    setWindowTitle("QMacToolBar Test");
+    resize(400, 200);
 
-    QMacToolButton();
-    QMacToolButton(QObject *parent);
-    virtual ~QMacToolButton();
+    QMacToolBar *toolBar = new QMacToolBar(this);
 
-    bool selectable() const;
-    void setSelectable(bool selectable);
+    QIcon qtIcon(QStringLiteral(":qtlogo.png"));
+    fooItem = toolBar->addItem(qtIcon, QStringLiteral("Foo"));
+    fooItem->setText("foo");
 
-    StandardItem standardItem() const;
-    void setStandardItem(StandardItem standardItem);
+    connect(fooItem, SIGNAL(activated()), this, SLOT(activated()));
 
-    QString text() const;
-    void setText(const QString &text);
+    QMacToolBarItem *item5 = toolBar->addAllowedItem(qtIcon, QStringLiteral("AllowedFoo"));
+    connect(item5, SIGNAL(activated()), this, SLOT(activated()));
 
-    QIcon icon() const;
-    void setIcon(const QIcon &icon);
-Q_SIGNALS:
-    void activated();
-private:
-    bool m_selectable;
-    StandardItem m_standardItem;
-    QString m_text;
-    QIcon m_icon;
+    QLineEdit *fooItemText = new QLineEdit(this);
+    fooItemText->setText("Foo");
+    fooItemText->move(10, 10);
+    connect(fooItemText, SIGNAL(textChanged(const QString &)), this, SLOT(changeItemText(const QString &)));
 
-public: // (not really public)
-    void emitActivated() { Q_EMIT activated(); }
-};
+    winId();
+    toolBar->attachToWindow(windowHandle());
+}
 
-QT_END_NAMESPACE
+void ToolBarControllerWidget::activated()
+{
+    qDebug() << "activated" << sender();
+}
 
-#endif
+void ToolBarControllerWidget::changeItemText(const QString &text)
+{
+    fooItem->setText(text);
+}

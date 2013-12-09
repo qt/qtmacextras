@@ -39,29 +39,56 @@
 **
 ****************************************************************************/
 
-#ifndef QMACTOOLBARDELEGATE_H
-#define QMACTOOLBARDELEGATE_H
+#ifndef QMACTOOLBAR_H
+#define QMACTOOLBAR_H
 
-#import <AppKit/AppKit.h>
-#include "qmactoolbar.h"
-#include "qmactoolbar_p.h"
+#include "qmacextrasglobal.h"
+#include "qmactoolbaritem.h"
 
-#include <QtCore/qglobal.h>
-#include <private/qcore_mac_p.h>
+#include <QtCore/QString>
+#include <QtCore/QObject>
+#include <QtCore/QVariant>
+#include <QtGui/QIcon>
 
-@interface QT_MANGLE_NAMESPACE(QMacToolbarDelegate) : NSObject <NSToolbarDelegate>
+Q_FORWARD_DECLARE_OBJC_CLASS(NSToolbar);
+
+QT_BEGIN_NAMESPACE
+
+class QWindow;
+class QMacToolBarPrivate;
+
+class Q_MACEXTRAS_EXPORT QMacToolBar : public QObject
 {
-@public
-    QMacToolBarPrivate *toolbarPrivate;
-}
+    Q_OBJECT
+public:
+    explicit QMacToolBar(QObject *parent = 0);
+    QMacToolBar(const QString &identifier, QObject *parent = 0);
+    ~QMacToolBar();
 
-- (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *) itemIdent willBeInsertedIntoToolbar:(BOOL) willBeInserted;
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
-- (IBAction)itemClicked:(id)sender;
-@end
+    QMacToolBarItem *addItem(const QIcon &icon, const QString &text);
+    QMacToolBarItem *addAllowedItem(const QIcon &icon, const QString &text);
+    QMacToolBarItem *addStandardItem(QMacToolBarItem::StandardItem standardItem);
+    QMacToolBarItem *addAllowedStandardItem(QMacToolBarItem::StandardItem standardItem);
+    void addSeparator();
 
-QT_NAMESPACE_ALIAS_OBJC_CLASS(QMacToolbarDelegate);
+    void setItems(QList<QMacToolBarItem *> &items);
+    QList<QMacToolBarItem *> items();
+    void setAllowedItems(QList<QMacToolBarItem *> &allowedItems);
+    QList<QMacToolBarItem *> allowedItems();
 
-#endif // QMACTOOLBARDELEGATE_H
+    void attachToWindow(QWindow *window);
+    void detachFromWindow();
+
+    NSToolbar* nativeToolbar() const;
+private Q_SLOTS:
+    void showInWindow_impl();
+private:
+    Q_DECLARE_PRIVATE(QMacToolBar)
+};
+
+QT_END_NAMESPACE
+
+Q_DECLARE_METATYPE(QMacToolBar*)
+
+#endif
+
