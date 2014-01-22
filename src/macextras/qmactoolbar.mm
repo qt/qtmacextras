@@ -235,8 +235,14 @@ void QMacToolBar::attachToWindow(QWindow *window)
         return;
     }
 
-    d->targetWindow = window;
-    QTimer::singleShot(100, this, SLOT(showInWindow_impl())); // ### hackety hack
+    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("setNSToolbar");
+    if (function) {
+        typedef void (*SetNSToolbarFunction)(QWindow *window, void *nsToolbar);
+        reinterpret_cast<SetNSToolbarFunction>(function)(window, d->toolbar);
+    } else {
+        d->targetWindow = window;
+        QTimer::singleShot(100, this, SLOT(showInWindow_impl())); // ### hackety hack
+    }
 }
 
 /*!
