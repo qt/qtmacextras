@@ -66,7 +66,7 @@ CGContextRef currentCGContext()
 */
 void setApplicationIconBadgeNumber(int number)
 {
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: number];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:number];
 }
 
 /*!

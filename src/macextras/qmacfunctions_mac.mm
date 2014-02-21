@@ -45,6 +45,8 @@
 #include "qmacfunctions.h"
 #include "qmacfunctions_p.h"
 
+#include <QtCore/QString>
+
 #if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)
 #include <QtGui/QWindow>
 #include <QtWidgets/QMenu>
@@ -104,7 +106,7 @@ CGContextRef currentCGContext()
 */
 void setBadgeLabelText(const QString &text)
 {
-    [[[NSApplication sharedApplication] dockTile] setBadgeLabel:toNSString(text)];
+    [[[NSApplication sharedApplication] dockTile] setBadgeLabel:text.toNSString()];
 }
 
 /*!
@@ -114,7 +116,7 @@ void setBadgeLabelText(const QString &text)
 */
 QString badgeLabelText()
 {
-    return fromNSString([[[NSApplication sharedApplication] dockTile] badgeLabel]);
+    return QString::fromNSString([[[NSApplication sharedApplication] dockTile] badgeLabel]);
 }
 
 } // namespace QtMac

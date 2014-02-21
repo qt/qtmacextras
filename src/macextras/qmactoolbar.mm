@@ -45,6 +45,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QTimer>
 #include <QtCore/QUuid>
+#include <QtCore/QString>
 #include <QtCore/qdebug.h>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -324,7 +325,7 @@ NSMutableArray *QMacToolBarPrivate::getItemIdentifiers(const QList<QMacToolBarIt
 
 void QMacToolBarPrivate::itemClicked(NSToolbarItem *item)
 {
-    QString identifier = QtMac::fromNSString([item itemIdentifier]);
+    QString identifier = QString::fromNSString([item itemIdentifier]);
     QMacToolBarItem *toolButton = reinterpret_cast<QMacToolBarItem *>(identifier.toULongLong());
     Q_EMIT toolButton->activated();
 }
