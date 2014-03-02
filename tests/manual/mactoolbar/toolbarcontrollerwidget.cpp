@@ -62,7 +62,7 @@ ToolBarControllerWidget::ToolBarControllerWidget()
     QLineEdit *fooItemText = new QLineEdit(this);
     fooItemText->setText("Foo");
     fooItemText->move(10, 10);
-    connect(fooItemText, SIGNAL(textChanged(const QString &)), this, SLOT(changeItemText(const QString &)));
+    connect(fooItemText, SIGNAL(textChanged(QString)), this, SLOT(changeItemText(QString)));
 
     winId();
     toolBar->attachToWindow(windowHandle());
