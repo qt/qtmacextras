@@ -66,11 +66,21 @@ QT_BEGIN_NAMESPACE
 namespace QtMac
 {
 
+/*!
+    \obsolete
+
+    Use QByteArray::toNSData() instead.
+ */
 NSData* toNSData(const QByteArray &data)
 {
     return [NSData dataWithBytes:data.constData() length:data.size()];
 }
 
+/*!
+    \obsolete
+
+    Use QByteArray::fromNSData() instead.
+ */
 QByteArray fromNSData(const NSData *data)
 {
     QByteArray ba;
