@@ -49,16 +49,31 @@ QT_BEGIN_NAMESPACE
 namespace QtMac
 {
 
+/*!
+    Returns the current CoreGraphics context.
+*/
 CGContextRef currentCGContext()
 {
     return UIGraphicsGetCurrentContext();
 }
 
+/*!
+    Sets the value shown on the application icon a.k.a badge.
+
+    Unlike its OS X counterpart, only numbers can be used.
+
+    \sa applicationIconBadgeNumber(), setBadgeLabelText()
+*/
 void setApplicationIconBadgeNumber(int number)
 {
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: number];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:number];
 }
 
+/*!
+    Returns the value of the application icon a.k.a badge.
+
+    \sa setApplicationIconBadgeNumber(), badgeLabelText()
+*/
 int applicationIconBadgeNumber()
 {
     return [[UIApplication sharedApplication] applicationIconBadgeNumber];

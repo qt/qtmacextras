@@ -44,8 +44,9 @@
 #include <QtGui/QImage>
 #include <QtGui/QPixmap>
 
+#include <QtCore/QString>
+
 #include "qmacfunctions.h"
-#include "qmacfunctions_p.h"
 #include "qmactoolbar.h"
 
 QT_USE_NAMESPACE
@@ -54,7 +55,7 @@ NSArray *toNSArray(const QList<QString> &stringList)
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     foreach (const QString &string, stringList) {
-        [array addObject : QtMac::toNSString(string)];
+        [array addObject:string.toNSString()];
     }
     return array;
 }
@@ -107,12 +108,12 @@ QString qt_strippedText(QString s)
 {
     Q_UNUSED(toolbar);
     Q_UNUSED(willBeInserted);
-    const QString identifier = QtMac::fromNSString(itemIdentifier);
+    const QString identifier = QString::fromNSString(itemIdentifier);
     QMacToolBarItem *toolButton = reinterpret_cast<QMacToolBarItem *>(identifier.toULongLong()); // string -> unisgned long long -> pointer
     NSToolbarItem *toolbarItem = toolButton->nativeToolBarItem();
 
-    [toolbarItem setTarget : self];
-    [toolbarItem setAction : @selector(itemClicked:)];
+    [toolbarItem setTarget:self];
+    [toolbarItem setAction:@selector(itemClicked:)];
 
     return toolbarItem;
 }

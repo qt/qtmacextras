@@ -45,6 +45,8 @@
 #include "qmacfunctions.h"
 #include "qmacfunctions_p.h"
 
+#include <QtCore/QString>
+
 #if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)
 #include <QtGui/QWindow>
 #include <QtWidgets/QMenu>
@@ -57,6 +59,12 @@ QT_BEGIN_NAMESPACE
 namespace QtMac
 {
 
+/*!
+    Creates an \c NSImage equivalent to the QPixmap. Returns the \c NSImage handle.
+
+    It is the caller's responsibility to release the \c NSImage data
+    after use.
+*/
 NSImage* toNSImage(const QPixmap &pixmap)
 {
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:toCGImageRef(pixmap)];
@@ -67,6 +75,9 @@ NSImage* toNSImage(const QPixmap &pixmap)
 }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+/*!
+    Returns whether the given QWindow is the application's main window
+*/
 bool isMainWindow(QWindow *window)
 {
     NSWindow *macWindow = static_cast<NSWindow*>(
@@ -78,19 +89,34 @@ bool isMainWindow(QWindow *window)
 }
 #endif
 
+/*!
+    Returns the current CoreGraphics context.
+*/
 CGContextRef currentCGContext()
 {
     return reinterpret_cast<CGContextRef>([[NSGraphicsContext currentContext] graphicsPort]);
 }
 
+/*!
+    Sets the text shown on the application icon a.k.a badge.
+
+    This is generally used with numbers (e.g. number of unread emails); it can also show a string.
+
+    \sa badgeLabelText()
+*/
 void setBadgeLabelText(const QString &text)
 {
-    [[[NSApplication sharedApplication] dockTile] setBadgeLabel:toNSString(text)];
+    [[[NSApplication sharedApplication] dockTile] setBadgeLabel:text.toNSString()];
 }
 
+/*!
+    Returns the text of the application icon a.k.a badge.
+
+    \sa setBadgeText()
+*/
 QString badgeLabelText()
 {
-    return fromNSString([[[NSApplication sharedApplication] dockTile] badgeLabel]);
+    return QString::fromNSString([[[NSApplication sharedApplication] dockTile] badgeLabel]);
 }
 
 } // namespace QtMac

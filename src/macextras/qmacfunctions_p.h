@@ -49,21 +49,7 @@
 #include <QtGui/QGuiApplication>
 #include <qpa/qplatformnativeinterface.h>
 
-// ### remove when merged to QtCore
-
-Q_FORWARD_DECLARE_OBJC_CLASS(NSString);
-Q_FORWARD_DECLARE_OBJC_CLASS(NSURL);
-
 QT_BEGIN_NAMESPACE
-
-namespace QtMac
-{
-    Q_MACEXTRAS_EXPORT NSString *toNSString(const QString &string);
-    Q_MACEXTRAS_EXPORT QString fromNSString(const NSString *string);
-
-    Q_MACEXTRAS_EXPORT NSURL *toNSURL(const QUrl &url);
-    Q_MACEXTRAS_EXPORT QUrl fromNSURL(const NSURL *url);
-}
 
 inline QPlatformNativeInterface::NativeResourceForIntegrationFunction resolvePlatformFunction(const QByteArray &functionName)
 {

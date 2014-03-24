@@ -44,6 +44,7 @@
 #include <QByteArray>
 #include <QPixmap>
 #include <QUrl>
+#include <QString>
 
 #include "qmacfunctions_p.h"
 
@@ -65,38 +66,21 @@ QT_BEGIN_NAMESPACE
 namespace QtMac
 {
 
-NSString *toNSString(const QString &string)
-{
-    return [NSString stringWithCharacters:reinterpret_cast<const UniChar*>(string.unicode()) length:string.length()];
-}
+/*!
+    \obsolete
 
-QString fromNSString(const NSString *string)
-{
-    if (!string)
-        return QString();
-
-    QString qstring;
-    qstring.resize([string length]);
-    [string getCharacters:reinterpret_cast<unichar*>(qstring.data()) range:NSMakeRange(0, [string length])];
-
-    return qstring;
-}
-
-NSURL* toNSURL(const QUrl &url)
-{
-    return [NSURL URLWithString:toNSString(url.toString())];
-}
-
-QUrl fromNSURL(const NSURL *url)
-{
-    return QUrl(fromNSString([url absoluteString]));
-}
-
+    Use QByteArray::toNSData() instead.
+ */
 NSData* toNSData(const QByteArray &data)
 {
     return [NSData dataWithBytes:data.constData() length:data.size()];
 }
 
+/*!
+    \obsolete
+
+    Use QByteArray::fromNSData() instead.
+ */
 QByteArray fromNSData(const NSData *data)
 {
     QByteArray ba;
