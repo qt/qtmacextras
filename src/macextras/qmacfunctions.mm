@@ -66,6 +66,7 @@ QT_BEGIN_NAMESPACE
 namespace QtMac
 {
 
+#if QT_DEPRECATED_SINCE(5,3)
 /*!
     \obsolete
 
@@ -88,6 +89,7 @@ QByteArray fromNSData(const NSData *data)
     [data getBytes:ba.data() length:ba.size()];
     return ba;
 }
+#endif // QT_DEPRECATED_SINCE
 
 /*!
     Creates a \c CGImageRef equivalent to the QPixmap. Returns the \c CGImageRef handle.

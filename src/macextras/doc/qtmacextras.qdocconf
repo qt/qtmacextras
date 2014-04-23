@@ -13,8 +13,8 @@ examplesinstallpath     = macextras
 # Add a generic 'Qt Code Sample' thumbnail in Qt Creator for all examples
 manifestmeta.thumbnail.names += "QtMacExtras/*"
 
-headerdirs = ..
-sourcedirs = ..
+headerdirs += ..
+sourcedirs += ..
 imagedirs += images
 
 Cpp.ignoretokens += Q_MACEXTRAS_EXPORT

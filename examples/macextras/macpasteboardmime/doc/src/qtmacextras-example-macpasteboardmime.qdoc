@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the documentation of the Qt Toolkit.
@@ -37,4 +37,8 @@
 
     The example creates a widget that accepts drag & drop events, and
     reads contents of dropped business cards in vCard format.
+
+    \include examples-run.qdocinc
+
+    \sa {Qt for Mac OS X}, {Qt Mac Extras}
 */

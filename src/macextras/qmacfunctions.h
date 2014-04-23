@@ -66,8 +66,10 @@ class QWindow;
 
 namespace QtMac
 {
-Q_MACEXTRAS_EXPORT NSData *toNSData(const QByteArray &data);
-Q_MACEXTRAS_EXPORT QByteArray fromNSData(const NSData *data);
+#if QT_DEPRECATED_SINCE(5,3)
+QT_DEPRECATED Q_MACEXTRAS_EXPORT NSData *toNSData(const QByteArray &data);
+QT_DEPRECATED Q_MACEXTRAS_EXPORT QByteArray fromNSData(const NSData *data);
+#endif
 
 Q_MACEXTRAS_EXPORT CGImageRef toCGImageRef(const QPixmap &pixmap);
 Q_MACEXTRAS_EXPORT QPixmap fromCGImageRef(CGImageRef image);
