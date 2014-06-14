@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the documentation of the Qt Toolkit.
@@ -34,4 +34,8 @@
 
     This Mac OS X-specific example shows how to create a view hierarchy
     containing a QWindow, with handling of Qt's mouse and keyboard events.
+
+    \include examples-run.qdocinc
+
+    \sa {Qt for Mac OS X}, {Qt Mac Extras}
 */
