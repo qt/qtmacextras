@@ -186,7 +186,7 @@ QMacToolBarItem *QMacToolBar::addAllowedStandardItem(QMacToolBarItem::StandardIt
 }
 
 /*!
-    Sets the list of the default toolbar items.
+    Sets the list of the default toolbar \a items.
 */
 void QMacToolBar::setItems(QList<QMacToolBarItem *> &items)
 {
