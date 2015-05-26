@@ -67,10 +67,14 @@ namespace QtMac
 */
 NSImage* toNSImage(const QPixmap &pixmap)
 {
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:toCGImageRef(pixmap)];
+    if (pixmap.isNull())
+        return 0;
+    CGImageRef cgimage = toCGImageRef(pixmap);
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgimage];
     NSImage *image = [[NSImage alloc] init];
     [image addRepresentation:bitmapRep];
     [bitmapRep release];
+    CFRelease(cgimage);
     return image;
 }
 
