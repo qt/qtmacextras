@@ -1,6 +1,9 @@
-include($$PWD/macextras-lib.pri)
+TARGET = QtMacExtras
 
 QT_PRIVATE += gui-private core-private
-TARGET = QtMacExtras
-load(qt_module)
+
+include($$PWD/macextras-lib.pri)
+
 QMAKE_DOCS = $$PWD/doc/qtmacextras.qdocconf
+
+load(qt_module)
