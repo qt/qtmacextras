@@ -54,7 +54,7 @@ class Q_MACEXTRAS_EXPORT QMacToolBar : public QObject
     Q_OBJECT
 public:
     explicit QMacToolBar(QObject *parent = Q_NULLPTR);
-    QMacToolBar(const QString &identifier, QObject *parent = Q_NULLPTR);
+    explicit QMacToolBar(const QString &identifier, QObject *parent = Q_NULLPTR);
     ~QMacToolBar();
 
     QMacToolBarItem *addItem(const QIcon &icon, const QString &text);
