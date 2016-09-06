@@ -312,7 +312,7 @@ QMacToolBarPrivate::~QMacToolBarPrivate()
 NSMutableArray *QMacToolBarPrivate::getItemIdentifiers(const QList<QMacToolBarItem *> &items, bool cullUnselectable)
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    foreach (const QMacToolBarItem * item, items) {
+    for (const QMacToolBarItem * item : items) {
         if (cullUnselectable && item->selectable() == false)
             continue;
         [array addObject : item->d_func()->itemIdentifier()];
