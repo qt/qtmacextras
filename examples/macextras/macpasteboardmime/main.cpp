@@ -91,11 +91,7 @@ public:
         Q_UNUSED(mime);
         Q_UNUSED(flav);
 
-        QByteArray all;
-        foreach (QByteArray i, data) {
-            all += i;
-        }
-        return QVariant(all);
+        return QVariant(data.join());
     }
 
     QList<QByteArray> convertFromMime(const QString &mime, QVariant data, QString flav)

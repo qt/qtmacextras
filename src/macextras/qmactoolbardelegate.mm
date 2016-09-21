@@ -52,7 +52,7 @@ QT_USE_NAMESPACE
 NSArray *toNSArray(const QList<QString> &stringList)
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    foreach (const QString &string, stringList) {
+    for (const QString &string : stringList) {
         [array addObject:string.toNSString()];
     }
     return array;
