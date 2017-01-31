@@ -34,6 +34,7 @@ mac {
             OBJECTIVE_SOURCES += $$PWD/qmacpasteboardmime.mm
         }
 
+        QT_PRIVATE += widgets
         LIBS_PRIVATE += -framework AppKit
     }
 }
