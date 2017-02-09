@@ -86,8 +86,8 @@ Q_MACEXTRAS_EXPORT bool isMainWindow(QWindow *window);
 #endif // Q_OS_OSX
 
 #ifdef Q_OS_IOS
-Q_MACEXTRAS_EXPORT void setApplicationIconBadgeNumber(int number);
-Q_MACEXTRAS_EXPORT int applicationIconBadgeNumber();
+Q_MACEXTRAS_EXPORT void setApplicationIconBadgeNumber(int number) __attribute__((availability(ios_app_extension,unavailable)));
+Q_MACEXTRAS_EXPORT int applicationIconBadgeNumber() __attribute__((availability(ios_app_extension,unavailable)));
 #endif // Q_OS_IOS
 }
 
