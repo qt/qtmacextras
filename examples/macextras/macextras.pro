@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-mac:SUBDIRS = macfunctions
-mac:!ios:SUBDIRS += embeddedqwindow \
+SUBDIRS = macfunctions
+macos: SUBDIRS += embeddedqwindow \
           macpasteboardmime \
           mactoolbar
