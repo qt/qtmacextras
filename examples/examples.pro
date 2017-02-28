@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-mac:SUBDIRS = macextras
+SUBDIRS = macextras

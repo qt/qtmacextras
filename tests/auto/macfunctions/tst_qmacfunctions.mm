@@ -25,7 +25,6 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#import <AppKit/AppKit.h>
 
 #include <QString>
 #include <QtTest>
@@ -34,6 +33,10 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QMainWindow>
 #include <qmacfunctions.h>
+
+#ifdef Q_OS_MACOS
+#import <AppKit/AppKit.h>
+#endif
 
 class tst_QMacFunctions : public QObject
 {
