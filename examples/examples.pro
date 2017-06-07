@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS = macextras
+darwin: SUBDIRS = macextras
