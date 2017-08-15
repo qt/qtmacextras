@@ -6,6 +6,8 @@ PUBLIC_HEADERS += \
 PRIVATE_HEADERS += $$PWD/qmacfunctions_p.h
 OBJECTIVE_SOURCES += $$PWD/qmacfunctions.mm
 
+LIBS_PRIVATE += -framework Foundation
+
 uikit:!watchos {
     OBJECTIVE_SOURCES += \
         $$PWD/qmacfunctions_ios.mm
