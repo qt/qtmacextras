@@ -18,8 +18,7 @@ moduleheader = QtMacExtrasDoc
 # pass include paths to clang
 includepaths += -I . \
                 -I .. \
-                -I ./QtMacExtras \
-                -I $QT_INSTALL_HEADERS
+                -I ./QtMacExtras
 
 clangdefines += Q_OS_OSX Q_OS_MACOS QT_PLATFORM_UIKIT
 
