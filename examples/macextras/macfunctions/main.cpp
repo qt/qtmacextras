@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 
     // Pixmap <-> CGImage conversion
     QPixmap pixmap(":qtlogo.png");
-    CGImageRef cgImage = QtMac::toCGImageRef(pixmap);
+    CGImageRef cgImage = pixmap.toImage().toCGImage();
     QPixmap pixmap2 = QtMac::fromCGImageRef(cgImage);
 
     return app.exec();
