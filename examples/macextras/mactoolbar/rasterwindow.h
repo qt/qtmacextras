@@ -48,6 +48,9 @@
 **
 ****************************************************************************/
 
+#ifndef RASTERWINDOW_H
+#define RASTERWINDOW_H
+
 #include <QtGui>
 
 class RasterWindow : public QWindow
@@ -67,3 +70,5 @@ private:
     QBackingStore *m_backingStore;
     QString m_text;
 };
+
+#endif // RASTERWINDOW_H
