@@ -52,6 +52,8 @@
  #import <CoreGraphics/CoreGraphics.h>
 #endif
 
+#include <QtGui/private/qcoregraphics_p.h>
+
 QT_BEGIN_NAMESPACE
 
 /*!
@@ -81,17 +83,7 @@ namespace QtMac
 */
 QPixmap fromCGImageRef(CGImageRef image)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("cgimagetoqimage");
-    if (function) {
-        typedef QImage (*CGImageToQImageFunction)(CGImageRef image);
-        return QPixmap::fromImage(reinterpret_cast<CGImageToQImageFunction>(function)(image));
-    }
-
-    return QPixmap();
-#else
-    return QPixmap::fromCGImageRef(image);
-#endif
+    return QPixmap::fromImage(qt_mac_toQImage(image));
 }
 
 } // namespace QtMac
