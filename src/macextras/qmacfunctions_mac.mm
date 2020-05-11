@@ -56,30 +56,6 @@ QT_BEGIN_NAMESPACE
 
 namespace QtMac
 {
-
-#if QT_DEPRECATED_SINCE(5, 12)
-/*!
-    \fn NSImage* QtMac::toNSImage(const QPixmap &pixmap)
-
-    Creates an \c NSImage equivalent to the QPixmap \a pixmap. Returns the \c NSImage handle.
-
-    It is the caller's responsibility to release the \c NSImage data
-    after use.
-*/
-NSImage* toNSImage(const QPixmap &pixmap)
-{
-    if (pixmap.isNull())
-        return 0;
-    CGImageRef cgimage = toCGImageRef(pixmap);
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgimage];
-    NSImage *image = [[NSImage alloc] init];
-    [image addRepresentation:bitmapRep];
-    [bitmapRep release];
-    CFRelease(cgimage);
-    return image;
-}
-#endif
-
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 /*!
     \fn bool QtMac::isMainWindow(QWindow *window)
@@ -94,39 +70,6 @@ bool isMainWindow(QWindow *window)
         return false;
 
     return [macWindow isMainWindow];
-}
-#endif
-
-#if QT_DEPRECATED_SINCE(5, 12)
-CGContextRef currentCGContext()
-{
-    return reinterpret_cast<CGContextRef>([[NSGraphicsContext currentContext] graphicsPort]);
-}
-
-/*!
-    \fn void QtMac::setBadgeLabelText(const QString &text)
-
-    Sets the \a text shown on the application icon a.k.a badge.
-
-    This is generally used with numbers (e.g. number of unread emails); it can also show a string.
-
-    \sa badgeLabelText()
-*/
-void setBadgeLabelText(const QString &text)
-{
-    [[[NSApplication sharedApplication] dockTile] setBadgeLabel:text.toNSString()];
-}
-
-/*!
-    \fn QString QtMac::badgeLabelText()
-
-    Returns the text of the application icon a.k.a badge.
-
-    \sa setBadgeLabelText()
-*/
-QString badgeLabelText()
-{
-    return QString::fromNSString([[[NSApplication sharedApplication] dockTile] badgeLabel]);
 }
 #endif
 

@@ -8,13 +8,6 @@ OBJECTIVE_SOURCES += $$PWD/qmacfunctions.mm
 
 LIBS_PRIVATE += -framework Foundation
 
-uikit:!watchos {
-    OBJECTIVE_SOURCES += \
-        $$PWD/qmacfunctions_ios.mm
-
-    LIBS_PRIVATE += -framework UIKit
-}
-
 macos {
     PUBLIC_HEADERS += \
     $$PWD/qmactoolbar.h \

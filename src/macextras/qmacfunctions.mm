@@ -70,63 +70,6 @@ QT_BEGIN_NAMESPACE
 
 namespace QtMac
 {
-
-#if QT_DEPRECATED_SINCE(5,3)
-/*!
-    \obsolete
-    \fn NSData* QtMac::toNSData(const QByteArray &data)
-
-    Use QByteArray::toNSData() instead.
- */
-NSData* toNSData(const QByteArray &data)
-{
-    return [NSData dataWithBytes:data.constData() length:data.size()];
-}
-
-/*!
-    \obsolete
-    \fn QByteArray QtMac::fromNSData(const NSData *data)
-
-    Use QByteArray::fromNSData() instead.
- */
-QByteArray fromNSData(const NSData *data)
-{
-    QByteArray ba;
-    ba.resize([data length]);
-    [data getBytes:ba.data() length:ba.size()];
-    return ba;
-}
-#endif // QT_DEPRECATED_SINCE
-
-#if QT_DEPRECATED_SINCE(5, 12)
-/*!
-    \fn CGImageRef QtMac::toCGImageRef(const QPixmap &pixmap)
-
-    Creates a \c CGImageRef equivalent to the QPixmap \a pixmap. Returns the \c CGImageRef handle.
-
-    It is the caller's responsibility to release the \c CGImageRef data
-    after use.
-
-    This function is not available in Qt 5.x until 5.0.2 and will return NULL in earlier versions.
-
-    \sa fromCGImageRef()
-*/
-CGImageRef toCGImageRef(const QPixmap &pixmap)
-{
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    QPlatformNativeInterface::NativeResourceForIntegrationFunction function = resolvePlatformFunction("qimagetocgimage");
-    if (function) {
-        typedef CGImageRef (*QImageToCGImageFunction)(const QImage &image);
-        return reinterpret_cast<QImageToCGImageFunction>(function)(pixmap.toImage());
-    }
-
-    return NULL;
-#else
-    return pixmap.toCGImageRef();
-#endif
-}
-#endif
-
 /*!
     \fn QPixmap QtMac::fromCGImageRef(CGImageRef image)
 
