@@ -93,8 +93,11 @@ Q_MACEXTRAS_EXPORT NSImage *toNSImage(const QPixmap &pixmap);
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-Q_MACEXTRAS_EXPORT bool isMainWindow(QWindow *window);
+# if QT_DEPRECATED_SINCE(5, 15)
+QT_DEPRECATED_X("Use QWindow::winId() and view.window.isMainWindow") Q_MACEXTRAS_EXPORT bool isMainWindow(QWindow *window);
+# endif
 #endif
+
 #endif // Q_OS_OSX
 
 #if defined(QT_PLATFORM_UIKIT) && !defined(Q_OS_WATCHOS)
