@@ -1,1 +1,1 @@
-Qt Mac Extras: Platform specific components for OS X and iOS.
+The QtMacExtras module no longer exists in Qt 6 (see QTBUG-93629).
