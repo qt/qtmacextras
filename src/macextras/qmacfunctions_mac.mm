@@ -84,8 +84,10 @@ NSImage* toNSImage(const QPixmap &pixmap)
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+# if QT_DEPRECATED_SINCE(5, 15)
 /*!
     \fn bool isMainWindow(QWindow *window)
+    \obsolete Use QWindow::winId() and view.window.isMainWindow instead.
 
     Returns whether the given QWindow \a window is the application's main window
 */
@@ -98,6 +100,7 @@ bool isMainWindow(QWindow *window)
 
     return [macWindow isMainWindow];
 }
+# endif
 #endif
 
 #if QT_DEPRECATED_SINCE(5, 12)

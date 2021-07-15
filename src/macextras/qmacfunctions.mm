@@ -134,6 +134,7 @@ CGImageRef toCGImageRef(const QPixmap &pixmap)
 
 /*!
     \fn QPixmap QtMac::fromCGImageRef(CGImageRef image)
+    \obsolete
 
     Returns a QPixmap that is equivalent to the given \a image.
 

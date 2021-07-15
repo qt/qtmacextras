@@ -48,6 +48,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \fn void qRegisterDraggedTypes(const QStringList &types)
+    \obsolete
     \relates QMacPasteboardMime
 
     Registers the given \a types as custom pasteboard types.
@@ -70,6 +71,7 @@ void qRegisterDraggedTypes(const QStringList &types)
 
 /*!
   \class QMacPasteboardMime
+  \obsolete
   \inmodule QtMacExtras
   \since 5.2
   \brief The QMacPasteboardMime class converts between a MIME type and a

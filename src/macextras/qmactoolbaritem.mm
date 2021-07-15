@@ -47,6 +47,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
   \class QMacToolBarItem
+  \obsolete
   \inmodule QtMacExtras
   \since 5.3
   \brief The QMacToolBarItem class provides an item for QMacToolBar.
