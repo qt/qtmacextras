@@ -63,6 +63,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
   \class QMacToolBar
+  \obsolete
   \inmodule QtMacExtras
   \since 5.3
   \brief The QMacToolBar class wraps the native NSToolbar class.
